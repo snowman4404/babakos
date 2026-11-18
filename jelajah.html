@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Jelajah barang bekas kost di sekitar Universitas Brawijaya. Saring per area kost, harga, kategori, dan kondisi.">
     <title>Jelajah Barang — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,23 +12,104 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <a class="skip" href="#hasil">Langsung ke hasil</a>
     <header id="site-header"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Jelajah Barang</h1>
-        <p class="placeholder-file">jelajah.html</p>
-        <ul>
-          <li>Search bar judul barang</li>
-          <li>Filter area kost (Ketawanggede, Sumbersari, Kerto, …)</li>
-          <li>Filter rentang harga min–max</li>
-          <li>Filter kategori &amp; kondisi</li>
-          <li>Urutkan: terbaru, termurah, termahal, terdekat</li>
-          <li>Grid kartu produk + state kosong</li>
-        </ul>
+    <main>
+      <!-- Head: a flat blue-grey field, like the homepage sheet, holding the search -->
+      <section class="browse-head" aria-labelledby="browse-title">
+        <div class="container browse-head-inner">
+          <h1 id="browse-title" class="title" data-reveal>Jelajah barang</h1>
+          <p class="browse-sub" id="browse-sub" data-reveal>Barang bekas dari kost di sekitar Universitas Brawijaya.</p>
+          <form class="search" id="search-form" role="search" data-reveal>
+            <label class="sr-only" for="search">Cari barang</label>
+            <span class="search-icon" data-icon="search"></span>
+            <input type="search" id="search" placeholder="Cari kipas, rice cooker, buku…" autocomplete="off" enterkeyhint="search">
+            <button type="button" class="search-clear" id="search-clear" data-icon="x" aria-label="Hapus pencarian" hidden></button>
+          </form>
+        </div>
       </section>
+
+      <div class="container browse">
+        <!-- Filters: a sidebar on desktop, a bottom sheet on phones. Options are filled by js/pages/jelajah.js. -->
+        <aside class="filters" id="filters" aria-labelledby="filters-title">
+          <div class="filters-head">
+            <h2 id="filters-title">Filter</h2>
+            <button type="button" class="filters-close" id="filters-close" data-icon="x" aria-label="Tutup filter"></button>
+          </div>
+          <form class="filter-form" id="filter-form" novalidate>
+            <fieldset class="filter-group">
+              <legend>Area kost</legend>
+              <p class="filter-note">Jarak ke gerbang UB</p>
+              <div id="area-options"></div>
+            </fieldset>
+
+            <fieldset class="filter-group">
+              <legend>Harga</legend>
+              <div class="price-fields">
+                <label class="price-field">
+                  <span class="price-caption">Minimum</span>
+                  <span class="price-input"><span aria-hidden="true">Rp</span><input name="min" inputmode="numeric" placeholder="0" autocomplete="off" aria-describedby="price-error"></span>
+                </label>
+                <label class="price-field">
+                  <span class="price-caption">Maksimum</span>
+                  <span class="price-input"><span aria-hidden="true">Rp</span><input name="max" inputmode="numeric" placeholder="Bebas" autocomplete="off" aria-describedby="price-error"></span>
+                </label>
+              </div>
+              <p class="field-error" id="price-error" hidden>Harga minimum lebih besar dari maksimum.</p>
+              <div class="chips price-quick" id="price-quick" role="group" aria-label="Harga maksimum cepat"></div>
+            </fieldset>
+
+            <fieldset class="filter-group">
+              <legend>Kategori</legend>
+              <div class="chips" id="cat-options"></div>
+            </fieldset>
+
+            <fieldset class="filter-group">
+              <legend>Kondisi</legend>
+              <div class="chips" id="cond-options"></div>
+            </fieldset>
+
+            <label class="check check-wide"><input type="checkbox" name="all"><span>Tampilkan juga yang sudah dipesan atau terjual</span></label>
+          </form>
+          <div class="filters-foot">
+            <button type="button" class="link-btn" id="filters-reset">Hapus semua filter</button>
+            <button type="button" class="btn btn-small filters-apply" id="filters-apply">Tampilkan barang</button>
+          </div>
+        </aside>
+
+        <section class="results" id="hasil" aria-labelledby="result-count">
+          <div class="results-bar">
+            <h2 class="results-count" id="result-count" tabindex="-1" aria-live="polite">Barang</h2>
+            <div class="results-tools">
+              <button type="button" class="btn btn-outline btn-small filters-toggle" id="filters-toggle" data-icon="sliders" aria-controls="filters" aria-expanded="false"><span>Filter</span><span id="filters-count"></span></button>
+              <div class="sort">
+                <label for="sort">Urutkan</label>
+                <span class="select">
+                  <select id="sort">
+                    <option value="newest">Terbaru</option>
+                    <option value="cheapest">Termurah</option>
+                    <option value="priciest">Termahal</option>
+                    <option value="nearest">Terdekat dari kampus</option>
+                  </select>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="active-filters" id="active-filters"></div>
+
+          <ul class="pgrid" id="grid"></ul>
+
+          <div class="empty" id="empty" hidden>
+            <p class="empty-title">Barang tidak ditemukan</p>
+            <p>Coba kata lain, tambah area kost, atau naikkan harga maksimum.</p>
+            <button type="button" class="btn btn-small btn-outline" id="empty-reset">Hapus semua filter</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="filters-backdrop" id="filters-backdrop"></div>
     </main>
 
     <footer id="site-footer"></footer>
@@ -36,5 +117,6 @@
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/jelajah.js"></script>
   </body>
 </html>

@@ -54,12 +54,15 @@ Beranda → Daftar (email `@student.ub.ac.id`) → Verifikasi OTP → Jelajah (f
 ### 4. Masuk `masuk.html`
 - Email kampus → kode OTP (tanpa password, cukup untuk mockup)
 
-### 5. Jelajah Barang `jelajah.html`
-- Search bar
-- Sidebar filter (di HP: bottom sheet): **area kost**, **rentang harga min–max**, kategori, kondisi
+### 5. Jelajah Barang `jelajah.html` ✅
+- Kepala halaman di bidang `--surface` (seperti lembar hero beranda): judul, jumlah barang tersedia, search bar besar (mencocokkan judul, deskripsi, kategori, area, kondisi)
+- Sidebar filter (di HP ≤900px: bottom sheet dengan tombol "Tampilkan N barang"): **area kost** (urut dari gerbang, dengan jarak km), **rentang harga min–max** + tombol cepat Rp100rb/200rb/500rb/1jt (dari `BBK.priceCeilings`), kategori, kondisi, dan "tampilkan juga yang sudah dipesan atau terjual" (default disembunyikan)
+- Validasi harga: minimum > maksimum memberi pesan error dan filter harga diabaikan
+- Filter aktif tampil sebagai token yang bisa dihapus satu per satu
 - Urutkan: terbaru / termurah / termahal / terdekat dari kampus
-- Grid kartu produk: foto, judul, harga, area, kondisi, badge penjual terverifikasi
-- State kosong ("Barang tidak ditemukan")
+- Grid kartu produk: foto, judul, harga, area, kondisi, penjual terverifikasi; barang dipesan/terjual diberi label → `produk.html?id=…`
+- State kosong ("Barang tidak ditemukan") + tombol Hapus semua filter
+- Semua filter tersimpan di URL, jadi bisa ditautkan, mis. `jelajah.html?area=ketawanggede&max=100000` (langkah demo). Parameter: `q`, `area`, `min`, `max`, `cat`, `cond`, `all=1`, `sort` (`newest|cheapest|priciest|nearest`)
 
 ### 6. Detail Barang `produk.html`
 - Galeri foto, judul, harga, kondisi, kategori, area kost + jarak ke UB
