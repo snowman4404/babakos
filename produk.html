@@ -3,38 +3,108 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Detail barang bekas kost di BaBaKos: foto, harga, kondisi, lokasi COD, dan penjual terverifikasi.">
     <title>Detail Barang — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <header id="site-header"></header>
+    <a class="skip" href="#p-title">Langsung ke isi</a>
+    <header id="site-header" data-bar="Detail Barang" data-back="jelajah.html"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Detail Barang</h1>
-        <p class="placeholder-file">produk.html</p>
-        <ul>
-          <li>Galeri foto</li>
-          <li>Judul, harga, kondisi, kategori, area kost</li>
-          <li>Kartu penjual + badge Terverifikasi + rating</li>
-          <li>Tombol Chat Penjual (produk otomatis terlampir)</li>
-          <li>Tombol Beli via COD</li>
-          <li>Barang serupa</li>
-        </ul>
+    <main>
+      <!-- Figma DETAIL PRODUK. Filled by js/pages/produk.js. -->
+      <div class="container page product" id="product-view">
+        <div class="product-media">
+          <figure class="gallery-main">
+            <img id="gallery-img" src="assets/photos/ub-aerial.jpg" alt="" width="960" height="960">
+            <span class="pcard-status" id="p-status" hidden></span>
+          </figure>
+          <div class="gallery-thumbs" id="gallery-thumbs" role="group" aria-label="Foto barang"></div>
+        </div>
+
+        <div class="product-info">
+          <h1 class="product-title" id="p-title" tabindex="-1">Detail barang</h1>
+          <p class="product-price" id="p-price"></p>
+          <div class="product-tags" id="p-tags"></div>
+          <p class="product-loc" id="p-loc"></p>
+          <p class="product-near" id="p-near"></p>
+          <div class="product-quick">
+            <button type="button" class="icon-btn icon-btn-soft" id="p-share" aria-label="Bagikan barang">
+              <span data-icon="share" data-icon-size="20"></span>
+            </button>
+            <button type="button" class="icon-btn icon-btn-soft" id="p-wish" aria-pressed="false" aria-label="Simpan ke wishlist">
+              <span data-icon="heart" data-icon-size="20"></span>
+            </button>
+          </div>
+
+          <hr class="divider">
+
+          <section class="product-desc" aria-labelledby="desc-title">
+            <h2 class="h3" id="desc-title">Deskripsi Produk</h2>
+            <p id="p-desc"></p>
+            <p class="caption" id="p-posted"></p>
+          </section>
+
+          <a class="bundle-note" id="p-bundle" hidden></a>
+
+          <hr class="divider">
+
+          <div class="seller-row" id="seller-row"></div>
+
+          <p class="product-note" id="p-note" hidden></p>
+          <div class="product-actions" id="p-actions"></div>
+        </div>
+
+        <section class="card shop" aria-labelledby="shop-title">
+          <h2 class="h3 card-head" id="shop-title">Profil Toko</h2>
+          <a class="shop-head" id="shop-link" href="profil.html">
+            <span class="avatar avatar-lg avatar-cream" id="shop-avatar" aria-hidden="true"></span>
+            <span>
+              <span class="shop-name" id="shop-name"></span>
+              <span class="caption" id="shop-meta"></span>
+            </span>
+          </a>
+          <dl class="shop-stats">
+            <div><dt>Trust Score</dt><dd id="shop-trust"></dd></div>
+            <div><dt>Rating</dt><dd id="shop-rating"></dd></div>
+            <div><dt>Terjual</dt><dd id="shop-sold"></dd></div>
+          </dl>
+        </section>
+
+        <section class="card reviews" aria-labelledby="reviews-title">
+          <div class="card-head">
+            <h2 class="h3" id="reviews-title">Ulasan Penjual</h2>
+            <a class="link-btn caption-link" id="reviews-more" href="profil.html">Lihat Semua</a>
+          </div>
+          <div id="reviews-list"></div>
+        </section>
+      </div>
+
+      <section class="container similar" id="serupa" aria-labelledby="similar-title">
+        <div class="section-head">
+          <h2 class="h2" id="similar-title">Barang serupa</h2>
+          <a class="text-action" id="similar-more" href="jelajah.html">Lihat semua<span data-icon="arrow-right"></span></a>
+        </div>
+        <ul class="pgrid" id="similar-grid"></ul>
       </section>
-    </main>
 
-    <footer id="site-footer"></footer>
+      <div class="container" id="not-found" hidden>
+        <div class="empty">
+          <span class="empty-icon" data-icon="search" data-icon-size="32"></span>
+          <p class="empty-title">Barang tidak ditemukan</p>
+          <p>Mungkin tautannya salah atau barangnya sudah dihapus penjual.</p>
+          <a class="btn btn-sm btn-outline" href="jelajah.html">Cari barang lain</a>
+        </div>
+      </div>
+    </main>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/produk.js"></script>
   </body>
 </html>

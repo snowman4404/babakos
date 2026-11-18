@@ -1,0 +1,1421 @@
+<canvas id="36:217" name="hifi" x="0" y="0" width="0" height="0">
+  <frame id="74:1250" name="Dashboard profil" x="1468" y="-2281" width="1442" height="1105">
+    <frame id="74:1251" name="Marketplace navigation" x="0" y="0" width="1442" height="80">
+      <frame id="74:1252" name="Marketplace links" x="40" y="19" width="216" height="42">
+        <vector id="74:1253" name="Marketplace mark" x="0" y="0" width="34" height="42" />
+        <text id="74:1254" name="Home link" x="70" y="11" width="57" height="20" />
+        <text id="74:1255" name="Catalog link" x="163" y="11" width="53" height="20" />
+      </frame>
+      <frame id="74:1256" name="Account navigation" x="1060" y="22" width="342" height="36">
+        <frame id="74:1257" name="Return to shopping" x="0" y="8" width="128" height="20">
+          <frame id="74:1377" name="shopping-bag" x="0" y="0" width="20" height="20" />
+          <text id="74:1259" name="Shopping link" x="28" y="0" width="100" height="20" />
+        </frame>
+        <frame id="74:1260" name="Navigation divider" x="152" y="4" width="1" height="28" />
+        <frame id="74:1261" name="Current account" x="177" y="0" width="165" height="36">
+          <frame id="74:1262" name="Profile avatar" x="0" y="0" width="36" height="36">
+            <text id="74:1263" name="Initials" x="11" y="9" width="14" height="18" />
+          </frame>
+          <text id="74:1264" name="Username" x="46" y="8" width="93" height="20" />
+          <frame id="74:1380" name="chevron-down" x="149" y="10" width="16" height="16" />
+        </frame>
+      </frame>
+    </frame>
+    <frame id="74:1266" name="Account workspace" x="0" y="80" width="1442" height="1025">
+      <frame id="74:1267" name="Account sidebar" x="40" y="32" width="264" height="953">
+        <frame id="74:1268" name="Sidebar heading" x="0" y="0" width="166" height="58">
+          <text id="74:1269" name="Account title" x="16" y="4" width="101" height="28" />
+          <text id="74:1270" name="Account subtitle" x="16" y="38" width="150" height="16" />
+        </frame>
+        <frame id="74:1271" name="Profile navigation" x="0" y="82" width="240" height="232">
+          <frame id="74:1272" name="Account menu item" x="0" y="0" width="240" height="52">
+            <frame id="74:1383" name="user-round" x="16" y="16" width="20" height="20" />
+            <text id="74:1274" name="Menu label" x="48" y="16" width="158" height="20" />
+            <frame id="74:1275" name="Current page indicator" x="218" y="23" width="6" height="6" />
+          </frame>
+          <frame id="74:1276" name="Account menu item" x="0" y="60" width="240" height="52">
+            <frame id="74:1386" name="package" x="16" y="16" width="20" height="20" />
+            <text id="74:1278" name="Menu label" x="48" y="16" width="176" height="20" />
+          </frame>
+          <frame id="74:1279" name="Account menu item" x="0" y="120" width="240" height="52">
+            <frame id="74:1389" name="heart" x="16" y="16" width="20" height="20" />
+            <text id="74:1281" name="Menu label" x="48" y="16" width="176" height="20" />
+          </frame>
+          <frame id="74:1282" name="Account menu item" x="0" y="180" width="240" height="52">
+            <frame id="74:1392" name="lock-keyhole" x="16" y="16" width="20" height="20" />
+            <text id="74:1284" name="Menu label" x="48" y="16" width="176" height="20" />
+          </frame>
+        </frame>
+        <frame id="74:1285" name="Divider" x="0" y="338" width="240" height="1" />
+        <frame id="74:1286" name="Support navigation" x="0" y="363" width="240" height="112">
+          <frame id="74:1287" name="Account menu item" x="0" y="0" width="240" height="52">
+            <frame id="74:1395" name="circle-help" x="16" y="16" width="20" height="20" />
+            <text id="74:1289" name="Menu label" x="48" y="16" width="176" height="20" />
+          </frame>
+          <frame id="74:1290" name="Account menu item" x="0" y="60" width="240" height="52">
+            <frame id="74:1398" name="log-out" x="16" y="16" width="20" height="20" />
+            <text id="74:1292" name="Menu label" x="48" y="16" width="176" height="20" />
+          </frame>
+        </frame>
+        <frame id="74:1293" name="Campus community note" x="0" y="499" width="240" height="158">
+          <frame id="74:1401" name="graduation-cap" x="20" y="20" width="26" height="26" />
+          <text id="74:1295" name="Community title" x="20" y="58" width="200" height="20" />
+          <text id="74:1296" name="Community description" x="20" y="90" width="200" height="48" />
+        </frame>
+      </frame>
+      <frame id="74:1297" name="Profile content" x="336" y="32" width="1066" height="909">
+        <frame id="74:1298" name="Welcome" x="0" y="0" width="1066" height="92">
+          <text id="74:1299" name="Breadcrumb" x="0" y="0" width="162" height="16" />
+          <text id="74:1300" name="Greeting" x="0" y="24" width="1066" height="40" />
+          <text id="74:1301" name="Introduction" x="0" y="72" width="1066" height="20" />
+        </frame>
+        <frame id="74:1302" name="Profile information" x="0" y="116" width="1066" height="227">
+          <frame id="74:1303" name="Profile identity" x="28" y="28" width="1010" height="76">
+            <frame id="74:1304" name="Profile avatar" x="0" y="0" width="76" height="76">
+              <text id="74:1305" name="Initials" x="24" y="20.5" width="28" height="35" />
+            </frame>
+            <frame id="74:1306" name="Identity" x="96" y="9" width="773" height="58">
+              <text id="74:1307" name="Username" x="0" y="0" width="773" height="32" />
+              <text id="74:1308" name="Email" x="0" y="38" width="773" height="20" />
+            </frame>
+            <frame id="74:1309" name="Edit profile button" x="889" y="17" width="121" height="42">
+              <frame id="74:1404" name="pencil" x="16" y="13" width="16" height="16" />
+              <text id="74:1311" name="Edit label" x="40" y="11" width="65" height="20" />
+            </frame>
+          </frame>
+          <frame id="74:1312" name="Divider" x="28" y="128" width="1010" height="1" />
+          <frame id="74:1313" name="Account details" x="28" y="153" width="1010" height="46">
+            <frame id="74:1314" name="Profile detail" x="0" y="0" width="489" height="46">
+              <text id="74:1315" name="Field label" x="0" y="0" width="95" height="16" />
+              <frame id="74:1316" name="Field value" x="0" y="26" width="120" height="20">
+                <frame id="74:1407" name="user-round" x="0" y="1" width="18" height="18" />
+                <text id="74:1318" name="Value" x="28" y="0" width="92" height="20" />
+              </frame>
+            </frame>
+            <frame id="74:1319" name="Profile detail" x="521" y="0" width="489" height="46">
+              <text id="74:1320" name="Field label" x="0" y="0" width="78" height="16" />
+              <frame id="74:1321" name="Field value" x="0" y="26" width="246" height="20">
+                <frame id="74:1410" name="mail" x="0" y="1" width="18" height="18" />
+                <text id="74:1323" name="Value" x="28" y="0" width="218" height="20" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="74:1324" name="My orders" x="0" y="367" width="1066" height="298">
+          <frame id="74:1325" name="Orders heading" x="28" y="28" width="1010" height="54">
+            <frame id="74:1326" name="Orders symbol" x="0" y="3" width="48" height="48">
+              <frame id="74:1413" name="package" x="11" y="11" width="26" height="26" />
+            </frame>
+            <frame id="74:1328" name="Orders introduction" x="64" y="0" width="718" height="54">
+              <text id="74:1329" name="Section title" x="0" y="0" width="133" height="28" />
+              <text id="74:1330" name="Section description" x="0" y="34" width="718" height="20" />
+            </frame>
+            <instance id="74:1331" name="Primary action" x="798" y="3" width="212" height="48" />
+          </frame>
+          <frame id="74:1334" name="Order preview" x="28" y="106" width="1010" height="164">
+            <frame id="74:1335" name="Order preview header" x="20" y="20" width="970" height="28">
+              <text id="74:1336" name="Preview label" x="0" y="6" width="160" height="16" />
+              <instance id="74:1337" name="Completed order status" x="865" y="0" width="105" height="28" />
+            </frame>
+            <frame id="74:1339" name="Order summary" x="20" y="64" width="970" height="80">
+              <rounded-rectangle id="74:1340" name="Product photo" x="0" y="0" width="80" height="80" />
+              <frame id="74:1341" name="Product information" x="98" y="4" width="748" height="72">
+                <text id="74:1342" name="Product name" x="0" y="0" width="748" height="24" />
+                <text id="74:1343" name="Order date" x="0" y="32" width="748" height="16" />
+                <text id="74:1344" name="Rental details" x="0" y="56" width="122" height="16" />
+              </frame>
+              <frame id="74:1345" name="Order total" x="864" y="0" width="106" height="80">
+                <text id="74:1346" name="Total label" x="46" y="0" width="60" height="16" />
+                <text id="74:1347" name="Total amount" x="0" y="24" width="106" height="28" />
+                <frame id="74:1348" name="Text action" x="6" y="60" width="100" height="20">
+                  <text id="74:1349" name="Label" x="0" y="0" width="74" height="20" />
+                  <frame id="74:1416" name="arrow-right" x="82" y="1" width="18" height="18" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="74:1351" name="Account utilities" x="0" y="689" width="1066" height="180">
+          <frame id="74:1352" name="Account utility" x="0" y="0" width="521" height="180">
+            <frame id="74:1353" name="Utility title" x="24" y="24" width="473" height="40">
+              <frame id="74:1354" name="Utility symbol" x="0" y="0" width="40" height="40">
+                <frame id="74:1419" name="lock-keyhole" x="10" y="10" width="20" height="20" />
+              </frame>
+              <text id="74:1356" name="Title" x="52" y="8" width="124" height="24" />
+            </frame>
+            <text id="74:1357" name="Description" x="24" y="80" width="473" height="40" />
+            <frame id="74:1358" name="Text action" x="24" y="136" width="141" height="20">
+              <text id="74:1359" name="Label" x="0" y="0" width="115" height="20" />
+              <frame id="74:1422" name="arrow-right" x="123" y="1" width="18" height="18" />
+            </frame>
+          </frame>
+          <frame id="74:1361" name="Account utility" x="545" y="0" width="521" height="180">
+            <frame id="74:1362" name="Utility title" x="24" y="24" width="473" height="40">
+              <frame id="74:1363" name="Utility symbol" x="0" y="0" width="40" height="40">
+                <frame id="74:1425" name="circle-help" x="10" y="10" width="20" height="20" />
+              </frame>
+              <text id="74:1365" name="Title" x="52" y="8" width="122" height="24" />
+            </frame>
+            <text id="74:1366" name="Description" x="24" y="80" width="473" height="40" />
+            <frame id="74:1367" name="Text action" x="24" y="136" width="184" height="20">
+              <text id="74:1368" name="Label" x="0" y="0" width="158" height="20" />
+              <frame id="74:1428" name="arrow-right" x="166" y="1" width="18" height="18" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="74:1370" name="Account note" x="0" y="893" width="331" height="16" />
+      </frame>
+    </frame>
+    <frame id="74:1371" name="Chat launcher" x="1248" y="1029" width="162" height="48">
+      <frame id="74:1431" name="messages-square" x="16" y="13" width="22" height="22" />
+      <instance id="74:1373" name="Primary action" x="38" y="0" width="124" height="48" />
+    </frame>
+  </frame>
+  <frame id="36:562" name="BERANDA" x="-1758" y="-2281" width="1442" height="1105">
+    <frame id="36:568" name="Frame 14" x="400" y="543" width="100" height="100" />
+    <frame id="36:570" name="Frame 31" x="152" y="582" width="364" height="58">
+      <frame id="36:571" name="Group 9" x="8" y="8" width="348" height="40">
+        <text id="36:572" name="Lihat lainnya" x="8" y="8" width="348" height="16" />
+        <text id="36:573" name="Paket Bundling Hemat Mahasiswa Kos" x="8" y="28" width="348" height="20" />
+      </frame>
+    </frame>
+    <frame id="52:751" name="Frame 1090" x="539" y="584" width="364" height="58">
+      <frame id="52:752" name="Group 9" x="8" y="8" width="348" height="40">
+        <text id="52:753" name="Lihat lainnya" x="8" y="8" width="348" height="16" />
+        <text id="52:754" name="Paket Bundling Hemat Mahasiswa Kos" x="8" y="28" width="348" height="20" />
+      </frame>
+    </frame>
+    <frame id="52:756" name="Frame 1091" x="926" y="582" width="364" height="58">
+      <frame id="52:757" name="Group 9" x="8" y="8" width="348" height="40">
+        <text id="52:758" name="Lihat lainnya" x="8" y="8" width="348" height="16" />
+        <text id="52:759" name="Paket Bundling Hemat Mahasiswa Kos" x="8" y="28" width="348" height="20" />
+      </frame>
+    </frame>
+    <frame id="36:587" name="Frame 40" x="160" y="664" width="554" height="104">
+      <frame id="36:588" name="Frame 38" x="0" y="0" width="269" height="104">
+        <frame id="36:589" name="Frame 36" x="167" y="10" width="92" height="18">
+          <text id="36:590" name="Lebih Hemat" x="13" y="1" width="66" height="16" />
+        </frame>
+        <frame id="36:591" name="Frame 37" x="8" y="22" width="261" height="66">
+          <text id="36:592" name="Paket Ospek Lengkap" x="0" y="0" width="261" height="20" />
+          <text id="36:593" name="Kemeja + Celana + Dasi" x="0" y="23" width="261" height="16" />
+          <frame id="36:594" name="Group 18" x="0" y="42" width="175" height="20">
+            <frame id="36:595" name="Group 16" x="0" y="42" width="87" height="20">
+              <text id="36:596" name="Rp 120.000" x="0" y="42" width="87" height="20" />
+            </frame>
+            <frame id="36:597" name="Group 17" x="88" y="46" width="87" height="16">
+              <text id="36:598" name="Rp 150.000" x="88" y="46" width="87" height="16" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="36:599" name="Frame 39" x="285" y="1" width="269" height="103">
+        <frame id="36:600" name="Frame 36" x="178" y="0" width="91" height="18">
+          <text id="36:601" name="Lebih Hemat" x="12.5" y="1" width="66" height="16" />
+        </frame>
+        <frame id="36:602" name="Frame 37" x="8" y="22" width="261" height="66">
+          <text id="36:603" name="Paket Kamar Kos Baru" x="0" y="0" width="261" height="20" />
+          <text id="36:604" name="Kasur Lipat + Kipas Angin" x="0" y="23" width="261" height="16" />
+          <frame id="36:605" name="Group 18" x="0" y="42" width="175" height="20">
+            <frame id="36:606" name="Group 16" x="0" y="42" width="87" height="20">
+              <text id="36:607" name="Rp 200.000" x="0" y="42" width="87" height="20" />
+            </frame>
+            <frame id="36:608" name="Group 17" x="88" y="46" width="87" height="16">
+              <text id="36:609" name="Rp 150.000" x="88" y="46" width="87" height="16" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="52:726" name="Frame 1089" x="730" y="664" width="554" height="104">
+      <frame id="52:727" name="Frame 38" x="0" y="0" width="269" height="104">
+        <frame id="52:728" name="Frame 36" x="178" y="0" width="91" height="18">
+          <text id="52:729" name="Lebih Hemat" x="12.5" y="1" width="66" height="16" />
+        </frame>
+        <frame id="52:730" name="Frame 37" x="8" y="22" width="261" height="66">
+          <text id="52:731" name="Paket Ospek Lengkap" x="0" y="0" width="261" height="20" />
+          <text id="52:732" name="Kemeja + Celana + Dasi" x="0" y="23" width="261" height="16" />
+          <frame id="52:733" name="Group 18" x="0" y="42" width="175" height="20">
+            <frame id="52:734" name="Group 16" x="0" y="42" width="87" height="20">
+              <text id="52:735" name="Rp 120.000" x="0" y="42" width="87" height="20" />
+            </frame>
+            <frame id="52:736" name="Group 17" x="88" y="46" width="87" height="16">
+              <text id="52:737" name="Rp 150.000" x="88" y="46" width="87" height="16" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="52:738" name="Frame 39" x="285" y="1" width="269" height="103">
+        <frame id="52:739" name="Frame 36" x="178" y="0" width="91" height="18">
+          <text id="52:740" name="Lebih Hemat" x="12.5" y="1" width="66" height="16" />
+        </frame>
+        <frame id="52:741" name="Frame 37" x="8" y="22" width="261" height="66">
+          <text id="52:742" name="Paket Kamar Kos Baru" x="0" y="0" width="261" height="20" />
+          <text id="52:743" name="Kasur Lipat + Kipas Angin" x="0" y="23" width="261" height="16" />
+          <frame id="52:744" name="Group 18" x="0" y="42" width="175" height="20">
+            <frame id="52:745" name="Group 16" x="0" y="42" width="87" height="20">
+              <text id="52:746" name="Rp 200.000" x="0" y="42" width="87" height="20" />
+            </frame>
+            <frame id="52:747" name="Group 17" x="88" y="46" width="87" height="16">
+              <text id="52:748" name="Rp 150.000" x="88" y="46" width="87" height="16" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <instance id="36:616" name="Frame 692" x="370" y="472" width="362" height="101" />
+    <instance id="36:617" name="Frame 1084" x="755" y="472" width="362" height="101" />
+    <instance id="36:618" name="boxicons:tv-filled" x="876" y="489" width="29" height="29" />
+    <instance id="36:629" name="reicon:cosmetic" x="972" y="491" width="27" height="27" />
+    <frame id="36:630" name="Frame 33" x="160" y="779" width="364" height="242">
+      <frame id="36:631" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="36:632" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="36:633" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="36:634" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="36:635" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="36:636" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="36:637" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="36:638" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="36:639" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="36:640" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="36:643" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="36:644" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="36:645" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="36:646" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="36:647" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="36:648" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="36:649" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="36:650" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="36:651" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="36:652" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="52:700" name="Frame 1088" x="918" y="779" width="364" height="242">
+      <frame id="52:701" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="52:702" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="52:703" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="52:704" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="52:705" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="52:706" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="52:707" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="52:708" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="52:709" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="52:710" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="52:713" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="52:714" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="52:715" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="52:716" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="52:717" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="52:718" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="52:719" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="52:720" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="52:721" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="52:722" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="52:675" name="Frame 31" x="540" y="779" width="173" height="242">
+      <frame id="52:676" name="Group 17" x="0" y="0" width="173" height="242">
+        <rounded-rectangle id="52:677" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+        <rounded-rectangle id="52:678" name="image 5" x="0" y="0" width="173" height="173" />
+      </frame>
+      <frame id="52:679" name="Frame 28" x="8" y="177" width="159" height="60">
+        <text id="52:680" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+        <text id="52:681" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+        <frame id="52:682" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+          <text id="52:683" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+          <frame id="52:684" name="Group" x="0" y="44" width="5" height="16" />
+        </frame>
+      </frame>
+    </frame>
+    <frame id="52:687" name="Frame 32" x="729" y="779" width="173" height="242">
+      <frame id="52:688" name="Group 17" x="0" y="0" width="173" height="242">
+        <rounded-rectangle id="52:689" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+        <rounded-rectangle id="52:690" name="image 6" x="0" y="0" width="173" height="177" />
+      </frame>
+      <frame id="52:691" name="Frame 28" x="8" y="177" width="159" height="60">
+        <text id="52:692" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+        <text id="52:693" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+        <frame id="52:694" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+          <text id="52:695" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+          <frame id="52:696" name="Group" x="0" y="44" width="5" height="16" />
+        </frame>
+      </frame>
+    </frame>
+    <instance id="36:2797" name="dashicons:food" x="783" y="493" width="24" height="24" />
+    <rounded-rectangle id="52:794" name="Rectangle 26" x="152" y="160" width="1138" height="288" />
+  </frame>
+  <instance id="36:656" name="dashicons:food" x="-156" y="-290" width="24" height="24" />
+  <frame id="36:865" name="KATALOG" x="-72" y="-2281" width="1442" height="1105">
+    <frame id="36:871" name="Frame 14" x="25" y="180" width="100" height="100" />
+    <frame id="61:683" name="Frame 36" x="25" y="180" width="100" height="100" />
+    <frame id="61:691" name="Frame 10" x="23" y="120" width="1393" height="56">
+      <frame id="61:692" name="Group 9" x="8" y="8" width="1377" height="36">
+        <text id="61:693" name="Fashion Kampus" x="8" y="24" width="1377" height="20" />
+        <text id="61:694" name="Katalog" x="8" y="8" width="585.4312133789062" height="16" />
+      </frame>
+    </frame>
+    <frame id="61:986" name="Frame 35" x="921" y="190" width="364" height="242">
+      <frame id="61:987" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:988" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:989" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:990" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:991" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:992" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:993" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:994" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:995" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:996" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:999" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1000" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1001" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1002" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1003" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1004" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1005" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1006" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1007" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1008" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1013" name="Frame 37" x="921" y="190" width="364" height="242">
+      <frame id="61:1014" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1015" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1016" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1017" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1018" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1019" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1020" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1021" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1022" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1023" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1026" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1027" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1028" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1029" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1030" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1031" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1032" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1033" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1034" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1035" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1039" name="Frame 38" x="921" y="466" width="364" height="242">
+      <frame id="61:1040" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1041" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1042" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1043" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1044" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1045" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1046" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1047" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1048" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1049" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1052" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1053" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1054" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1055" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1056" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1057" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1058" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1059" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1060" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1061" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1065" name="Frame 39" x="921" y="742" width="364" height="242">
+      <frame id="61:1066" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1067" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1068" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1069" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1070" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1071" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1072" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1073" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1074" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1075" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1078" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1079" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1080" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1081" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1082" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1083" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1084" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1085" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1086" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1087" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1166" name="Frame 40" x="539" y="190" width="364" height="242">
+      <frame id="61:1167" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1168" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1169" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1170" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1171" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1172" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1173" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1174" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1175" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1176" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1179" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1180" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1181" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1182" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1183" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1184" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1185" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1186" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1187" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1188" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1191" name="Frame 41" x="539" y="190" width="364" height="242">
+      <frame id="61:1192" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1193" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1194" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1195" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1196" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1197" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1198" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1199" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1200" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1201" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1204" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1205" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1206" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1207" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1208" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1209" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1210" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1211" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1212" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1213" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1216" name="Frame 42" x="539" y="466" width="364" height="242">
+      <frame id="61:1217" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1218" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1219" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1220" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1221" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1222" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1223" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1224" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1225" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1226" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1229" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1230" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1231" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1232" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1233" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1234" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1235" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1236" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1237" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1238" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1241" name="Frame 43" x="539" y="742" width="364" height="242">
+      <frame id="61:1242" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1243" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1244" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1245" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1246" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1247" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1248" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1249" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1250" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1251" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1254" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1255" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1256" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1257" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1258" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1259" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1260" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1261" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1262" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1263" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1325" name="Frame 44" x="157" y="190" width="364" height="242">
+      <frame id="61:1326" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1327" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1328" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1329" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1330" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1331" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1332" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1333" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1334" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1335" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1338" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1339" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1340" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1341" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1342" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1343" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1344" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1345" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1346" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1347" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1350" name="Frame 45" x="157" y="190" width="364" height="242">
+      <frame id="61:1351" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1352" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1353" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1354" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1355" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1356" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1357" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1358" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1359" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1360" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1363" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1364" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1365" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1366" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1367" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1368" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1369" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1370" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1371" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1372" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1375" name="Frame 46" x="157" y="466" width="364" height="242">
+      <frame id="61:1376" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1377" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1378" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1379" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1380" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1381" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1382" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1383" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1384" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1385" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1388" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1389" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1390" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1391" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1392" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1393" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1394" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1395" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1396" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1397" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1400" name="Frame 47" x="157" y="742" width="364" height="242">
+      <frame id="61:1401" name="Frame 31" x="0" y="0" width="173" height="242">
+        <frame id="61:1402" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1403" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1404" name="image 5" x="0" y="0" width="173" height="173" />
+        </frame>
+        <frame id="61:1405" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1406" name="Sepatu Pantofel Uk 38" x="0" y="0" width="159" height="16" />
+          <text id="61:1407" name="Rp 33.000" x="0" y="20" width="159" height="20" />
+          <frame id="61:1408" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1409" name="Soekarno - Hatta" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1410" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="61:1413" name="Frame 32" x="189" y="0" width="173" height="242">
+        <frame id="61:1414" name="Group 17" x="0" y="0" width="173" height="242">
+          <rounded-rectangle id="61:1415" name="Rectangle 3" x="0" y="0" width="173" height="242" />
+          <rounded-rectangle id="61:1416" name="image 6" x="0" y="0" width="173" height="177" />
+        </frame>
+        <frame id="61:1417" name="Frame 28" x="8" y="177" width="159" height="60">
+          <text id="61:1418" name="Rok Hitam M" x="0" y="0" width="159" height="16" />
+          <text id="61:1419" name="Rp 45.900" x="0" y="20" width="159" height="20" />
+          <frame id="61:1420" name="Group 16" x="0" y="44" width="158.52694702148438" height="16">
+            <text id="61:1421" name="Sigura-gura" x="11" y="44" width="147.52694702148438" height="16" />
+            <frame id="61:1422" name="Group" x="0" y="44" width="5" height="16" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="61:1093" name="Menu 5" x="1342" y="22" width="103.09212493896484" height="29">
+      <frame id="61:1094" name="li:user" x="35.0460205078125" y="0" width="33" height="29" />
+    </frame>
+    <frame id="86:662" name="Marketplace navigation" x="0" y="0" width="1442" height="80">
+      <frame id="86:663" name="Marketplace links" x="40" y="30" width="191" height="20">
+        <text id="86:666" name="Catalog link" x="0" y="0" width="191" height="20" />
+      </frame>
+      <frame id="96:741" name="Group 19" x="410" y="20" width="497" height="40">
+        <rounded-rectangle id="96:742" name="Rectangle 27" x="410" y="20" width="497" height="40" />
+        <instance id="96:743" name="_Magnifyingglass" x="416" y="26" width="28.69572639465332" height="28.69572639465332" />
+        <text id="96:744" name="Placeholder Label" x="446" y="28" width="262.3609313964844" height="25" />
+      </frame>
+      <frame id="86:667" name="Account navigation" x="1086" y="22" width="316" height="36">
+        <frame id="86:668" name="Return to shopping" x="0" y="10" width="102" height="16">
+          <frame id="61:688" name="Frame 10" x="0" y="0" width="102" height="16">
+            <vector id="61:689" name="Vector" x="9" y="0" width="12" height="16" />
+            <text id="61:690" name="Lowokwaru" x="26" y="0" width="76" height="16" />
+          </frame>
+        </frame>
+        <frame id="86:672" name="Navigation divider" x="126" y="4" width="1" height="28" />
+        <frame id="86:673" name="Current account" x="151" y="0" width="165" height="36">
+          <frame id="86:674" name="Profile avatar" x="0" y="0" width="36" height="36">
+            <text id="86:675" name="Initials" x="11" y="9" width="14" height="18" />
+          </frame>
+          <text id="86:676" name="Username" x="46" y="8" width="93" height="20" />
+          <frame id="86:677" name="chevron-down" x="149" y="10" width="16" height="16" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="36:1264" name="DETAIL PRODUK" x="-72" y="-973" width="1442" height="1105">
+    <frame id="70:471" name="navbar" x="0" y="0" width="1442" height="64">
+      <frame id="70:472" name="Frame" x="40" y="4" width="202" height="56">
+        <instance id="70:473" name="back-btn" x="0" y="0" width="56" height="56" />
+        <text id="70:476" name="Detail Barang" x="72" y="14" width="130" height="28" />
+      </frame>
+    </frame>
+    <frame id="70:482" name="main-content" x="40" y="88" width="1362" height="624">
+      <frame id="70:483" name="left-col" x="0" y="0" width="580" height="624">
+        <frame id="70:484" name="main-image-container" x="0" y="0" width="580" height="520">
+          <rounded-rectangle id="70:485" name="image 3" x="50" y="24" width="480" height="472" />
+        </frame>
+        <frame id="70:486" name="thumbnails" x="0" y="536" width="580" height="88">
+          <frame id="70:487" name="thumb-1" x="0" y="0" width="88" height="88">
+            <rounded-rectangle id="70:488" name="Rectangle" x="6" y="6" width="76" height="76" />
+          </frame>
+          <frame id="70:489" name="thumb-2" x="100" y="0" width="88" height="88">
+            <rounded-rectangle id="70:490" name="Rectangle" x="6" y="6" width="76" height="76" />
+          </frame>
+          <frame id="70:491" name="thumb-3" x="200" y="0" width="88" height="88">
+            <rounded-rectangle id="70:492" name="Rectangle" x="6" y="6" width="76" height="76" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="70:493" name="right-col" x="620" y="0" width="742" height="544">
+        <frame id="70:494" name="product-info" x="0" y="0" width="742" height="154">
+          <text id="70:495" name="product-name" x="0" y="0" width="742" height="32" />
+          <text id="70:496" name="product-price" x="0" y="44" width="742" height="40" />
+          <frame id="70:497" name="tags-row" x="0" y="96" width="742" height="28">
+            <frame id="70:498" name="Frame" x="0" y="0" width="109" height="28">
+              <text id="70:499" name="Kondisi: Bekas" x="12" y="6" width="85" height="16" />
+            </frame>
+            <frame id="70:500" name="Frame" x="117" y="0" width="126" height="28">
+              <text id="70:501" name="Kategori: Pakaian" x="12" y="6" width="102" height="16" />
+            </frame>
+            <frame id="70:502" name="Frame" x="251" y="0" width="64" height="28">
+              <text id="70:503" name="DIJUAL" x="12" y="6" width="40" height="16" />
+            </frame>
+          </frame>
+          <frame id="70:504" name="location-row" x="0" y="136" width="261" height="18">
+            <vector id="70:505" name="Vector" x="0" y="0" width="14" height="18" />
+            <text id="70:506" name="Lokasi COD: Area Sumbersari / Kampus UB" x="20" y="1" width="241" height="16" />
+          </frame>
+        </frame>
+        <frame id="70:477" name="Frame" x="0" y="178" width="92" height="40">
+          <frame id="70:478" name="Frame" x="0" y="0" width="40" height="40">
+            <frame id="70:563" name="share" x="8" y="8" width="24" height="24" />
+          </frame>
+          <frame id="70:480" name="Frame" x="52" y="0" width="40" height="40">
+            <frame id="70:569" name="heart" x="8" y="8" width="24" height="24" />
+          </frame>
+        </frame>
+        <rounded-rectangle id="70:507" name="divider-1" x="0" y="242" width="742" height="1" />
+        <frame id="70:508" name="description-section" x="0" y="267" width="742" height="64">
+          <text id="70:509" name="desc-title" x="0" y="0" width="131" height="24" />
+          <text id="70:510" name="desc-body" x="0" y="32" width="742" height="32" />
+        </frame>
+        <rounded-rectangle id="70:511" name="divider-2" x="0" y="355" width="742" height="1" />
+        <frame id="70:512" name="seller-card" x="0" y="380" width="742" height="88">
+          <ellipse id="70:513" name="avatar" x="16" y="16" width="56" height="56" />
+          <frame id="70:514" name="seller-meta" x="88" y="24" width="549" height="40">
+            <text id="70:515" name="Cantika Pramesthi (FEB &#39;22)" x="0" y="0" width="185" height="20" />
+            <text id="70:516" name="Trust Score: 95/100 (Excellent)" x="0" y="24" width="172" height="16" />
+          </frame>
+          <frame id="70:517" name="chat-btn" x="653" y="24" width="73" height="40">
+            <text id="70:518" name="Chat" x="20" y="10" width="33" height="20" />
+          </frame>
+        </frame>
+        <frame id="70:519" name="action-buttons" x="0" y="492" width="742" height="52">
+          <frame id="70:520" name="wishlist-btn" x="0" y="0.5" width="51" height="51">
+            <frame id="70:521" name="Group" x="14" y="14" width="23" height="23" />
+          </frame>
+          <frame id="70:526" name="beli-btn" x="63" y="0" width="679" height="52">
+            <text id="70:527" name="Beli" x="325" y="14" width="29" height="24" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="70:528" name="bottom-section" x="40" y="720" width="1362" height="309">
+      <frame id="70:529" name="store-card" x="0" y="0" width="580" height="254">
+        <text id="70:530" name="Profil Toko" x="24" y="24" width="81" height="24" />
+        <rounded-rectangle id="70:531" name="store-divider" x="24" y="64" width="532" height="1" />
+        <frame id="70:532" name="Frame" x="24" y="81" width="532" height="64">
+          <ellipse id="70:533" name="Ellipse" x="0" y="0" width="64" height="64" />
+          <frame id="70:534" name="Frame" x="80" y="11" width="452" height="42">
+            <text id="70:535" name="Cantika Pramesthi" x="0" y="0" width="123" height="20" />
+            <text id="70:536" name="FEB &#39;22" x="0" y="26" width="43" height="16" />
+          </frame>
+        </frame>
+        <frame id="70:542" name="Frame" x="24" y="161" width="532" height="69">
+          <frame id="70:543" name="Frame" x="0" y="0" width="532" height="69">
+            <text id="70:544" name="95" x="253.5" y="12" width="25" height="25" />
+            <text id="70:545" name="Trust Score" x="234" y="41" width="64" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="70:552" name="reviews-section" x="620" y="0" width="742" height="309">
+        <frame id="70:553" name="Frame" x="24" y="24" width="694" height="24">
+          <text id="70:554" name="Ulasan Produk" x="0" y="0" width="111" height="24" />
+          <text id="70:555" name="Lihat Semua" x="623" y="4" width="71" height="16" />
+        </frame>
+        <rounded-rectangle id="70:556" name="review-divider" x="24" y="64" width="694" height="1" />
+        <frame id="70:557" name="Frame" x="24" y="81" width="694" height="204">
+          <frame id="70:558" name="Frame" x="315" y="32" width="64" height="64">
+            <frame id="70:566" name="message-circle" x="16" y="16" width="32" height="32" />
+          </frame>
+          <text id="70:560" name="Belum Ada Ulasan" x="287" y="108" width="120" height="20" />
+          <text id="70:561" name="Produk ini belum memiliki ulasan. Jadilah yang pertama memberikan ulasan setelah pembelian." x="187" y="140" width="320" height="32" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="36:1364" name="Android Compact - 89" x="2049" y="-1078" width="1643" height="951">
+    <frame id="36:1384" name="Frame 817" x="77" y="125" width="1051" height="119.6036605834961">
+      <instance id="36:1385" name="Search History" x="0" y="0" width="290.8498229980469" height="39.25185775756836" />
+      <instance id="36:1387" name="Frame 817" x="0" y="39.25185775756836" width="290.8498229980469" height="38.6083869934082" />
+      <instance id="36:1386" name="Frame 816" x="0" y="77.86024475097656" width="290.8498229980469" height="39.25185775756836" />
+      <instance id="36:1388" name="Frame 818" x="0" y="117.11210632324219" width="290.8498229980469" height="39.25185775756836" />
+    </frame>
+    <frame id="47:628" name="Menu List" x="0" y="120.7403564453125" width="76.92952728271484" height="287.2596435546875">
+      <frame id="47:629" name="Menu 1" x="16.61798095703125" y="11.078535079956055" width="43.693843841552734" height="64.54460144042969">
+        <instance id="47:630" name="li:home" x="5.2290802001953125" y="0" width="33.23568344116211" height="33.23568344116211" />
+        <text id="47:631" name="Home" x="-3.153078079223633" y="41.54460525512695" width="50" height="23" />
+      </frame>
+      <frame id="47:632" name="Menu 2" x="16.617841720581055" y="78.3927993774414" width="43.693843841552734" height="63.159786224365234">
+        <frame id="47:633" name="Group" x="5.921389102935791" y="-0.000025246426957892254" width="31.85086441040039" height="31.85086441040039" />
+        <text id="47:636" name="Chat" x="1.3469219207763672" y="40.159786224365234" width="41" height="23" />
+      </frame>
+      <frame id="47:637" name="Menu 4" x="16.617841720581055" y="144.32223510742188" width="43.693843841552734" height="64.54460144042969">
+        <vector id="47:638" name="Vector" x="5.229245662689209" y="0.000016037827663240023" width="33.23568344116211" height="33.23568344116211" />
+        <text id="47:639" name="Orders" x="-6.153078079223633" y="41.54460525512695" width="56" height="23" />
+      </frame>
+      <frame id="47:640" name="Menu 5" x="16.617841720581055" y="211.636474609375" width="43.693843841552734" height="64.54460144042969">
+        <instance id="47:641" name="li:user" x="5.2290802001953125" y="0" width="33.23568344116211" height="33.23568344116211" />
+        <text id="47:642" name="Profile" x="-3.653078079223633" y="41.54460525512695" width="51" height="23" />
+      </frame>
+    </frame>
+    <instance id="60:464" name="&amp; SearchBar" x="19" y="82" width="1596" height="36" />
+    <frame id="60:465" name="Frame 826" x="14" y="22" width="1601" height="30">
+      <frame id="60:466" name="Group 8" x="0" y="0" width="28.200031280517578" height="30" />
+      <frame id="60:475" name="Frame 10" x="1499" y="7" width="102" height="16">
+        <vector id="60:476" name="Vector" x="0" y="0" width="12" height="16" />
+        <text id="60:477" name="Lowokwaru" x="17" y="0" width="76" height="16" />
+      </frame>
+    </frame>
+  </frame>
+  <frame id="36:1390" name="Android Compact - 90" x="2049" y="135" width="1643" height="951">
+    <instance id="36:1396" name="&amp; SearchBar" x="23" y="80" width="1596" height="36" />
+    <frame id="36:1397" name="Frame 26" x="18" y="20" width="1601" height="30">
+      <frame id="36:1398" name="Group 8" x="0" y="0" width="28.200031280517578" height="30" />
+      <frame id="36:1407" name="Frame 10" x="1499" y="7" width="102" height="16">
+        <vector id="36:1408" name="Vector" x="0" y="0" width="12" height="16" />
+        <text id="36:1409" name="Lowokwaru" x="17" y="0" width="76" height="16" />
+      </frame>
+    </frame>
+    <frame id="36:1410" name="Frame 825" x="719" y="447" width="206" height="65">
+      <instance id="36:1411" name="Component 8" x="73" y="0" width="60" height="28" />
+      <text id="36:1412" name="Sedang mencari..." x="0" y="36" width="206" height="24" />
+    </frame>
+    <frame id="57:629" name="floating-chat-widget" x="1079" y="424" width="420" height="423">
+      <frame id="57:630" name="chat-header" x="16" y="16" width="388" height="35">
+        <frame id="57:631" name="chat-identity" x="0" y="0" width="120" height="35">
+          <frame id="57:632" name="status" x="0" y="3.5" width="28" height="28">
+            <vector id="57:633" name="Vector" x="7" y="7" width="14" height="14" />
+          </frame>
+          <frame id="57:634" name="Frame" x="38" y="0" width="82" height="35">
+            <text id="57:635" name="FilkomShop" x="0" y="0" width="82" height="18" />
+            <frame id="57:636" name="Frame" x="0" y="20" width="52" height="15">
+              <frame id="57:637" name="Frame" x="0" y="3.5" width="8" height="8" />
+              <text id="57:638" name="Online" x="14" y="0" width="38" height="15" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="57:639" name="chat-actions" x="316" y="1.5" width="72" height="32">
+          <frame id="57:640" name="btn-minimize" x="0" y="0" width="32" height="32">
+            <frame id="57:727" name="minus" x="8" y="8" width="16" height="16" />
+          </frame>
+          <frame id="57:642" name="btn-close" x="40" y="0" width="32" height="32">
+            <frame id="57:730" name="x" x="8" y="8" width="16" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="57:644" name="chat-body" x="16" y="63" width="388" height="288">
+        <instance id="57:645" name="product-bubble" x="0" y="4" width="388" height="116" />
+        <frame id="57:653" name="chat-row" x="0" y="132" width="388" height="60">
+          <instance id="57:654" name="bot-message" x="0" y="0" width="280" height="60" />
+        </frame>
+        <frame id="57:671" name="chat-row" x="0" y="204" width="388" height="80">
+          <instance id="57:672" name="user-message" x="0" y="0" width="280" height="80" />
+        </frame>
+      </frame>
+      <frame id="57:689" name="chat-input" x="16" y="363" width="388" height="44">
+        <frame id="57:733" name="smile" x="12" y="13" width="18" height="18" />
+        <text id="57:691" name="Type a message…" x="40" y="14" width="308" height="16" />
+        <frame id="57:736" name="send" x="358" y="13" width="18" height="18" />
+      </frame>
+    </frame>
+  </frame>
+  <frame id="36:1414" name="Android Compact - 91" x="3862" y="132" width="1485" height="951">
+    <frame id="45:886" name="&amp; SearchBar" x="10" y="64" width="1466" height="36">
+      <frame id="45:887" name="content                                                                                                                                                                                                                         &amp;" x="0" y="0" width="1466" height="36">
+        <instance id="45:888" name="_Magnifyingglass" x="8" y="4" width="28" height="28" />
+        <text id="45:889" name="Placeholder Label" x="36" y="6" width="1422" height="24" />
+      </frame>
+    </frame>
+    <frame id="36:1421" name="Frame 26" x="10" y="11" width="1475" height="30">
+      <frame id="36:1422" name="Group 8" x="0" y="0" width="28.200031280517578" height="30" />
+      <frame id="36:1431" name="Frame 10" x="1373" y="7" width="102" height="16">
+        <vector id="36:1432" name="Vector" x="0" y="0" width="12" height="16" />
+        <text id="36:1433" name="Lowokwaru" x="17" y="0" width="76" height="16" />
+      </frame>
+    </frame>
+    <frame id="36:1434" name="Frame 826" x="640" y="576" width="206" height="48">
+      <text id="36:1436" name="Yah, barangnya belum ada nih, Yuk cari yang lain!" x="0" y="0" width="206" height="48" />
+    </frame>
+    <rounded-rectangle id="36:1435" name="Untitled8_20260708190219 1" x="640" y="362" width="206" height="206" />
+  </frame>
+  <frame id="36:2130" name="Web Landscape - Pesanan Saya" x="-4998" y="1023" width="1513" height="1768">
+    <frame id="64:499" name="pesanan-saya-card" x="48" y="48" width="1417" height="1672">
+      <frame id="64:674" name="card-header" x="32" y="32" width="1353" height="56">
+        <frame id="64:675" name="title-group" x="0" y="0" width="232" height="56">
+          <instance id="64:676" name="Back Button" x="0" y="0" width="56" height="56" />
+          <text id="64:679" name="Pesanan Saya" x="72" y="12" width="160" height="32" />
+        </frame>
+      </frame>
+      <frame id="67:517" name="order-list" x="32" y="112" width="1353" height="1528">
+        <frame id="67:518" name="order-card" x="0" y="0" width="1353" height="752">
+          <frame id="67:519" name="order-header" x="24" y="24" width="1305" height="28">
+            <frame id="67:520" name="order-meta" x="0" y="2" width="442" height="24">
+              <text id="67:521" name="Pesanan Kemeja Putih" x="0" y="0" width="168" height="24" />
+              <text id="67:522" name="Dibuat pada Rabu, 23 September 2026" x="184" y="2" width="258" height="20" />
+            </frame>
+            <instance id="67:523" name="status pesanan tag" x="1200" y="0" width="105" height="28" />
+          </frame>
+          <frame id="67:525" name="order-content" x="24" y="76" width="1305" height="652">
+            <frame id="67:526" name="left-column" x="0" y="0" width="640.5" height="632">
+              <frame id="67:527" name="summary-section" x="0" y="0" width="640.5" height="264">
+                <text id="67:528" name="Ringkasan Produk" x="24" y="24" width="173" height="28" />
+                <frame id="67:529" name="summary-row" x="24" y="72" width="592.5" height="168">
+                  <rounded-rectangle id="67:530" name="Rectangle" x="0" y="4" width="160" height="160" />
+                  <frame id="67:531" name="summary-meta" x="184" y="0" width="408.5" height="168">
+                    <text id="67:532" name="Kemeja Putih - FilkomShop" x="0" y="0" width="408.5" height="28" />
+                    <frame id="67:533" name="Frame" x="0" y="40" width="408.5" height="28">
+                      <text id="67:534" name="Harga sewa" x="0" y="4" width="78" height="20" />
+                      <text id="67:535" name="Rp49.900" x="310.5" y="0" width="98" height="28" />
+                    </frame>
+                    <frame id="67:536" name="Frame" x="0" y="80" width="408.5" height="20">
+                      <text id="67:537" name="Kuantitas" x="0" y="0" width="63" height="20" />
+                      <text id="67:538" name="x1" x="395.5" y="0" width="13" height="20" />
+                    </frame>
+                    <frame id="67:539" name="Frame" x="0" y="112" width="408.5" height="20">
+                      <text id="67:540" name="Durasi sewa" x="0" y="0" width="79" height="20" />
+                      <text id="67:541" name="3 hari" x="372.5" y="0" width="36" height="20" />
+                    </frame>
+                    <frame id="67:542" name="Frame" x="0" y="144" width="408.5" height="24">
+                      <text id="67:543" name="Status sewa" x="0" y="2" width="80" height="20" />
+                      <frame id="67:544" name="Frame" x="339.5" y="0" width="69" height="24">
+                        <text id="67:545" name="Selesai" x="10" y="2" width="49" height="20" />
+                      </frame>
+                    </frame>
+                  </frame>
+                </frame>
+              </frame>
+              <frame id="67:546" name="status-section" x="0" y="288" width="640.5" height="344">
+                <text id="67:547" name="Detail &amp; Status Pesanan" x="24" y="24" width="227" height="28" />
+                <frame id="67:548" name="status-card" x="24" y="72" width="592.5" height="144">
+                  <instance id="67:549" name="Head Order Progress Bar" x="16" y="16" width="560.5" height="72" />
+                  <instance id="67:553" name="Order Progress Bar" x="16" y="104" width="560.5" height="24" />
+                </frame>
+                <frame id="67:562" name="status-meta" x="24" y="236" width="592.5" height="84">
+                  <frame id="67:563" name="Frame" x="0" y="0" width="592.5" height="20">
+                    <text id="67:564" name="Status pesanan" x="0" y="0" width="103" height="20" />
+                    <text id="67:565" name="Selesai" x="543.5" y="0" width="49" height="20" />
+                  </frame>
+                  <frame id="67:566" name="Frame" x="0" y="32" width="592.5" height="20">
+                    <text id="67:567" name="Metode pembayaran" x="0" y="0" width="140" height="20" />
+                    <text id="67:568" name="QRIS" x="557.5" y="0" width="35" height="20" />
+                  </frame>
+                  <frame id="67:569" name="Frame" x="0" y="64" width="592.5" height="20">
+                    <text id="67:570" name="Total biaya" x="0" y="0" width="70" height="20" />
+                    <text id="67:571" name="Rp 54.000" x="518.5" y="0" width="74" height="20" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+            <frame id="67:572" name="right-column" x="664.5" y="0" width="640.5" height="652">
+              <frame id="67:593" name="details-row" x="0" y="0" width="640.5" height="320">
+                <frame id="67:594" name="schedule-section" x="0" y="0" width="308.25" height="320">
+                  <text id="67:595" name="Jadwal Pesanan" x="24" y="24" width="152" height="28" />
+                  <instance id="67:596" name="tanggal pesanan card" x="24" y="72" width="260.25" height="224" />
+                </frame>
+                <frame id="67:605" name="address-section" x="332.25" y="0" width="308.25" height="318">
+                  <instance id="67:607" name="Rincian Titik Temu Card" x="24" y="24" width="260.25" height="291" />
+                </frame>
+              </frame>
+              <frame id="67:624" name="payment-section" x="0" y="344" width="640.5" height="308">
+                <text id="67:625" name="Rincian Pembayaran" x="24" y="24" width="195" height="28" />
+                <instance id="67:626" name="Rincian Pembayaran Card" x="24" y="72" width="592.5" height="212" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="67:648" name="order-card" x="0" y="776" width="1353" height="752">
+          <frame id="67:649" name="order-header" x="24" y="24" width="1305" height="28">
+            <frame id="67:650" name="order-meta" x="0" y="2" width="522" height="24">
+              <text id="67:651" name="Contoh Pesanan — Blazer Hitam" x="0" y="0" width="242" height="24" />
+              <text id="67:652" name="Dibuat pada Kamis, 24 September 2026" x="258" y="2" width="264" height="20" />
+            </frame>
+            <instance id="67:653" name="status pesanan tag" x="1200" y="0" width="105" height="28" />
+          </frame>
+          <frame id="67:655" name="order-content" x="24" y="76" width="1305" height="652">
+            <frame id="67:656" name="left-column" x="0" y="0" width="640.5" height="632">
+              <frame id="67:657" name="summary-section" x="0" y="0" width="640.5" height="264">
+                <text id="67:658" name="Ringkasan Produk" x="24" y="24" width="173" height="28" />
+                <frame id="67:659" name="summary-row" x="24" y="72" width="592.5" height="168">
+                  <rounded-rectangle id="67:660" name="Rectangle" x="0" y="4" width="160" height="160" />
+                  <frame id="67:661" name="summary-meta" x="184" y="0" width="408.5" height="168">
+                    <text id="67:662" name="Blazer Hitam - FilkomShop" x="0" y="0" width="408.5" height="28" />
+                    <frame id="67:663" name="Frame" x="0" y="40" width="408.5" height="28">
+                      <text id="67:664" name="Harga sewa" x="0" y="4" width="78" height="20" />
+                      <text id="67:665" name="Rp79.000" x="309.5" y="0" width="99" height="28" />
+                    </frame>
+                    <frame id="67:666" name="Frame" x="0" y="80" width="408.5" height="20">
+                      <text id="67:667" name="Kuantitas" x="0" y="0" width="63" height="20" />
+                      <text id="67:668" name="x1" x="395.5" y="0" width="13" height="20" />
+                    </frame>
+                    <frame id="67:669" name="Frame" x="0" y="112" width="408.5" height="20">
+                      <text id="67:670" name="Durasi sewa" x="0" y="0" width="79" height="20" />
+                      <text id="67:671" name="2 hari" x="372.5" y="0" width="36" height="20" />
+                    </frame>
+                    <frame id="67:672" name="Frame" x="0" y="144" width="408.5" height="24">
+                      <text id="67:673" name="Status sewa" x="0" y="2" width="80" height="20" />
+                      <frame id="67:674" name="Frame" x="339.5" y="0" width="69" height="24">
+                        <text id="67:675" name="Selesai" x="10" y="2" width="49" height="20" />
+                      </frame>
+                    </frame>
+                  </frame>
+                </frame>
+              </frame>
+              <frame id="67:676" name="status-section" x="0" y="288" width="640.5" height="344">
+                <text id="67:677" name="Detail &amp; Status Pesanan" x="24" y="24" width="227" height="28" />
+                <frame id="67:678" name="status-card" x="24" y="72" width="592.5" height="144">
+                  <instance id="67:679" name="Head Order Progress Bar" x="16" y="16" width="560.5" height="72" />
+                  <instance id="67:683" name="Order Progress Bar" x="16" y="104" width="560.5" height="24" />
+                </frame>
+                <frame id="67:692" name="status-meta" x="24" y="236" width="592.5" height="84">
+                  <frame id="67:693" name="Frame" x="0" y="0" width="592.5" height="20">
+                    <text id="67:694" name="Status pesanan" x="0" y="0" width="103" height="20" />
+                    <text id="67:695" name="Selesai" x="543.5" y="0" width="49" height="20" />
+                  </frame>
+                  <frame id="67:696" name="Frame" x="0" y="32" width="592.5" height="20">
+                    <text id="67:697" name="Metode pembayaran" x="0" y="0" width="140" height="20" />
+                    <text id="67:698" name="QRIS" x="557.5" y="0" width="35" height="20" />
+                  </frame>
+                  <frame id="67:699" name="Frame" x="0" y="64" width="592.5" height="20">
+                    <text id="67:700" name="Total biaya" x="0" y="0" width="70" height="20" />
+                    <text id="67:701" name="Rp 84.000" x="518.5" y="0" width="74" height="20" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+            <frame id="67:702" name="right-column" x="664.5" y="0" width="640.5" height="652">
+              <frame id="67:723" name="details-row" x="0" y="0" width="640.5" height="320">
+                <frame id="67:724" name="schedule-section" x="0" y="0" width="308.25" height="320">
+                  <text id="67:725" name="Jadwal Pesanan" x="24" y="24" width="152" height="28" />
+                  <instance id="67:726" name="tanggal pesanan card" x="24" y="72" width="260.25" height="224" />
+                </frame>
+                <frame id="67:735" name="address-section" x="332.25" y="0" width="308.25" height="320">
+                  <instance id="67:737" name="Rincian Titik Temu Card" x="24" y="24" width="260.25" height="290" />
+                </frame>
+              </frame>
+              <frame id="67:754" name="payment-section" x="0" y="344" width="640.5" height="308">
+                <text id="67:755" name="Rincian Pembayaran" x="24" y="24" width="195" height="28" />
+                <instance id="67:756" name="Rincian Pembayaran Card" x="24" y="72" width="592.5" height="212" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="36:2561" name="Kelola Pesanan - Penjualan (Desktop)" x="2027" y="1398" width="1440" height="1588">
+    <frame id="58:538" name="header" x="0" y="0" width="1440" height="96">
+      <instance id="58:549" name="Back Button" x="32" y="20" width="56" height="56" />
+      <frame id="58:539" name="brand" x="110" y="28" width="1178" height="40">
+        <frame id="58:540" name="logo-mark" x="0" y="0" width="40" height="40">
+          <text id="58:541" name="K" x="13.5" y="8.5" width="13" height="23" />
+        </frame>
+        <frame id="58:542" name="brand-text" x="52" y="0" width="132" height="40">
+          <text id="58:543" name="Kelola Pesanan" x="0" y="0" width="132" height="23" />
+          <text id="58:544" name="Penjualan • Desktop" x="0" y="25" width="118" height="15" />
+        </frame>
+      </frame>
+      <frame id="58:545" name="header-actions" x="1310" y="29" width="98" height="38">
+        <frame id="58:546" name="btn-export" x="0" y="0" width="98" height="38">
+          <frame id="58:687" name="download" x="14" y="10" width="18" height="18" />
+          <text id="58:548" name="Ekspor" x="40" y="11" width="44" height="16" />
+        </frame>
+      </frame>
+    </frame>
+    <frame id="58:552" name="content" x="0" y="96" width="1440" height="1492">
+      <frame id="58:553" name="title-row" x="32" y="32" width="1376" height="44">
+        <text id="58:554" name="Kelola Pesanan" x="0" y="8" width="146" height="28" />
+        <frame id="58:555" name="title-actions" x="957" y="0" width="419" height="44">
+          <frame id="58:556" name="search" x="0" y="0" width="320" height="44">
+            <frame id="58:693" name="search" x="14" y="13" width="18" height="18" />
+            <text id="58:558" name="Cari pesanan, pelanggan, atau produk…" x="42" y="14" width="264" height="16" />
+          </frame>
+          <frame id="58:559" name="btn-filter" x="332" y="0" width="87" height="44">
+            <frame id="58:699" name="filter" x="14" y="13" width="18" height="18" />
+            <text id="58:561" name="Filter" x="40" y="14" width="33" height="16" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="58:562" name="mode-card" x="32" y="100" width="1376" height="52">
+        <frame id="58:563" name="mode-left" x="16" y="16" width="135" height="20">
+          <frame id="58:564" name="mode-dot" x="0" y="5" width="10" height="10" />
+          <text id="58:565" name="Mode: Penjualan" x="22" y="0" width="113" height="20" />
+        </frame>
+        <frame id="58:566" name="mode-right" x="1263" y="18" width="97" height="16">
+          <text id="58:567" name="Ubah mode" x="0" y="0" width="73" height="16" />
+          <frame id="58:690" name="chevron-down" x="81" y="0" width="16" height="16" />
+        </frame>
+      </frame>
+      <frame id="58:569" name="tabs" x="32" y="176" width="1376" height="38">
+        <frame id="58:570" name="tab-all" x="0" y="1" width="76" height="36">
+          <text id="58:571" name="Semua" x="16" y="10" width="44" height="16" />
+        </frame>
+        <frame id="58:572" name="tab-new" x="88" y="0" width="80" height="38">
+          <text id="58:573" name="Baru" x="16" y="10" width="30" height="16" />
+          <frame id="58:574" name="badge" x="46" y="10" width="18" height="18">
+            <text id="58:575" name="1" x="6.5" y="2.5" width="5" height="13" />
+          </frame>
+        </frame>
+        <frame id="58:576" name="tab-cod" x="180" y="1" width="94" height="36">
+          <text id="58:577" name="Siap COD" x="16" y="10" width="62" height="16" />
+        </frame>
+        <frame id="58:578" name="tab-done" x="286" y="1" width="78" height="36">
+          <text id="58:579" name="Selesai" x="16" y="10" width="46" height="16" />
+        </frame>
+        <frame id="58:580" name="tab-cancelled" x="376" y="1" width="65" height="36">
+          <text id="58:581" name="Batal" x="16" y="10" width="33" height="16" />
+        </frame>
+      </frame>
+      <frame id="58:582" name="cards-grid" x="32" y="238" width="1376" height="1206">
+        <frame id="58:583" name="order-card-new" x="0" y="0" width="1376" height="430">
+          <frame id="58:584" name="status-bar" x="0" y="0" width="1376" height="31.669723510742188">
+            <text id="58:585" name="Pesanan Baru" x="15.669655799865723" y="7.834862232208252" width="77" height="16" />
+          </frame>
+          <frame id="58:586" name="card-body" x="0" y="31.669723510742188" width="1376" height="398.2201843261719">
+            <frame id="58:587" name="meta" x="15.669655799865723" y="15.669696807861328" width="1344.6605224609375" height="16">
+              <text id="58:588" name="TRX-2024-001247" x="0" y="0" width="106" height="16" />
+              <text id="58:589" name="2 jam yang lalu" x="1261.6605224609375" y="0" width="83" height="16" />
+            </frame>
+            <frame id="58:590" name="buyer" x="15.669724464416504" y="43.42201614379883" width="1344.6605224609375" height="41.87614822387695">
+              <frame id="58:591" name="avatar" x="0" y="1.3509178161621094" width="39.174312591552734" height="39.174312591552734" />
+              <frame id="58:592" name="buyer-text" x="50.92658233642578" y="0.00004031680145999417" width="1293.73388671875" height="41.87614822387695">
+                <frame id="58:593" name="name-row" x="0" y="0" width="106.31880950927734" height="20">
+                  <text id="58:594" name="Arine Fey" x="0" y="0" width="61" height="20" />
+                  <frame id="58:595" name="trust-badge" x="68.8348617553711" y="0.5412845611572266" width="37.483943939208984" height="18.917430877685547">
+                    <frame id="58:696" name="check-circle" x="5.8761467933654785" y="5.051605224609375" width="8.814220428466797" height="8.814220428466797" />
+                    <text id="58:597" name="88" x="18.607738494873047" y="1.958688735961914" width="13" height="15" />
+                  </frame>
+                </frame>
+                <text id="58:598" name="Universitas Brawijaya" x="0" y="25.87614631652832" width="1293.73388671875" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:599" name="product" x="15.669724464416504" y="97.05046081542969" width="1344.6605224609375" height="86.18348693847656">
+              <frame id="58:600" name="product-image" x="11.75227165222168" y="11.752279281616211" width="62.678897857666016" height="62.678897857666016" />
+              <frame id="58:601" name="product-text" x="86.18348693847656" y="24.133026123046875" width="1246.7247314453125" height="37.91743087768555">
+                <text id="58:602" name="Buku Algoritma &amp; Pemrograman Ed.3" x="0" y="0" width="1246.7247314453125" height="18" />
+                <text id="58:603" name="Qty: 1 · Rp 85.000/pcs" x="0" y="21.917430877685547" width="1246.7247314453125" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:604" name="payment" x="15.669724464416504" y="194.98623657226562" width="1344.6605224609375" height="61.545875549316406">
+              <frame id="58:605" name="total" x="11.75227165222168" y="9.79355239868164" width="100" height="41.958717346191406">
+                <text id="58:606" name="Total Pembayaran" x="0" y="0" width="100" height="16" />
+                <text id="58:607" name="Rp 85.000" x="0" y="17.958715438842773" width="83" height="24" />
+              </frame>
+              <frame id="58:608" name="escrow" x="1261.908203125" y="13.793578147888184" width="71" height="33.958717346191406">
+                <text id="58:609" name="Dana Status" x="3" y="0" width="68" height="16" />
+                <text id="58:610" name="Escrow Hold" x="0" y="17.958715438842773" width="71" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:611" name="pickup" x="15.669724464416504" y="268.284423828125" width="1344.6605224609375" height="16">
+              <frame id="58:702" name="map-pin" x="0" y="1.1444954872131348" width="13.71100902557373" height="13.71100902557373" />
+              <text id="58:613" name="COD – Lobby Perpustakaan UB" x="21.545848846435547" y="0.00003919688970199786" width="1323.1146240234375" height="16" />
+            </frame>
+            <frame id="58:614" name="countdown" x="15.669724464416504" y="296.0367126464844" width="1344.6605224609375" height="31.669723510742188">
+              <frame id="58:705" name="clock" x="11.752293586730957" y="8.979357719421387" width="13.71100902557373" height="13.71100902557373" />
+              <text id="58:616" name="Terima sebelum: 17 Jam 53 Menit 59 Det" x="33.29814147949219" y="7.834922790527344" width="1299.610107421875" height="16" />
+            </frame>
+            <frame id="58:617" name="actions" x="15.669724464416504" y="339.458740234375" width="1344.6605224609375" height="43.09174346923828">
+              <frame id="58:618" name="btn-reject" x="0" y="0" width="666.4541015625" height="43.09174346923828">
+                <text id="58:619" name="Tolak Pesanan" x="286.22705078125" y="11.54587173461914" width="94" height="20" />
+              </frame>
+              <frame id="58:620" name="btn-accept" x="678.2064208984375" y="0" width="666.4541015625" height="43.09174346923828">
+                <text id="58:621" name="Terima Pesanan" x="281.72705078125" y="11.54587173461914" width="103" height="20" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="58:622" name="order-card-cod" x="0" y="454" width="1376" height="392">
+          <frame id="58:623" name="status-bar" x="0" y="0" width="1376" height="32">
+            <text id="58:624" name="Siap COD / Kirim" x="16" y="8" width="97" height="16" />
+          </frame>
+          <frame id="58:625" name="card-body" x="0" y="32" width="1376" height="360">
+            <frame id="58:626" name="meta" x="16" y="16" width="1344" height="16">
+              <text id="58:627" name="TRX-2024-001190" x="0" y="0" width="109" height="16" />
+              <text id="58:628" name="5 jam yang lalu" x="1259" y="0" width="85" height="16" />
+            </frame>
+            <frame id="58:629" name="buyer" x="16" y="44" width="1344" height="42">
+              <frame id="58:630" name="avatar" x="0" y="1" width="40" height="40" />
+              <frame id="58:631" name="buyer-text" x="52" y="0" width="1292" height="42">
+                <frame id="58:632" name="name-row" x="0" y="0" width="118" height="20">
+                  <text id="58:633" name="Anisa Putri" x="0" y="0" width="71" height="20" />
+                  <frame id="58:634" name="trust-badge" x="79" y="0.5" width="39" height="19">
+                    <frame id="58:708" name="check-circle" x="6" y="5" width="9" height="9" />
+                    <text id="58:636" name="95" x="19" y="2" width="14" height="15" />
+                  </frame>
+                </frame>
+                <text id="58:637" name="Universitas Brawijaya" x="0" y="26" width="1292" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:638" name="product" x="16" y="98" width="1344" height="88">
+              <frame id="58:639" name="product-image" x="12" y="12" width="64" height="64" />
+              <frame id="58:640" name="product-text" x="88" y="25" width="1244" height="38">
+                <text id="58:641" name="Laptop Asus VivoBook 14 i5" x="0" y="0" width="1244" height="18" />
+                <text id="58:642" name="Qty: 1 · Rp 3.200.000/pcs" x="0" y="22" width="1244" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:643" name="payment" x="16" y="198" width="1344" height="62">
+              <frame id="58:644" name="total" x="12" y="10" width="113" height="42">
+                <text id="58:645" name="Total Pembayaran" x="0" y="0" width="102" height="16" />
+                <text id="58:646" name="Rp 3.200.000" x="0" y="18" width="113" height="24" />
+              </frame>
+              <frame id="58:647" name="escrow" x="1259" y="14" width="73" height="34">
+                <text id="58:648" name="Dana Status" x="4" y="0" width="69" height="16" />
+                <text id="58:649" name="Escrow Hold" x="0" y="18" width="73" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:650" name="pickup" x="16" y="272" width="1344" height="16">
+              <frame id="58:711" name="map-pin" x="0" y="1" width="14" height="14" />
+              <text id="58:652" name="COD – Kantin Teknik UB" x="22" y="0" width="1322" height="16" />
+            </frame>
+            <frame id="58:653" name="btn-done" x="16" y="300" width="1344" height="44">
+              <text id="58:654" name="✓ Konfirmasi Selesai COD" x="585" y="12" width="174" height="20" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="58:655" name="order-card-done" x="0" y="870" width="1376" height="336">
+          <frame id="58:656" name="status-bar" x="0" y="0" width="1376" height="32">
+            <text id="58:657" name="Selesai" x="16" y="8" width="42" height="16" />
+          </frame>
+          <frame id="58:658" name="card-body" x="0" y="32" width="1376" height="304">
+            <frame id="58:659" name="meta" x="16" y="16" width="1344" height="16">
+              <text id="58:660" name="TRX-2024-001050" x="0" y="0" width="109" height="16" />
+              <text id="58:661" name="2 hari yang lalu" x="1258" y="0" width="86" height="16" />
+            </frame>
+            <frame id="58:662" name="buyer" x="16" y="44" width="1344" height="42">
+              <frame id="58:663" name="avatar" x="0" y="1" width="40" height="40" />
+              <frame id="58:664" name="buyer-text" x="52" y="0" width="1292" height="42">
+                <frame id="58:665" name="name-row" x="0" y="0" width="136" height="20">
+                  <text id="58:666" name="Budi Santoso" x="0" y="0" width="90" height="20" />
+                  <frame id="58:667" name="trust-badge" x="98" y="0.5" width="38" height="19">
+                    <frame id="58:714" name="check-circle" x="6" y="5" width="9" height="9" />
+                    <text id="58:669" name="72" x="19" y="2" width="13" height="15" />
+                  </frame>
+                </frame>
+                <text id="58:670" name="Universitas Brawijaya" x="0" y="26" width="1292" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:671" name="product" x="16" y="98" width="1344" height="88">
+              <frame id="58:672" name="product-image" x="12" y="12" width="64" height="64" />
+              <frame id="58:673" name="product-text" x="88" y="25" width="1244" height="38">
+                <text id="58:674" name="Mouse Wireless Logitech M185" x="0" y="0" width="1244" height="18" />
+                <text id="58:675" name="Qty: 2 · Rp 110.000/pcs" x="0" y="22" width="1244" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:676" name="payment" x="16" y="198" width="1344" height="62">
+              <frame id="58:677" name="total" x="12" y="10" width="102" height="42">
+                <text id="58:678" name="Total Pembayaran" x="0" y="0" width="102" height="16" />
+                <text id="58:679" name="Rp 220.000" x="0" y="18" width="95" height="24" />
+              </frame>
+              <frame id="58:680" name="escrow" x="1259" y="14" width="73" height="34">
+                <text id="58:681" name="Dana Status" x="4" y="0" width="69" height="16" />
+                <text id="58:682" name="Escrow Hold" x="0" y="18" width="73" height="16" />
+              </frame>
+            </frame>
+            <frame id="58:683" name="shipping" x="16" y="272" width="1344" height="16">
+              <frame id="58:717" name="truck" x="0" y="1" width="14" height="14" />
+              <text id="58:685" name="Kurir Instant" x="22" y="0" width="1322" height="16" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="69:3368" name="Signup" x="-3999" y="-1370" width="1440" height="1024">
+    <frame id="69:3369" name="Page Content" x="380" y="87.5" width="680" height="849">
+      <instance id="69:3370" name="Section Text" x="80" y="80" width="520" height="103" />
+      <instance id="69:3371" name="Form / 5 fields + checkbox + button" x="80" y="207" width="520" height="360" />
+      <frame id="69:3372" name="Frame 48" x="80" y="591" width="520" height="110">
+        <text id="69:3373" name="Paragraph" x="0" y="24" width="520" height="22" />
+        <frame id="69:3374" name="login with" x="0" y="62" width="520" height="48">
+          <instance id="69:3375" name="button" x="0" y="0" width="168" height="48" />
+          <instance id="69:3376" name="button" x="176" y="0" width="168" height="48" />
+          <instance id="69:3377" name="button" x="352" y="0" width="168" height="48" />
+        </frame>
+      </frame>
+      <line id="69:3378" name="Sep" x="80" y="725" width="520" height="0" />
+      <text id="69:3379" name="Already have an account?" x="80" y="749" width="520" height="20" />
+    </frame>
+  </frame>
+  <frame id="69:3380" name="Login" x="-3999" y="-2526" width="1440" height="1024">
+    <frame id="69:3381" name="Page Content" x="380" y="123" width="680" height="778">
+      <instance id="69:3382" name="Section Text" x="80" y="80" width="520" height="79" />
+      <instance id="69:3383" name="Form / 2 fields + checkbox + button" x="80" y="183" width="520" height="313" />
+      <frame id="69:3384" name="Frame 48" x="80" y="520" width="520" height="110">
+        <text id="69:3385" name="Paragraph" x="0" y="24" width="520" height="22" />
+        <frame id="69:3386" name="login with" x="0" y="62" width="520" height="48">
+          <instance id="69:3387" name="button" x="0" y="0" width="168" height="48" />
+          <instance id="69:3388" name="button" x="176" y="0" width="168" height="48" />
+          <instance id="69:3389" name="button" x="352" y="0" width="168" height="48" />
+        </frame>
+      </frame>
+      <line id="69:3390" name="Sep" x="80" y="654" width="520" height="0" />
+      <text id="69:3391" name="No account yet? Sign Up" x="80" y="678" width="520" height="20" />
+    </frame>
+  </frame>
+  <frame id="69:3392" name="Forgot Password" x="-3999" y="-187" width="1440" height="1024">
+    <frame id="69:3393" name="Page Content" x="380" y="298.5" width="680" height="427">
+      <instance id="69:3394" name="Section Text" x="80" y="80" width="520" height="79" />
+      <instance id="69:3395" name="Form / 2 fields + checkbox + button" x="80" y="183" width="520" height="164" />
+    </frame>
+  </frame>
+  <frame id="86:680" name="Marketplace navigation" x="-1758" y="-2281" width="1442" height="80">
+    <frame id="86:681" name="Marketplace links" x="40" y="30" width="283" height="20">
+      <text id="86:683" name="Home link" x="0" y="0" width="57" height="20" />
+    </frame>
+    <frame id="86:736" name="Group 19" x="456" y="20" width="497" height="40">
+      <rounded-rectangle id="86:730" name="Rectangle 27" x="456" y="20" width="497" height="40" />
+      <instance id="86:731" name="_Magnifyingglass" x="462" y="26" width="28.69572639465332" height="28.69572639465332" />
+      <text id="86:734" name="Placeholder Label" x="492" y="28" width="262.3609313964844" height="25" />
+    </frame>
+    <frame id="86:685" name="Account navigation" x="1086" y="22" width="316" height="36">
+      <frame id="86:737" name="Frame 10" x="0" y="10" width="102" height="16">
+        <vector id="86:738" name="Vector" x="9" y="0" width="12" height="16" />
+        <text id="86:739" name="Lowokwaru" x="26" y="0" width="76" height="16" />
+      </frame>
+      <frame id="86:690" name="Navigation divider" x="126" y="4" width="1" height="28" />
+      <frame id="86:691" name="Current account" x="151" y="0" width="165" height="36">
+        <frame id="86:692" name="Profile avatar" x="0" y="0" width="36" height="36">
+          <text id="86:693" name="Initials" x="11" y="9" width="14" height="18" />
+        </frame>
+        <text id="86:694" name="Username" x="46" y="8" width="93" height="20" />
+        <frame id="86:695" name="chevron-down" x="149" y="10" width="16" height="16" />
+      </frame>
+    </frame>
+  </frame>
+</canvas>IMPORTANT: After you call this tool, you MUST call get_design_context if trying to implement the design, since this tool only returns metadata. If you do not call get_design_context, the agent will not be able to implement the design.

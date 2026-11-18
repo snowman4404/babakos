@@ -3,78 +3,70 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jelajah barang bekas kost di sekitar Universitas Brawijaya. Saring per area kost, harga, kategori, dan kondisi.">
-    <title>Jelajah Barang — BaBaKos</title>
+    <meta name="description" content="Katalog barang bekas kost di sekitar Universitas Brawijaya. Saring per area kost, harga, kategori, dan kondisi.">
+    <title>Katalog — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <a class="skip" href="#hasil">Langsung ke hasil</a>
     <header id="site-header"></header>
 
-    <main>
-      <!-- Head: a flat blue-grey field, like the homepage sheet, holding the search -->
-      <section class="browse-head" aria-labelledby="browse-title">
-        <div class="container browse-head-inner">
-          <h1 id="browse-title" class="title" data-reveal>Jelajah barang</h1>
-          <p class="browse-sub" id="browse-sub" data-reveal>Barang bekas dari kost di sekitar Universitas Brawijaya.</p>
-          <form class="search" id="search-form" role="search" data-reveal>
-            <label class="sr-only" for="search">Cari barang</label>
-            <span class="search-icon" data-icon="search"></span>
-            <input type="search" id="search" placeholder="Cari kipas, rice cooker, buku…" autocomplete="off" enterkeyhint="search">
-            <button type="button" class="search-clear" id="search-clear" data-icon="x" aria-label="Hapus pencarian" hidden></button>
-          </form>
-        </div>
-      </section>
+    <main class="container page catalog">
+      <!-- Figma KATALOG: maroon title bar, then the grid. Search lives in the navbar. -->
+      <div class="catalog-bar">
+        <p class="catalog-eyebrow">Katalog</p>
+        <h1 class="catalog-title" id="catalog-title">Semua barang</h1>
+      </div>
 
-      <div class="container browse">
+      <div class="cat-chips" id="cat-chips" role="group" aria-label="Kategori"></div>
+
+      <div class="browse">
         <!-- Filters: a sidebar on desktop, a bottom sheet on phones. Options are filled by js/pages/jelajah.js. -->
         <aside class="filters" id="filters" aria-labelledby="filters-title">
           <div class="filters-head">
-            <h2 id="filters-title">Filter</h2>
-            <button type="button" class="filters-close" id="filters-close" data-icon="x" aria-label="Tutup filter"></button>
+            <h2 id="filters-title" class="h3">Filter</h2>
+            <button type="button" class="icon-btn filters-close" id="filters-close" aria-label="Tutup filter" data-icon="x"></button>
           </div>
           <form class="filter-form" id="filter-form" novalidate>
             <fieldset class="filter-group">
-              <legend>Area kost</legend>
-              <p class="filter-note">Jarak ke gerbang UB</p>
-              <div id="area-options"></div>
+              <legend class="field-label">Area kost</legend>
+              <p class="field-hint">Jarak ke gerbang utama UB</p>
+              <div class="area-options" id="area-options"></div>
             </fieldset>
 
             <fieldset class="filter-group">
-              <legend>Harga</legend>
+              <legend class="field-label">Harga</legend>
               <div class="price-fields">
-                <label class="price-field">
-                  <span class="price-caption">Minimum</span>
-                  <span class="price-input"><span aria-hidden="true">Rp</span><input name="min" inputmode="numeric" placeholder="0" autocomplete="off" aria-describedby="price-error"></span>
+                <label class="input-group">
+                  <span class="sr-only">Harga minimum</span>
+                  <span class="input-prefix" aria-hidden="true">Rp</span>
+                  <input class="input" name="min" inputmode="numeric" placeholder="Min" autocomplete="off" aria-describedby="price-error">
                 </label>
-                <label class="price-field">
-                  <span class="price-caption">Maksimum</span>
-                  <span class="price-input"><span aria-hidden="true">Rp</span><input name="max" inputmode="numeric" placeholder="Bebas" autocomplete="off" aria-describedby="price-error"></span>
+                <span class="price-dash" aria-hidden="true">–</span>
+                <label class="input-group">
+                  <span class="sr-only">Harga maksimum</span>
+                  <span class="input-prefix" aria-hidden="true">Rp</span>
+                  <input class="input" name="max" inputmode="numeric" placeholder="Maks" autocomplete="off" aria-describedby="price-error">
                 </label>
               </div>
               <p class="field-error" id="price-error" hidden>Harga minimum lebih besar dari maksimum.</p>
-              <div class="chips price-quick" id="price-quick" role="group" aria-label="Harga maksimum cepat"></div>
+              <div class="chips" id="price-quick" role="group" aria-label="Harga maksimum cepat"></div>
             </fieldset>
 
             <fieldset class="filter-group">
-              <legend>Kategori</legend>
-              <div class="chips" id="cat-options"></div>
-            </fieldset>
-
-            <fieldset class="filter-group">
-              <legend>Kondisi</legend>
+              <legend class="field-label">Kondisi</legend>
               <div class="chips" id="cond-options"></div>
             </fieldset>
 
-            <label class="check check-wide"><input type="checkbox" name="all"><span>Tampilkan juga yang sudah dipesan atau terjual</span></label>
+            <label class="check"><input type="checkbox" name="all"><span>Tampilkan juga yang sudah dipesan atau terjual</span></label>
           </form>
           <div class="filters-foot">
-            <button type="button" class="link-btn" id="filters-reset">Hapus semua filter</button>
-            <button type="button" class="btn btn-small filters-apply" id="filters-apply">Tampilkan barang</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="filters-reset">Hapus filter</button>
+            <button type="button" class="btn btn-sm filters-apply" id="filters-apply">Tampilkan barang</button>
           </div>
         </aside>
 
@@ -82,29 +74,33 @@
           <div class="results-bar">
             <h2 class="results-count" id="result-count" tabindex="-1" aria-live="polite">Barang</h2>
             <div class="results-tools">
-              <button type="button" class="btn btn-outline btn-small filters-toggle" id="filters-toggle" data-icon="sliders" aria-controls="filters" aria-expanded="false"><span>Filter</span><span id="filters-count"></span></button>
-              <div class="sort">
-                <label for="sort">Urutkan</label>
-                <span class="select">
-                  <select id="sort">
-                    <option value="newest">Terbaru</option>
-                    <option value="cheapest">Termurah</option>
-                    <option value="priciest">Termahal</option>
-                    <option value="nearest">Terdekat dari kampus</option>
-                  </select>
-                </span>
-              </div>
+              <button type="button" class="btn btn-ghost btn-sm filters-toggle" id="filters-toggle" aria-controls="filters" aria-expanded="false"><span data-icon="sliders"></span>Filter<span class="filters-count" id="filters-count"></span></button>
+              <label class="sr-only" for="sort">Urutkan</label>
+              <span class="select select-sm">
+                <select id="sort">
+                  <option value="newest">Terbaru</option>
+                  <option value="cheapest">Termurah</option>
+                  <option value="priciest">Termahal</option>
+                  <option value="nearest">Terdekat dari kampus</option>
+                </select>
+              </span>
             </div>
           </div>
 
           <div class="active-filters" id="active-filters"></div>
 
+          <div class="loading" id="loading" hidden>
+            <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p>Sedang mencari…</p>
+          </div>
+
           <ul class="pgrid" id="grid"></ul>
 
           <div class="empty" id="empty" hidden>
-            <p class="empty-title">Barang tidak ditemukan</p>
-            <p>Coba kata lain, tambah area kost, atau naikkan harga maksimum.</p>
-            <button type="button" class="btn btn-small btn-outline" id="empty-reset">Hapus semua filter</button>
+            <span class="empty-icon" data-icon="search" data-icon-size="32"></span>
+            <p class="empty-title">Yah, barangnya belum ada nih</p>
+            <p id="empty-text">Yuk cari yang lain! Coba kata lain, tambah area kost, atau naikkan harga maksimum.</p>
+            <button type="button" class="btn btn-sm btn-outline" id="empty-reset">Hapus semua filter</button>
           </div>
         </section>
       </div>

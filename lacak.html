@@ -3,37 +3,80 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Lacak pesanan BaBaKos dari konfirmasi penjual sampai transaksi selesai.">
     <title>Lacak Pesanan — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body data-auth="required">
-    <header id="site-header"></header>
+    <header id="site-header" data-bar="Lacak Pesanan" data-back="pesanan.html"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Lacak Pesanan</h1>
-        <p class="placeholder-file">lacak.html</p>
-        <ul>
-          <li>Stepper status: Menunggu → Dikonfirmasi → Jadwal COD → Bertemu → Selesai</li>
-          <li>Peta mockup titik COD + jadwal</li>
-          <li>Info penjual/pembeli + tombol chat</li>
-          <li>Tombol Konfirmasi Barang Diterima / Batalkan</li>
-          <li>Beri rating setelah selesai</li>
-        </ul>
-      </section>
+    <!-- Figma "Web Landscape - Pesanan Saya": one order group. Filled by js/pages/lacak.js. -->
+    <main class="container page">
+      <div class="track card-soft" id="track" hidden>
+        <div class="track-head">
+          <p class="track-name" id="t-name"></p>
+          <p class="caption" id="t-created"></p>
+          <span id="t-pill"></span>
+        </div>
+
+        <div class="track-grid">
+          <div class="track-col">
+            <section class="track-card" aria-labelledby="sum-title">
+              <h2 class="h2 track-card-title" id="sum-title">Ringkasan Produk</h2>
+              <div id="t-items"></div>
+            </section>
+
+            <section class="track-card" aria-labelledby="status-title">
+              <h2 class="h2 track-card-title" id="status-title">Detail &amp; Status Pesanan</h2>
+              <div class="status-banner" id="t-banner"></div>
+              <ol class="stepper" id="t-steps"></ol>
+              <dl class="kv track-kv" id="t-status-kv"></dl>
+              <div class="track-actions" id="t-actions"></div>
+              <div class="demo-box track-demo" id="t-demo" hidden></div>
+            </section>
+
+            <section class="track-card" id="t-review" hidden aria-labelledby="review-title"></section>
+          </div>
+
+          <div class="track-col">
+            <div class="track-pair">
+              <section class="track-card" aria-labelledby="when-title">
+                <h2 class="h2 track-card-title" id="when-title">Jadwal Pesanan</h2>
+                <ul class="when-list" id="t-when"></ul>
+              </section>
+              <section class="track-card" aria-labelledby="where-title">
+                <h2 class="sr-only" id="where-title">Lokasi</h2>
+                <ul class="where-list" id="t-where"></ul>
+              </section>
+            </div>
+            <section class="track-card" aria-labelledby="map-title">
+              <h2 class="h2 track-card-title" id="map-title">Titik COD</h2>
+              <div id="t-map"></div>
+              <p class="caption track-map-note" id="t-map-note"></p>
+            </section>
+            <section class="track-card" aria-labelledby="pay-title">
+              <h2 class="h2 track-card-title" id="pay-title">Rincian Pembayaran</h2>
+              <dl class="kv" id="t-pay"></dl>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty" id="missing" hidden>
+        <span class="empty-icon" data-icon="package" data-icon-size="32"></span>
+        <p class="empty-title">Pesanan tidak ditemukan</p>
+        <p>Nomor pesanannya mungkin salah, atau pesanan ini bukan milikmu.</p>
+        <a class="btn btn-sm btn-outline" href="pesanan.html">Lihat pesanan saya</a>
+      </div>
     </main>
-
-    <footer id="site-footer"></footer>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/lacak.js"></script>
   </body>
 </html>

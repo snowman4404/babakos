@@ -1,21 +1,20 @@
 /*
- * Jelajah Barang (jelajah.html). Search plus filters (area kost, price range,
- * category, condition) over BBK.products. The state is mirrored in the URL,
- * e.g. jelajah.html?area=ketawanggede&max=100000, so a filtered list can be linked.
- * On phones the filter panel becomes a bottom sheet.
+ * Katalog (jelajah.html). Search (the navbar box) plus filters (category chips,
+ * area kost, price range, condition) over BBK.products. The state is mirrored in
+ * the URL, e.g. jelajah.html?area=ketawanggede&max=100000, so a filtered list can
+ * be linked. On phones the filter panel becomes a bottom sheet.
  */
 (function () {
   const $ = (selector) => document.querySelector(selector); // tiny querySelector alias
   const esc = BBK.escape;
 
   const form = $('#filter-form');
-  const search = $('#search');
+  const search = $('#nav-q'); // rendered by js/layout.js
   const sortSelect = $('#sort');
   const minInput = form.elements.min;
   const maxInput = form.elements.max;
   const grid = $('#grid');
 
-  const statusText = { terjual: 'Terjual', dipesan: 'Dipesan' };
   const areasByDistance = BBK.kostAreas.slice().sort((a, b) => a.distanceKm - b.distanceKm);
   const areaIds = areasByDistance.map((a) => a.id);
   const catIds = BBK.categories.map((c) => c.id);
@@ -34,7 +33,7 @@
     const d = String(text || '').replace(/\D/g, '');
     return d ? Number(d) : null;
   };
-  /** 100000 -> "Rp100rb", 1000000 -> "Rp1jt" (for the quick price chips). */
+  /** 100000 -> "≤ Rp100rb", 1000000 -> "≤ Rp1jt" (quick price chips). */
   const shortRupiah = (v) => (v >= 1e6 ? 'Rp' + BBK.formatKm(v / 1e6) + 'jt' : 'Rp' + v / 1000 + 'rb');
 
   // Everything a search word may match: title, description, category, area, condition.
@@ -50,31 +49,34 @@
   /* ---------- Build the filter options from the data ---------- */
   $('#area-options').innerHTML = areasByDistance
     .map(
-      (a) => `<label class="check"><input type="checkbox" name="area" value="${esc(a.id)}">
-        <span>${esc(BBK.areaShortName(a.id))}</span><span class="check-hint">${BBK.formatKm(a.distanceKm)} km</span></label>`,
+      (a) => `<label class="check area-check"><input type="checkbox" name="area" value="${esc(a.id)}">
+        <span>${esc(BBK.areaShortName(a.id))}</span><span class="area-km">${BBK.formatKm(a.distanceKm)} km</span></label>`,
     )
     .join('');
 
   const chipToggle = (name, value, label) =>
-    `<label class="chip-toggle"><input class="sr-only" type="checkbox" name="${name}" value="${esc(value)}"><span class="chip">${esc(label)}</span></label>`;
-  $('#cat-options').innerHTML = BBK.categories.map((c) => chipToggle('cat', c.id, c.label)).join('');
-  $('#cond-options').innerHTML = condIds.map((id) => chipToggle('cond', id, BBK.conditionLabels[id])).join('');
+    `<label class="chip-toggle"><input class="sr-only" type="checkbox" name="${name}" value="${esc(value)}"><span class="chip">${label}</span></label>`;
+  // Category chips sit above the grid but belong to the same form (form="filter-form").
+  $('#cat-chips').innerHTML = BBK.categories
+    .map(
+      (c) => `<label class="chip-toggle"><input class="sr-only" type="checkbox" form="filter-form" name="cat" value="${esc(c.id)}">
+        <span class="chip">${BBK.icon(c.icon, 16)}${esc(c.short)}</span></label>`,
+    )
+    .join('');
+  $('#cond-options').innerHTML = condIds.map((id) => chipToggle('cond', id, esc(BBK.conditionLabels[id]))).join('');
   $('#price-quick').innerHTML = BBK.priceCeilings
-    .map((v) => `<button type="button" class="chip" data-max="${v}" aria-pressed="false" aria-label="Maksimal ${BBK.formatRupiah(v)}">${shortRupiah(v)}</button>`)
+    .map((v) => `<button type="button" class="chip" data-max="${v}" aria-pressed="false" aria-label="Maksimal ${BBK.formatRupiah(v)}">≤ ${shortRupiah(v)}</button>`)
     .join('');
 
-  // Subtitle: how much is on offer right now.
-  const available = BBK.products.filter((p) => p.status === 'tersedia');
-  const areaCount = new Set(available.map((p) => p.areaId)).size;
-  $('#browse-sub').textContent = `${available.length} barang tersedia dari ${areaCount} area kost di sekitar Universitas Brawijaya. Saring per area dan harga, lalu chat penjualnya.`;
-
   /* ---------- State: read from / write to the controls and the URL ---------- */
+  const catInputs = () => [...document.querySelectorAll('input[name="cat"]')];
+
   function readState() {
     const data = new FormData(form);
     return {
       q: search.value.trim(),
       areas: data.getAll('area'),
-      cats: data.getAll('cat'),
+      cats: catInputs().filter((el) => el.checked).map((el) => el.value),
       conds: data.getAll('cond'),
       min: digits(minInput.value),
       max: digits(maxInput.value),
@@ -85,7 +87,7 @@
 
   function writeState(s) {
     search.value = s.q;
-    const check = (name, values) => form.querySelectorAll(`input[name="${name}"]`).forEach((el) => (el.checked = values.includes(el.value)));
+    const check = (name, values) => document.querySelectorAll(`input[name="${name}"]`).forEach((el) => (el.checked = values.includes(el.value)));
     check('area', s.areas);
     check('cat', s.cats);
     check('cond', s.conds);
@@ -139,29 +141,11 @@
     if (priceOk && s.min !== null && p.price < s.min) return false;
     if (priceOk && s.max !== null && p.price > s.max) return false;
     const words = s.q.toLowerCase().split(/\s+/).filter(Boolean);
-    const hay = haystacks.get(p.id);
+    const hay = haystacks.get(p.id) || p.title.toLowerCase();
     return words.every((w) => hay.includes(w));
   }
 
   /* ---------- Rendering ---------- */
-  function card(p, i) {
-    const seller = BBK.getUser(p.sellerId);
-    const first = seller.name.split(' ')[0];
-    const gone = statusText[p.status];
-    return `<li class="pcard${gone ? ' is-gone' : ''}" style="--i:${Math.min(i, 12)}">
-      <a href="produk.html?id=${encodeURIComponent(p.id)}">
-        <span class="pcard-photo">
-          <img src="${esc(BBK.productImage(p))}" alt="" width="480" height="600" loading="lazy">
-          ${gone ? `<span class="pcard-status">${gone}</span>` : ''}
-        </span>
-        <h3 class="pcard-title">${esc(p.title)}</h3>
-        <p class="pcard-price">${BBK.formatRupiah(p.price)}</p>
-        <p class="pcard-meta">${esc(BBK.areaShortName(p.areaId))} · ${esc(BBK.conditionLabels[p.condition])}</p>
-        ${seller.verified ? `<p class="pcard-meta pcard-seller">${BBK.icon('verified', 15)}<span>${esc(first)}, terverifikasi</span></p>` : ''}
-      </a>
-    </li>`;
-  }
-
   function priceLabel(s) {
     if (s.min !== null && s.max !== null) return `${BBK.formatRupiah(s.min)}–${BBK.formatRupiah(s.max)}`;
     if (s.max !== null) return `Sampai ${BBK.formatRupiah(s.max)}`;
@@ -169,11 +153,11 @@
   }
 
   const uncheck = (name, value) => () => {
-    const el = form.querySelector(`input[name="${name}"][value="${value}"]`);
+    const el = document.querySelector(`input[name="${name}"][value="${value}"]`);
     if (el) el.checked = false;
   };
 
-  /** Removable tokens for every active filter; returns how many there are. */
+  /** Removable tokens for every active filter; returns how many sit in the panel. */
   let clearers = [];
   function renderActive(s, priceOk) {
     const active = [];
@@ -182,16 +166,23 @@
     if (priceOk && (s.min !== null || s.max !== null)) {
       active.push([priceLabel(s), () => ((minInput.value = ''), (maxInput.value = ''))]);
     }
-    s.cats.forEach((id) => active.push([BBK.getCategory(id).label, uncheck('cat', id)]));
     s.conds.forEach((id) => active.push([BBK.conditionLabels[id], uncheck('cond', id)]));
     if (s.all) active.push(['Termasuk yang sudah laku', () => (form.elements.all.checked = false)]);
 
     clearers = active.map(([, clear]) => clear);
-    $('#active-filters').innerHTML = active
-      .map(([label], i) => `<button type="button" class="active-chip" data-i="${i}" aria-label="Hapus filter ${esc(label)}">${esc(label)}${BBK.icon('x', 16)}</button>`)
-      .join('');
-    // The search lives in the head, so the phone's Filter button counts the rest.
+    $('#active-filters').innerHTML = active.length
+      ? active
+          .map(([label], i) => `<button type="button" class="chip active-chip" data-i="${i}" aria-label="Hapus filter ${esc(label)}">${esc(label)}${BBK.icon('x', 14)}</button>`)
+          .join('') + `<button type="button" class="link-btn" data-clear-all>Hapus semua</button>`
+      : '';
     return active.length - (s.q ? 1 : 0);
+  }
+
+  function titleFor(s) {
+    if (s.cats.length === 1) return BBK.getCategory(s.cats[0]).short;
+    if (s.cats.length > 1) return `${s.cats.length} kategori`;
+    if (s.areas.length === 1) return `Area ${BBK.areaShortName(s.areas[0])}`;
+    return 'Semua barang';
   }
 
   function render() {
@@ -202,24 +193,45 @@
     [minInput, maxInput].forEach((el) => el.setAttribute('aria-invalid', String(priceError)));
 
     const list = BBK.products.filter((p) => matches(p, s, priceOk)).sort(SORTS[s.sort]);
-    grid.innerHTML = list.map(card).join('');
+    grid.innerHTML = list.map(BBK.productCard).join('');
     grid.hidden = !list.length;
     $('#empty').hidden = list.length > 0;
+    $('#empty-text').textContent = s.q
+      ? `Tidak ada barang untuk “${s.q}”. Yuk cari yang lain, atau longgarkan filternya.`
+      : 'Yuk cari yang lain! Tambah area kost atau naikkan harga maksimum.';
 
     const filterCount = renderActive(s, priceOk);
-    const filtered = filterCount > 0 || s.q;
+    const filtered = filterCount > 0 || s.q || s.cats.length;
+    $('#catalog-title').textContent = titleFor(s);
     $('#result-count').textContent = filtered ? `${list.length} barang ditemukan` : `${list.length} barang ${s.all ? 'dijual' : 'tersedia'}`;
-    $('#filters-count').textContent = filterCount ? `(${filterCount})` : '';
+    $('#filters-count').textContent = filterCount ? filterCount : '';
     $('#filters-apply').textContent = list.length ? `Tampilkan ${list.length} barang` : 'Belum ada yang cocok';
-    $('#search-clear').hidden = !s.q;
     document.querySelectorAll('#price-quick .chip').forEach((b) => b.setAttribute('aria-pressed', String(s.max === Number(b.dataset.max))));
 
     syncURL(s);
   }
 
+  /* Typing in the search shows "Sedang mencari…" briefly, then the results. */
+  let typingTimer;
+  let rememberTimer;
+  function renderSoon() {
+    $('#loading').hidden = false;
+    grid.hidden = true;
+    $('#empty').hidden = true;
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      $('#loading').hidden = true;
+      render();
+    }, 350);
+    clearTimeout(rememberTimer);
+    rememberTimer = setTimeout(() => BBK.recentSearches.add(search.value), 1800);
+  }
+
   function resetFilters() {
     form.reset();
+    catInputs().forEach((el) => (el.checked = false));
     search.value = '';
+    $('#nav-q-clear').hidden = true;
     render();
   }
 
@@ -239,23 +251,21 @@
     maxInput.value = digits(maxInput.value) === v ? '' : v.toLocaleString('id-ID');
     render();
   });
+  $('#cat-chips').addEventListener('change', render);
 
-  search.addEventListener('input', render);
-  $('#search-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (sheetMQ.matches) search.blur(); // closes the phone keyboard so the results show
-  });
-  $('#search-clear').addEventListener('click', () => {
-    search.value = '';
-    render();
-    search.focus();
-  });
+  search.addEventListener('input', renderSoon);
   sortSelect.addEventListener('change', render);
 
   $('#active-filters').addEventListener('click', (e) => {
+    if (e.target.closest('[data-clear-all]')) {
+      resetFilters();
+      $('#result-count').focus();
+      return;
+    }
     const b = e.target.closest('.active-chip');
     if (!b) return;
     clearers[Number(b.dataset.i)]();
+    $('#nav-q-clear').hidden = !search.value;
     render();
     const next = $('#active-filters .active-chip');
     (next || $('#result-count')).focus();
@@ -267,11 +277,11 @@
   });
 
   /* ---------- Phone bottom sheet ---------- */
-  const sheetMQ = matchMedia('(max-width: 900px)');
+  const sheetMQ = matchMedia('(max-width: 1099px)');
   const panel = $('#filters');
   const backdrop = $('#filters-backdrop');
   const toggle = $('#filters-toggle');
-  const behindSheet = [$('#site-header'), $('#site-footer'), $('.browse-head'), $('.results')];
+  const behindSheet = [$('#site-header'), $('#site-footer'), $('.catalog-bar'), $('.cat-chips'), $('.results'), $('.tabbar')];
 
   function setSheet(open, returnFocus) {
     panel.classList.toggle('is-open', open);
@@ -304,5 +314,4 @@
 
   writeState(stateFromURL());
   render();
-  BBK.initReveal();
 })();

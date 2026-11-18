@@ -3,36 +3,66 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Verifikasi email kampus untuk akun BaBaKos.">
     <title>Verifikasi Email — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body>
-    <header id="site-header"></header>
+  <body class="auth-page">
+    <!-- Figma "Forgot Password" frame (titled Verification Email): code entry. -->
+    <main class="auth">
+      <a class="wordmark auth-brand" href="index.html">BaBaKos</a>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Verifikasi Email</h1>
-        <p class="placeholder-file">verifikasi.html</p>
-        <ul>
-          <li>Info: kode dikirim ke email kampus</li>
-          <li>Input 6 digit OTP (kode apa pun diterima)</li>
-          <li>Kirim ulang kode (timer)</li>
-          <li>Sukses → badge Terverifikasi</li>
-        </ul>
+      <form class="auth-card" id="otp-form" novalidate>
+        <div class="auth-head">
+          <h1 class="auth-title" id="otp-title">Verifikasi Email</h1>
+          <p class="auth-sub" id="otp-sub">Masukkan kode yang kami kirim ke emailmu</p>
+        </div>
+
+        <ol class="auth-steps" id="otp-steps" aria-label="Langkah daftar">
+          <li><span data-icon="check" data-icon-size="14"></span>Data diri</li>
+          <li aria-current="step"><span>2</span>Verifikasi email</li>
+        </ol>
+
+        <fieldset class="field">
+          <legend class="field-label">Kode 6 digit</legend>
+          <div class="otp" id="otp"></div>
+          <p class="field-error" id="otp-error" hidden></p>
+          <p class="field-hint">Mode demo: 6 angka apa saja diterima, mis. 123456.</p>
+        </fieldset>
+
+        <button class="btn btn-block" type="submit" id="otp-submit">Verifikasi</button>
+
+        <p class="auth-foot" id="resend-line">Belum menerima kode? <button type="button" class="link-btn" id="resend" disabled>Kirim ulang</button> <span id="resend-timer"></span></p>
+        <p class="auth-foot"><a class="link-btn" id="change-email" href="daftar.html">Ganti email</a></p>
+      </form>
+
+      <!-- Success state -->
+      <section class="auth-card auth-done" id="otp-done" hidden aria-labelledby="done-title">
+        <span class="done-badge" data-icon="verified" data-icon-size="40"></span>
+        <h1 class="auth-title" id="done-title" tabindex="-1">Mahasiswa Terverifikasi</h1>
+        <p class="auth-sub" id="done-text"></p>
+        <span class="tag tag-green done-tag" id="done-email"></span>
+        <a class="btn btn-block" id="done-next" href="index.html">Mulai jelajah barang</a>
+      </section>
+
+      <!-- Nothing waiting for a code (opened directly) -->
+      <section class="auth-card" id="otp-none" hidden>
+        <div class="auth-head">
+          <h1 class="auth-title">Belum ada kode</h1>
+          <p class="auth-sub">Daftar atau minta reset kata sandi dulu, lalu kode dikirim ke email kampusmu.</p>
+        </div>
+        <a class="btn btn-block" href="daftar.html">Daftar</a>
+        <p class="auth-foot"><a class="link-btn" href="masuk.html">Sudah punya akun? Masuk</a></p>
       </section>
     </main>
-
-    <footer id="site-footer"></footer>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/verifikasi.js"></script>
   </body>
 </html>

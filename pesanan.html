@@ -3,29 +3,48 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Pesanan Saya di BaBaKos: pembelian dan penjualan barang bekas kost.">
     <title>Pesanan Saya — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body data-auth="required">
     <header id="site-header"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Pesanan Saya</h1>
-        <p class="placeholder-file">pesanan.html</p>
-        <ul>
-          <li>Tab Pembelian / Penjualan</li>
-          <li>Kartu pesanan + status</li>
-          <li>Filter status: aktif, selesai, dibatalkan</li>
-        </ul>
-      </section>
+    <!-- Pembelian list + Penjualan (Figma "Kelola Pesanan - Penjualan"). Filled by js/pages/pesanan.js. -->
+    <main class="container page orders">
+      <div class="orders-head">
+        <div>
+          <nav class="crumbs" aria-label="Remah roti"><a href="index.html">Beranda</a><span aria-hidden="true">/</span><span>Pesanan Saya</span></nav>
+          <h1 class="h1" id="orders-title">Pesanan Saya</h1>
+        </div>
+        <div class="segmented" role="tablist" aria-label="Jenis pesanan">
+          <button type="button" role="tab" id="tab-pembelian" aria-controls="panel" aria-selected="true" data-tab="pembelian">Pembelian</button>
+          <button type="button" role="tab" id="tab-penjualan" aria-controls="panel" aria-selected="false" data-tab="penjualan">Penjualan</button>
+        </div>
+      </div>
+
+      <div class="orders-tools">
+        <div class="input-group orders-search">
+          <span data-icon="search" data-icon-size="18"></span>
+          <label class="sr-only" for="order-q">Cari pesanan</label>
+          <input class="input" id="order-q" type="search" placeholder="Cari pesanan, nama, atau barang…" autocomplete="off">
+        </div>
+        <div class="chips" id="filters" role="group" aria-label="Status"></div>
+      </div>
+
+      <div id="panel" role="tabpanel" aria-labelledby="tab-pembelian">
+        <ul class="order-list" id="list"></ul>
+        <div class="empty" id="empty" hidden>
+          <span class="empty-icon" data-icon="package" data-icon-size="32"></span>
+          <p class="empty-title" id="empty-title">Belum ada pesanan</p>
+          <p id="empty-text"></p>
+          <a class="btn btn-sm btn-outline" id="empty-cta" href="jelajah.html">Buka katalog</a>
+        </div>
+      </div>
     </main>
 
     <footer id="site-footer"></footer>
@@ -33,5 +52,6 @@
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/pesanan.js"></script>
   </body>
 </html>

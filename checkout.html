@@ -3,37 +3,97 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Atur COD di BaBaKos: pilih titik temu aman di kampus UB, tanggal, dan jam.">
     <title>Atur COD — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body data-auth="required">
-    <header id="site-header"></header>
+    <header id="site-header" data-bar="Atur COD" data-back="jelajah.html"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Atur COD</h1>
-        <p class="placeholder-file">checkout.html</p>
-        <ul>
-          <li>Ringkasan barang &amp; harga</li>
-          <li>Peta mockup kampus UB dengan pin titik COD</li>
-          <li>Pilih titik temu, tanggal &amp; jam</li>
-          <li>Tips keamanan COD</li>
-          <li>Konfirmasi pesanan → halaman lacak</li>
-        </ul>
-      </section>
+    <main class="container page">
+      <!-- Order summary, map of safe meeting points, schedule, payment summary. Filled by js/pages/checkout.js. -->
+      <form class="checkout" id="checkout-form" novalidate>
+        <div class="checkout-main">
+          <section class="card" aria-labelledby="sum-title">
+            <h2 class="h3 card-head" id="sum-title">Ringkasan Barang</h2>
+            <ul class="order-items" id="items"></ul>
+            <div class="checkout-seller" id="seller"></div>
+          </section>
+
+          <section class="card" aria-labelledby="point-title">
+            <div class="card-head">
+              <div>
+                <h2 class="h3" id="point-title">Titik Temu COD</h2>
+                <p class="caption">Pilih tempat ramai di sekitar kampus. Ketuk pin di peta atau pilih dari daftar.</p>
+              </div>
+            </div>
+            <div id="map"></div>
+            <fieldset class="points" id="points">
+              <legend class="sr-only">Titik temu</legend>
+            </fieldset>
+          </section>
+
+          <section class="card" aria-labelledby="when-title">
+            <h2 class="h3 card-head" id="when-title">Jadwal COD</h2>
+            <fieldset class="field">
+              <legend class="field-label">Tanggal</legend>
+              <div class="date-chips" id="dates"></div>
+            </fieldset>
+            <fieldset class="field when-time">
+              <legend class="field-label">Jam</legend>
+              <div class="chips" id="times"></div>
+              <p class="field-hint" id="hours-hint"></p>
+            </fieldset>
+            <div class="field when-note">
+              <label class="field-label" for="note">Catatan untuk penjual <span class="muted">(opsional)</span></label>
+              <textarea class="textarea" id="note" name="note" maxlength="200" placeholder="Mis. aku pakai jaket almamater, tunggu di depan pos satpam."></textarea>
+            </div>
+          </section>
+
+          <section class="card-soft tips" aria-labelledby="tips-title">
+            <h2 class="h3" id="tips-title"><span data-icon="shield"></span>Tips aman COD</h2>
+            <ul>
+              <li>Bertemu di titik ramai yang ada di peta, pada jam terang.</li>
+              <li>Cek barangnya dulu, baru bayar tunai.</li>
+              <li>Tidak sesuai? Jangan bayar, batalkan dari halaman Lacak Pesanan.</li>
+            </ul>
+          </section>
+        </div>
+
+        <aside class="checkout-side">
+          <section class="card pay" aria-labelledby="pay-title">
+            <h2 class="h3 card-head" id="pay-title">Rincian Pembayaran</h2>
+            <dl class="kv" id="pay"></dl>
+            <div class="pay-method">
+              <span class="icon-tile" data-icon="wallet" data-icon-size="20"></span>
+              <div><p class="h3">Tunai saat COD</p><p class="caption">Bayar setelah barang dicek di titik temu.</p></div>
+            </div>
+            <p class="pay-summary caption" id="pay-summary"></p>
+            <button class="btn btn-block" type="submit" id="submit">Buat Pesanan</button>
+          </section>
+        </aside>
+      </form>
+
+      <div class="empty" id="unavailable" hidden>
+        <span class="empty-icon" data-icon="package" data-icon-size="32"></span>
+        <p class="empty-title" id="unavailable-title">Barang tidak bisa dipesan</p>
+        <p id="unavailable-text"></p>
+        <a class="btn btn-sm btn-outline" href="jelajah.html">Cari barang lain</a>
+      </div>
     </main>
 
-    <footer id="site-footer"></footer>
+    <div class="actionbar checkout-bar" id="checkout-bar">
+      <div class="checkout-bar-total"><span class="caption">Total</span><strong id="bar-total"></strong></div>
+      <button class="btn" type="submit" form="checkout-form">Buat Pesanan</button>
+    </div>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/checkout.js"></script>
   </body>
 </html>

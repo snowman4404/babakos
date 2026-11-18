@@ -3,35 +3,61 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Masuk ke BaBaKos dengan email kampus (ac.id).">
     <title>Masuk — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body>
-    <header id="site-header"></header>
+  <body class="auth-page">
+    <!-- Figma Login frame: grey page, white card, maroon title. -->
+    <main class="auth">
+      <a class="wordmark auth-brand" href="index.html">BaBaKos</a>
+      <form class="auth-card" id="login-form" novalidate>
+        <div class="auth-head">
+          <h1 class="auth-title">Selamat Datang Kembali</h1>
+          <p class="auth-sub">Masuk untuk melanjutkan</p>
+        </div>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Masuk</h1>
-        <p class="placeholder-file">masuk.html</p>
-        <ul>
-          <li>Input email kampus (…ac.id)</li>
-          <li>Kirim kode OTP (mock)</li>
-          <li>Link ke Daftar</li>
-        </ul>
-      </section>
+        <div class="auth-fields">
+          <div class="field">
+            <label class="field-label" for="email">Email kampus</label>
+            <input class="input auth-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nama@student.ub.ac.id" aria-describedby="email-error" required>
+            <p class="field-error" id="email-error" hidden></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="password">Kata sandi</label>
+            <div class="input-group">
+              <input class="input auth-input" id="password" name="password" type="password" autocomplete="current-password" placeholder="Minimal 8 karakter" aria-describedby="password-hint password-error" required>
+              <button type="button" class="icon-btn input-suffix-btn" data-toggle-password aria-controls="password" aria-pressed="false" aria-label="Tampilkan kata sandi" data-icon="eye" data-icon-size="20"></button>
+            </div>
+            <p class="field-hint" id="password-hint">Kombinasi minimal 8 huruf, angka, dan simbol.</p>
+            <p class="field-error" id="password-error" hidden></p>
+          </div>
+          <div class="auth-row">
+            <label class="check"><input type="checkbox" name="remember" checked><span>Ingat saya</span></label>
+            <button type="button" class="link-btn" id="forgot">Lupa kata sandi?</button>
+          </div>
+        </div>
+
+        <button class="btn btn-block" type="submit">Masuk</button>
+
+        <div class="demo-box">
+          <span data-icon="info"></span>
+          <p>Mode demo: email apa saja yang berakhiran <strong>ac.id</strong> dan kata sandi minimal 8 karakter.</p>
+          <button type="button" class="link-btn" id="fill-demo">Isi akun demo</button>
+        </div>
+
+        <p class="auth-foot">Belum punya akun? <a class="link-btn" id="to-signup" href="daftar.html">Daftar</a></p>
+      </form>
+      <a class="auth-back" href="index.html"><span data-icon="arrow-left"></span>Kembali ke Beranda</a>
     </main>
-
-    <footer id="site-footer"></footer>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/masuk.js"></script>
   </body>
 </html>

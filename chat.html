@@ -3,36 +3,65 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Chat dengan penjual BaBaKos. Barang yang ditanyakan otomatis terlampir.">
     <title>Chat — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body data-auth="required">
+  <body data-auth="required" class="chat-page">
     <header id="site-header"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Chat</h1>
-        <p class="placeholder-file">chat.html</p>
-        <ul>
-          <li>Daftar percakapan (kiri) + ruang chat (kanan), satu kolom di HP</li>
-          <li>Kartu produk otomatis terlampir di atas percakapan</li>
-          <li>Bubble pesan + input</li>
-          <li>Shortcut: Ajukan COD / Lihat pesanan</li>
-        </ul>
-      </section>
-    </main>
+    <!-- List of conversations + the open room (Figma floating chat widget style). Filled by js/pages/chat.js. -->
+    <main class="container chat" id="chat">
+      <aside class="chat-list" aria-labelledby="list-title">
+        <div class="chat-list-head">
+          <h1 class="h2" id="list-title">Chat</h1>
+          <p class="caption" id="list-sub"></p>
+        </div>
+        <ul class="threads" id="threads"></ul>
+      </aside>
 
-    <footer id="site-footer"></footer>
+      <section class="room" id="room" aria-label="Percakapan" hidden>
+        <header class="room-head">
+          <button type="button" class="icon-btn icon-btn-soft room-back" id="room-back" aria-label="Kembali ke daftar chat" data-icon="chevron-left" data-icon-size="20"></button>
+          <a class="room-who" id="room-who" href="profil.html">
+            <span class="avatar" id="room-avatar" aria-hidden="true"></span>
+            <span>
+              <span class="room-name" id="room-name"></span>
+              <span class="room-status"><span class="online-dot"></span><span id="room-status">Online</span></span>
+            </span>
+          </a>
+          <a class="icon-btn icon-btn-soft" id="room-product-link" href="produk.html" aria-label="Lihat barang" data-icon="bag" data-icon-size="18"></a>
+        </header>
+
+        <div class="room-context" id="room-context"></div>
+
+        <ol class="messages" id="messages" aria-live="polite"></ol>
+
+        <div class="room-foot">
+          <div class="quick" id="quick" role="group" aria-label="Balasan cepat"></div>
+          <form class="composer" id="composer">
+            <label class="sr-only" for="msg">Tulis pesan</label>
+            <input id="msg" name="msg" autocomplete="off" placeholder="Tulis pesan…" maxlength="500" enterkeyhint="send">
+            <button class="send-btn" type="submit" aria-label="Kirim" data-icon="send" data-icon-size="20"></button>
+          </form>
+        </div>
+      </section>
+
+      <div class="room-empty" id="room-empty">
+        <span class="empty-icon" data-icon="messages" data-icon-size="32"></span>
+        <p class="empty-title">Pilih percakapan</p>
+        <p>Atau buka barang di katalog lalu tekan Chat. Kartu barangnya akan otomatis terlampir.</p>
+        <a class="btn btn-sm btn-outline" href="jelajah.html">Buka katalog</a>
+      </div>
+    </main>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/chat.js"></script>
   </body>
 </html>

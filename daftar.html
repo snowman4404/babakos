@@ -3,36 +3,84 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Daftar BaBaKos dengan email kampus (ac.id). Khusus mahasiswa.">
     <title>Daftar — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body>
-    <header id="site-header"></header>
+  <body class="auth-page">
+    <!-- Figma Signup frame, plus faculty and kost area for distances. -->
+    <main class="auth">
+      <a class="wordmark auth-brand" href="index.html">BaBaKos</a>
+      <form class="auth-card" id="signup-form" novalidate>
+        <div class="auth-head">
+          <h1 class="auth-title">Daftar Gratis</h1>
+          <p class="auth-sub">Khusus mahasiswa dengan email kampus (ac.id)</p>
+        </div>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Daftar</h1>
-        <p class="placeholder-file">daftar.html</p>
-        <ul>
-          <li>Nama, email kampus, fakultas, area kost</li>
-          <li>Validasi email harus berakhiran ac.id</li>
-          <li>Checkbox syarat &amp; ketentuan</li>
-          <li>Lanjut ke verifikasi</li>
-        </ul>
-      </section>
+        <ol class="auth-steps" aria-label="Langkah daftar">
+          <li aria-current="step"><span>1</span>Data diri</li>
+          <li><span>2</span>Verifikasi email</li>
+        </ol>
+
+        <div class="auth-fields">
+          <div class="auth-split">
+            <div class="field">
+              <label class="field-label" for="first">Nama depan</label>
+              <input class="input auth-input" id="first" name="first" autocomplete="given-name" placeholder="Rizky" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="last">Nama belakang</label>
+              <input class="input auth-input" id="last" name="last" autocomplete="family-name" placeholder="Pratama">
+            </div>
+          </div>
+          <p class="field-error" id="name-error" hidden></p>
+
+          <div class="field">
+            <label class="field-label" for="email">Email kampus</label>
+            <input class="input auth-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nama@student.ub.ac.id" aria-describedby="email-hint email-error" required>
+            <p class="field-hint" id="email-hint">Kode verifikasi dikirim ke email ini.</p>
+            <p class="field-error" id="email-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="password">Kata sandi</label>
+            <div class="input-group">
+              <input class="input auth-input" id="password" name="password" type="password" autocomplete="new-password" placeholder="Minimal 8 karakter" aria-describedby="password-meter password-error" required>
+              <button type="button" class="icon-btn input-suffix-btn" data-toggle-password aria-controls="password" aria-pressed="false" aria-label="Tampilkan kata sandi" data-icon="eye" data-icon-size="20"></button>
+            </div>
+            <div class="meter" id="password-meter" aria-live="polite"><span class="meter-bar"><span id="meter-fill"></span></span><span id="meter-text">Kombinasi minimal 8 huruf, angka, dan simbol.</span></div>
+            <p class="field-error" id="password-error" hidden></p>
+          </div>
+
+          <div class="auth-split">
+            <div class="field">
+              <label class="field-label" for="faculty">Fakultas</label>
+              <span class="select"><select id="faculty" name="faculty" required></select></span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="area">Area kost</label>
+              <span class="select"><select id="area" name="area" required></select></span>
+            </div>
+          </div>
+
+          <label class="check"><input type="checkbox" name="terms" id="terms"><span>Saya setuju bertransaksi jujur dan hanya COD di titik aman kampus.</span></label>
+          <p class="field-error" id="terms-error" hidden></p>
+        </div>
+
+        <button class="btn btn-block" type="submit">Kirim Kode Verifikasi</button>
+
+        <p class="auth-foot">Sudah punya akun? <a class="link-btn" id="to-login" href="masuk.html">Masuk</a></p>
+      </form>
+      <a class="auth-back" href="index.html"><span data-icon="arrow-left"></span>Kembali ke Beranda</a>
     </main>
-
-    <footer id="site-footer"></footer>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/daftar.js"></script>
   </body>
 </html>

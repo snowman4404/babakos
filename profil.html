@@ -3,37 +3,27 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
+    <meta name="description" content="Profil BaBaKos: akun, pesanan, wishlist, dan profil penjual terverifikasi.">
     <title>Profil — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <header id="site-header"></header>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Profil</h1>
-        <p class="placeholder-file">profil.html</p>
-        <ul>
-          <li>Tanpa ?id: profil sendiri (wajib login). Dengan ?id=u2: profil penjual</li>
-          <li>Avatar, nama, fakultas, badge Terverifikasi ac.id</li>
-          <li>Rating &amp; jumlah terjual</li>
-          <li>Daftar barang dijual</li>
-          <li>Keluar (profil sendiri)</li>
-        </ul>
-      </section>
-    </main>
+    <!-- Own profile: Figma "Dashboard profil" (sidebar + panels). Seller profile: profil.html?id=u2. Filled by js/pages/profil.js. -->
+    <main class="container page" id="profile"></main>
+
+    <a class="chat-launcher" id="chat-launcher" href="chat.html" hidden><span data-icon="messages" data-icon-size="22"></span>Buka Chat</a>
 
     <footer id="site-footer"></footer>
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/profil.js"></script>
   </body>
 </html>
