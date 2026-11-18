@@ -1,11 +1,11 @@
 /*
  * Atur COD (checkout.html?product=p1, or ?items=p1,p3,p14 for the buyer's own bundle from
  * one seller). Summary of the item(s), a free-text meeting place (suggestion chips and the
- * illustrated campus map only fill the input), a COD date (today up to 7 days from now,
- * any time of day; BBK.codDateError) and time, a note, and the payment summary (cash at the
- * COD). "Buat Pesanan" saves a
- * new order in BBK.store, marks the items as reserved, empties the seller's cart when the
- * order came from ?items, posts a message in the chat and opens lacak.html.
+ * illustrated campus map only fill the input), a COD date (today up to 7 days from now) and
+ * a time (any hour, but not already past when the date is today; BBK.codWhenProblem), a note,
+ * and the payment summary (cash at the COD). "Buat Pesanan" saves a new order in BBK.store,
+ * marks the items as reserved, empties the seller's cart when the order came from ?items,
+ * posts a message in the chat and opens lacak.html.
  */
 (function () {
   const $ = (selector) => document.querySelector(selector); // tiny querySelector alias
@@ -106,14 +106,15 @@
     return !text;
   }
   const checkPlace = () => setError(place, BBK.meetingPlaceError(place.value));
-  // Only the date is limited; the time just has to be filled in. One error box serves both inputs.
+  // One error box serves both inputs; BBK.codWhenProblem says which input is at fault.
   const checkWhen = () => {
-    const dateText = BBK.codDateError(whenDate.value, new Date());
-    const timeText = dateText || whenTime.value ? '' : 'Pilih jam COD.';
-    setError(whenDate, dateText, 'when-error');
-    if (!dateText) setError(whenTime, timeText, 'when-error');
-    else whenTime.setAttribute('aria-invalid', 'false');
-    return !dateText && !timeText;
+    const problem = BBK.codWhenProblem(whenDate.value, whenTime.value, new Date());
+    const box = $('#when-error');
+    box.textContent = problem ? problem.message : '';
+    box.hidden = !problem;
+    whenDate.setAttribute('aria-invalid', String(!!problem && problem.field === 'date'));
+    whenTime.setAttribute('aria-invalid', String(!!problem && problem.field === 'time'));
+    return !problem;
   };
   place.addEventListener('blur', checkPlace);
   whenDate.addEventListener('blur', () => whenDate.value && checkWhen());

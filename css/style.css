@@ -1080,8 +1080,7 @@ button {
 
 .nav-chat,
 .nav-sell,
-.nav-divider,
-.account {
+.nav-divider {
   display: none;
 }
 
@@ -1118,6 +1117,11 @@ button {
 
 .account-btn .icon {
   transition: transform 0.2s var(--ease);
+}
+
+.account-btn > .icon,
+.account-name {
+  display: none; /* phones: avatar only */
 }
 
 .account-name {
@@ -1190,9 +1194,13 @@ button {
   }
 
   .nav-chat,
-  .nav-divider,
-  .account {
+  .nav-divider {
     display: inline-flex;
+  }
+
+  .account-btn > .icon,
+  .account-name {
+    display: block;
   }
 
   .nav-loc {

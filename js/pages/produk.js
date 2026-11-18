@@ -126,7 +126,7 @@
   let actions;
   if (isOwn) {
     say(`${BBK.icon('info', 18)}<span>Ini barang yang kamu jual.</span>`);
-    actions = `<a class="btn btn-outline" href="profil.html">Lihat di profil</a><a class="btn" href="pesanan.html?tab=penjualan">Kelola pesanan</a>`;
+    actions = `<a class="btn" href="profil.html">Lihat di profil</a>`;
   } else if (myOrder) {
     say(`${BBK.icon('circle-check', 18)}<span>Kamu sudah memesan barang ini (${esc(BBK.statusLabel(myOrder.status))}).</span>`);
     actions = `${chatIcon}<a class="btn" href="lacak.html?id=${encodeURIComponent(myOrder.id)}">Lacak pesanan</a>`;

@@ -8,14 +8,17 @@
  *   never cancels the order), mark the meeting.
  * Once the seller approves the schedule (jadwal-cod onward) it is final: nobody can cancel
  * the order, the buyer cannot edit the place/time, and the seller cannot reject the schedule.
- * The COD date the buyer picks must be within 7 days of the order date; the time is free.
+ * The COD date the buyer picks must be within 7 days of the order date (BBK.codWhenProblem); the
+ * time is free but cannot be past on today. When that window has already passed the pencil
+ * buttons are hidden (BBK.canEditSchedule). Every action first re-reads the order from storage,
+ * so a stale tab cannot cancel or edit an order the seller agreed to in another tab.
  * A demo button plays the other side so the whole flow can be shown alone.
  */
 (function () {
   const $ = (selector) => document.querySelector(selector); // tiny querySelector alias
   const esc = BBK.escape;
   const me = BBK.auth.currentUser();
-  const o = BBK.getOrder(BBK.param('id'));
+  let o = BBK.getOrder(BBK.param('id')); // replaced by a fresh copy from storage before every action (see syncOrder)
 
   if (!o || (o.buyerId !== me.id && o.sellerId !== me.id)) {
     $('#missing').hidden = false;
@@ -31,11 +34,11 @@
   document.title = `Pesanan ${o.id} — BaBaKos`;
 
   const STEP_ICONS = ['clock', 'circle-check', 'calendar', 'users', 'package'];
-  const LIVE = ['menunggu-konfirmasi', 'dikonfirmasi', 'jadwal-cod']; // statuses that show the schedule approval state
-  const NEGOTIABLE = ['menunggu-konfirmasi', 'dikonfirmasi']; // before approval: buyer may change place/time, seller may reject the schedule
+  const SHOWS_SCHEDULE_STATE = ['menunggu-konfirmasi', 'dikonfirmasi', 'jadwal-cod']; // statuses that show the schedule approval state
   const SCHEDULE_LABEL = { menunggu: 'Menunggu persetujuan penjual', disetujui: 'Disetujui penjual', ditolak: 'Ditolak penjual' };
   let editing = null; // 'when' | 'place' | null (buyer's inline form)
   let rejecting = false; // seller's inline "reason" form for Tolak Jadwal COD
+  let shownStatus = o.status; // status the page was last rendered with, to spot changes made in another tab
 
   function render() {
     const idx = BBK.stepIndex(o.status);
@@ -85,7 +88,7 @@
       })
       .join('');
     const cancelEntry = BBK.stepEntry(o, 'dibatalkan');
-    const live = LIVE.includes(o.status);
+    const live = SHOWS_SCHEDULE_STATE.includes(o.status);
     $('#t-status-kv').innerHTML = `
       <div><dt>Status pesanan</dt><dd class="status-text is-${BBK.statusTone(o.status)}">${esc(BBK.statusLabel(o.status))}</dd></div>
       ${live ? `<div><dt>Jadwal dan lokasi COD</dt><dd>${esc(SCHEDULE_LABEL[o.schedule] || SCHEDULE_LABEL.menunggu)}</dd></div>` : ''}
@@ -101,7 +104,7 @@
     /* Schedule + place (the buyer can edit both while the order is still open) */
     const confirmed = BBK.stepEntry(o, 'dikonfirmasi');
     const finished = BBK.stepEntry(o, 'selesai');
-    const canEdit = isBuyer && NEGOTIABLE.includes(o.status);
+    const canEdit = isBuyer && BBK.canEditSchedule(o);
     const pencil = (field, label) =>
       canEdit && editing !== field
         ? `<button type="button" class="icon-btn icon-btn-soft edit-btn" data-act="edit" data-field="${field}" aria-label="${label}" title="${label}">${BBK.icon('pencil', 16)}</button>`
@@ -126,6 +129,7 @@
         ${placeValue}<p class="caption">${esc(buyer.name)} — ${esc(buyer.email)}</p></div></li>`;
     const field = editing && $(editing === 'when' ? '#e-when-date' : '#e-place');
     if (field) field.focus();
+    shownStatus = o.status;
 
     /* Payment: every item, then the total */
     $('#t-pay').innerHTML = `
@@ -154,7 +158,10 @@
     const changed = o.timeline.some((t) => t.event);
     let tone = '';
     let text = '';
-    if (s === 'jadwal-cod' || s === 'bertemu') {
+    if (isBuyer && !BBK.isScheduleLocked(o) && !BBK.canEditSchedule(o)) {
+      tone = 'is-pending';
+      text = 'Batas ubah jadwal 7 hari sudah lewat. Hubungi penjual lewat chat atau batalkan pesanan.';
+    } else if (s === 'jadwal-cod' || s === 'bertemu') {
       tone = 'is-agreed';
       text = 'Jadwal dan lokasi COD sudah disepakati dan tidak bisa diubah. Pesanan tidak bisa dibatalkan.';
     } else if (s === 'dikonfirmasi' || (s === 'menunggu-konfirmasi' && changed)) {
@@ -186,7 +193,7 @@
       if (s === 'jadwal-cod' || s === 'bertemu') html = `${chat}<button type="button" class="btn" data-act="received">Konfirmasi Barang Diterima</button>`;
       else if (s === 'selesai') html = `${chat}<a class="btn" href="jelajah.html">Belanja lagi</a>`;
       else html = chat;
-      if (NEGOTIABLE.includes(s)) html += `<button type="button" class="btn btn-danger-soft" data-act="cancel">Batalkan pesanan</button>`;
+      if (BBK.OPEN_STATUSES.includes(s)) html += `<button type="button" class="btn btn-danger-soft" data-act="cancel">Batalkan pesanan</button>`;
     } else {
       if (s === 'menunggu-konfirmasi') html = `<button type="button" class="btn btn-danger-soft" data-act="reject">Tolak Pesanan</button><button type="button" class="btn" data-act="accept">Terima Pesanan</button>`;
       else if (s === 'dikonfirmasi') {
@@ -217,7 +224,7 @@
       if (s === 'menunggu-konfirmasi') steps.push(['dikonfirmasi', 'Penjual menerima pesanan']);
       else if (s === 'dikonfirmasi' && o.schedule !== 'ditolak') steps.push(['jadwal-cod', 'Penjual menyetujui jadwal'], ['schedule-reject', 'Penjual menolak jadwal']);
       else if (s === 'jadwal-cod') steps.push(['bertemu', 'Kalian bertemu di titik COD']);
-    } else if (s === 'dikonfirmasi' && o.schedule === 'ditolak') steps.push(['schedule-change', 'Pembeli mengubah jadwal']);
+    } else if (s === 'dikonfirmasi' && o.schedule === 'ditolak' && BBK.canEditSchedule(o)) steps.push(['schedule-change', 'Pembeli mengubah jadwal']);
     else if (s === 'jadwal-cod') steps.push(['bertemu', 'Pembeli datang ke titik COD']);
     else if (s === 'bertemu') steps.push(['selesai', 'Pembeli konfirmasi barang diterima']);
     demo.hidden = !steps.length;
@@ -229,19 +236,50 @@
 
   const scheduleNote = () => `${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`;
 
+  /**
+   * Re-read the order from storage before acting on it: another tab may have changed it since this
+   * page was drawn. Returns true when it is safe to go on. Otherwise the page is redrawn with a
+   * toast (agreedText when the seller has agreed in the meantime, a general note for any other
+   * change) and false is returned, so the stale action is never applied.
+   */
+  function syncOrder(agreedText = '') {
+    o = BBK.reloadOrder(o.id) || o;
+    const agreed = !!agreedText && BBK.AGREED_STATUSES.includes(o.status);
+    if (!agreed && o.status === shownStatus) return true;
+    rejecting = false;
+    editing = null;
+    BBK.toast(agreed ? agreedText : 'Pesanan sudah berubah di tab lain. Tampilan diperbarui.');
+    render();
+    return false;
+  }
+
+  const CONFIRMS = {
+    cancel: { title: 'Batalkan pesanan ini?', text: 'Barang akan tersedia lagi untuk pembeli lain.', ok: 'Ya, batalkan', cancel: 'Kembali', danger: true },
+    reject: { title: 'Tolak pesanan ini?', text: `${otherUser.name} akan diberi tahu lewat chat.`, ok: 'Tolak', cancel: 'Kembali', danger: true },
+    received: { title: 'Barang sudah diterima dan dicek?', text: 'Pastikan barang sesuai dan sudah dibayar tunai. Setelah ini transaksi selesai.', ok: 'Ya, selesai' },
+  };
+  const AGREED_TEXT = { cancel: 'Pesanan sudah disepakati, tidak bisa dibatalkan.', edit: 'Pesanan sudah disepakati, tidak bisa diubah.' };
+  const ACTIONS = ['cancel', 'reject', 'accept', 'schedule', 'schedule-reject', 'edit', 'met', 'received', 'demo'];
+
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('[data-act]');
     if (!b) return;
     const act = b.dataset.act;
+    if (act === 'reject-cancel') {
+      rejecting = false;
+      render();
+      return;
+    }
+    if (act === 'edit-cancel') {
+      editing = null;
+      render();
+      return;
+    }
+    if (!ACTIONS.includes(act)) return;
+    if (CONFIRMS[act] && !(await BBK.confirm(CONFIRMS[act]))) return;
+    if (!syncOrder(AGREED_TEXT[act])) return;
+
     if (act === 'cancel' || act === 'reject') {
-      const ok = await BBK.confirm({
-        title: act === 'cancel' ? 'Batalkan pesanan ini?' : 'Tolak pesanan ini?',
-        text: act === 'cancel' ? 'Barang akan tersedia lagi untuk pembeli lain.' : `${otherUser.name} akan diberi tahu lewat chat.`,
-        ok: act === 'cancel' ? 'Ya, batalkan' : 'Tolak',
-        cancel: 'Kembali',
-        danger: true,
-      });
-      if (!ok) return;
       BBK.setOrderStatus(o, 'dibatalkan', act === 'cancel' ? 'Dibatalkan pembeli' : 'Ditolak penjual');
       BBK.toast(act === 'cancel' ? 'Pesanan dibatalkan.' : 'Pesanan ditolak.');
     } else if (act === 'accept') {
@@ -256,28 +294,14 @@
       const field = $('#reject-reason');
       if (field) field.focus();
       return;
-    } else if (act === 'reject-cancel') {
-      rejecting = false;
-      render();
-      return;
     } else if (act === 'edit') {
       editing = b.dataset.field;
-      render();
-      return;
-    } else if (act === 'edit-cancel') {
-      editing = null;
       render();
       return;
     } else if (act === 'met') {
       BBK.setOrderStatus(o, 'bertemu');
       BBK.toast('Ditandai sudah bertemu.');
     } else if (act === 'received') {
-      const ok = await BBK.confirm({
-        title: 'Barang sudah diterima dan dicek?',
-        text: 'Pastikan barang sesuai dan sudah dibayar tunai. Setelah ini transaksi selesai.',
-        ok: 'Ya, selesai',
-      });
-      if (!ok) return;
       if (o.status === 'jadwal-cod') BBK.setOrderStatus(o, 'bertemu');
       BBK.setOrderStatus(o, 'selesai', isBuyer ? 'Pembeli konfirmasi barang diterima' : 'Penjual konfirmasi COD selesai');
       BBK.toast('Transaksi selesai. Terima kasih!');
@@ -297,7 +321,7 @@
         BBK.setOrderStatus(o, to, to === 'jadwal-cod' ? scheduleNote() : to === 'selesai' ? 'Pembeli konfirmasi barang diterima' : undefined);
         BBK.toast(BBK.orderSteps.find((s) => s.status === to).long + '.');
       }
-    } else return;
+    }
     rejecting = false;
     editing = null;
     render();
@@ -309,7 +333,9 @@
     const form = e.target;
     if (form.id === 'reject-form') {
       e.preventDefault();
-      BBK.toast(BBK.rejectSchedule(o, $('#reject-reason').value.trim()) ? 'Jadwal COD ditolak. Pembeli diminta mengubahnya.' : 'Jadwal COD sudah disepakati dan tidak bisa ditolak.');
+      if (!syncOrder('Jadwal COD sudah disepakati dan tidak bisa ditolak.')) return;
+      BBK.rejectSchedule(o, $('#reject-reason').value.trim());
+      BBK.toast('Jadwal COD ditolak. Pembeli diminta mengubahnya.');
       rejecting = false;
       render();
       return;
@@ -317,23 +343,27 @@
     if (!form.dataset.form) return;
     e.preventDefault();
     const field = form.dataset.form;
-    const error = form.querySelector('.field-error');
     const [input, timeInput] = form.querySelectorAll('input');
-    // Only the date is limited (today .. 7 days after the order was made); the time is free.
-    const dateProblem = field === 'when' ? BBK.codDateError(input.value, o.createdAt) : BBK.meetingPlaceError(input.value);
-    const problem = dateProblem || (field === 'when' ? BBK.codWhenError(input.value, timeInput.value, o.createdAt) : '');
-    if (problem) {
-      const bad = dateProblem ? input : timeInput;
-      error.textContent = problem;
+    // The date must be inside the window (today .. 7 days after the order was made); the time is free but not past on today.
+    let fieldError = null; // { input, message } of the first problem
+    if (field === 'when') {
+      const problem = BBK.codWhenProblem(input.value, timeInput.value, o.createdAt);
+      if (problem) fieldError = { input: problem.field === 'time' ? timeInput : input, message: problem.message };
+    } else {
+      const message = BBK.meetingPlaceError(input.value);
+      if (message) fieldError = { input, message };
+    }
+    if (fieldError) {
+      const error = form.querySelector('.field-error');
+      error.textContent = fieldError.message;
       error.hidden = false;
-      form.querySelectorAll('input').forEach((el) => el.setAttribute('aria-invalid', String(el === bad)));
-      bad.focus();
+      form.querySelectorAll('input').forEach((el) => el.setAttribute('aria-invalid', String(el === fieldError.input)));
+      fieldError.input.focus();
       return;
     }
-    const changed = BBK.changeSchedule(o, field === 'when' ? { scheduledAt: BBK.codWhenISO(input.value, timeInput.value) } : { meetingPlace: input.value.trim() });
-    if (!changed) {
-      BBK.toast('Jadwal dan lokasi COD sudah disepakati dan tidak bisa diubah.');
-    } else BBK.toast('Diubah. Menunggu persetujuan penjual.');
+    if (!syncOrder(AGREED_TEXT.edit)) return;
+    BBK.changeSchedule(o, field === 'when' ? { scheduledAt: BBK.codWhenISO(input.value, timeInput.value) } : { meetingPlace: input.value.trim() });
+    BBK.toast('Diubah. Menunggu persetujuan penjual.');
     editing = null;
     render();
   });

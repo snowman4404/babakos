@@ -231,7 +231,7 @@
         <a class="btn btn-primary btn-sm nav-sell" href="jual.html">${BBK.icon('plus', 16)}Jual</a>
         <span class="nav-divider" aria-hidden="true"></span>
         <div class="account">
-          <button type="button" class="account-btn" id="account-btn" aria-expanded="false" aria-controls="account-menu">
+          <button type="button" class="account-btn" id="account-btn" aria-label="Menu akun" aria-expanded="false" aria-controls="account-menu">
             ${BBK.avatar(user, 'sm')}<span class="account-name">${esc(username)}</span>${BBK.icon('chevron-down', 16)}
           </button>
           <div class="account-menu" id="account-menu" hidden>
@@ -325,7 +325,7 @@
       }
     });
 
-    // Phone tab bar (Figma "Menu List": Home, Chat, Orders, Account).
+    // Phone tab bar (Figma "Menu List", without Orders: Pesanan Saya lives in the account menu, which the compact avatar button opens on phones).
     const tab = (href, icon, label, extra = '') =>
       `<a href="${href}"${here(href)}>${BBK.icon(icon, 22)}<span>${label}</span>${extra}</a>`;
     const tabs = document.createElement('nav');
@@ -335,7 +335,6 @@
       ? tab('index.html', 'house', 'Beranda') +
         tab('jelajah.html', 'grid', 'Katalog') +
         tab('chat.html', 'chat-dots', 'Chat', unread ? `<span class="badge-dot">${unread}</span>` : '') +
-        tab('pesanan.html', 'package', 'Pesanan') +
         tab('profil.html', 'user', 'Akun')
       : tab('index.html', 'house', 'Beranda') + tab('jelajah.html', 'grid', 'Katalog') + tab('masuk.html', 'user', 'Masuk');
     document.body.append(tabs);

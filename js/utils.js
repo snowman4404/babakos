@@ -131,6 +131,10 @@
 
   /** Statuses at or after "Jadwal COD": the seller has agreed to the COD place and time. */
   BBK.AGREED_STATUSES = ['jadwal-cod', 'bertemu', 'selesai'];
+  /** Statuses before the seller approves the schedule (the rest of BBK.orderSteps): place/time can still change, the order can still be cancelled. */
+  BBK.OPEN_STATUSES = BBK.orderSteps.map((s) => s.status).filter((status) => !BBK.AGREED_STATUSES.includes(status));
+  /** True once the order is agreed or cancelled: the buyer cannot edit place/time and the seller cannot reject the schedule. */
+  BBK.isScheduleLocked = (o) => !BBK.OPEN_STATUSES.includes(o.status);
 
   // Orders saved by an older version used meetingPointId and had no schedule approval state.
   // Migrate them once and save, so they are not migrated again on every load.
@@ -185,8 +189,21 @@
   BBK.statusTone = (status) =>
     ({ selesai: 'done', dibatalkan: 'cancelled', 'menunggu-konfirmasi': 'waiting' })[status] || 'active';
 
-  /** Move an order to a status, stamp the timeline, update the items, save. */
+  /**
+   * Re-read the orders from storage (another tab may have changed them since this page loaded)
+   * and return the fresh order, or undefined when it no longer exists.
+   */
+  BBK.reloadOrder = (id) => {
+    BBK.orders = BBK.store.get('orders', BBK.orders);
+    return BBK.getOrder(id);
+  };
+
+  /**
+   * Move an order to a status, stamp the timeline, update the items, save.
+   * Returns false (no change) when asked to cancel an order the seller has already agreed to.
+   */
   BBK.setOrderStatus = (o, status, note) => {
+    if (status === 'dibatalkan' && BBK.AGREED_STATUSES.includes(o.status)) return false;
     o.status = status;
     if (status === 'jadwal-cod') {
       o.schedule = 'disetujui';
@@ -196,6 +213,7 @@
     if (status === 'selesai') BBK.save.productStatus(o.productIds, 'terjual');
     if (status === 'dibatalkan') BBK.save.productStatus(o.productIds, 'tersedia');
     BBK.save.orders();
+    return true;
   };
 
   /**
@@ -239,6 +257,11 @@
     const c = new Date(createdAt || Date.now());
     return { min: BBK.toDateInput(new Date()), max: BBK.toDateInput(new Date(c.getFullYear(), c.getMonth(), c.getDate() + BBK.COD_MAX_DAYS)) };
   };
+  /** False when today is already past the window of an order (it can never get a valid COD date again). */
+  BBK.canEditSchedule = (o) => {
+    const { min, max } = BBK.codDateWindow(o.createdAt);
+    return !BBK.isScheduleLocked(o) && min <= max;
+  };
   /** Hint under the COD date input, e.g. "… (sampai Jumat, 27 November 2026). Jamnya bebas." */
   BBK.codDateHint = (createdAt) => {
     const { max } = BBK.codDateWindow(createdAt);
@@ -254,8 +277,20 @@
     if (value > max) return `Tanggal COD paling lambat ${BBK.COD_MAX_DAYS} hari setelah pesanan dibuat (${BBK.formatDate(max + 'T12:00')}).`;
     return '';
   };
-  /** Date + time input values -> error message ('' when fine). Only the date is limited; the time just has to be filled in. */
-  BBK.codWhenError = (date, time, createdAt) => BBK.codDateError(date, createdAt) || (time ? '' : 'Pilih jam COD.');
+  /**
+   * Date + time input values -> null when fine, else { field: 'date' | 'time', message }.
+   * The date must be inside the window; the time of day is free, but when the date is today it
+   * cannot already be past (compared by the minute).
+   */
+  BBK.codWhenProblem = (date, time, createdAt) => {
+    const dateError = BBK.codDateError(date, createdAt);
+    if (dateError) return { field: 'date', message: dateError };
+    if (!time) return { field: 'time', message: 'Pilih jam COD.' };
+    if (date === BBK.toDateInput(new Date()) && time < BBK.toTimeInput(new Date())) {
+      return { field: 'time', message: 'Jam ini sudah lewat. Pilih jam lain atau tanggal berikutnya.' };
+    }
+    return null;
+  };
   /** Date + time input values (local time) -> ISO string. */
   BBK.codWhenISO = (date, time) => new Date(`${date}T${time}`).toISOString();
 
@@ -264,25 +299,25 @@
     String(value || '').trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan masjid kampus.';
 
   /* Schedule approval: the buyer changes place/time, the seller approves or rejects (never cancels). Once approved the schedule is final. */
-  const reopenSchedule = (o, state, reason, note) => {
+  const recordScheduleEvent = (o, state, reason, note) => {
     o.schedule = state;
     if (reason) o.scheduleReason = reason;
     else delete o.scheduleReason;
     o.timeline.push({ status: o.status, at: new Date().toISOString(), event: 'jadwal', note });
     BBK.save.orders();
   };
-  /** Buyer edits place and/or time; the seller must approve again. Returns false (no change) once the schedule is agreed. */
+  /** Buyer edits place and/or time; the seller must approve again. Returns false (no change) once the order is agreed or cancelled. */
   BBK.changeSchedule = (o, { meetingPlace, scheduledAt }) => {
-    if (BBK.AGREED_STATUSES.includes(o.status) || o.status === 'dibatalkan') return false;
+    if (BBK.isScheduleLocked(o)) return false;
     if (meetingPlace) o.meetingPlace = meetingPlace;
     if (scheduledAt) o.scheduledAt = scheduledAt;
-    reopenSchedule(o, 'menunggu', '', `Jadwal diubah pembeli: ${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`);
+    recordScheduleEvent(o, 'menunggu', '', `Jadwal diubah pembeli: ${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`);
     return true;
   };
-  /** Seller rejects the schedule; the order stays alive. Returns false (no change) once the schedule is agreed. */
+  /** Seller rejects the schedule; the order stays alive. Returns false (no change) once the order is agreed or cancelled. */
   BBK.rejectSchedule = (o, reason) => {
-    if (BBK.AGREED_STATUSES.includes(o.status) || o.status === 'dibatalkan') return false;
-    reopenSchedule(o, 'ditolak', reason, reason ? `Jadwal ditolak penjual: ${reason}` : 'Jadwal ditolak penjual');
+    if (BBK.isScheduleLocked(o)) return false;
+    recordScheduleEvent(o, 'ditolak', reason, reason ? `Jadwal ditolak penjual: ${reason}` : 'Jadwal ditolak penjual');
     return true;
   };
 
