@@ -1,7 +1,7 @@
 /*
  * Profil (profil.html, profil.html#wishlist, profil.html?id=u2).
  * - Own account: the Figma "Dashboard profil" — sidebar menu and panels for
- *   Profil Saya, Barang Saya, Wishlist, Keamanan Akun, Pusat Bantuan.
+ *   Akun Saya, Barang Saya, Wishlist, Keamanan Akun, Pusat Bantuan.
  * - Someone else (?id=): public seller profile with listings and reviews.
  */
 (function () {
@@ -23,7 +23,7 @@
   function renderOwn() {
     const username = me.email.split('@')[0];
     const PANELS = [
-      ['profil', 'user', 'Profil Saya'],
+      ['profil', 'user', 'Akun Saya'],
       ['pesanan', 'package', 'Pesanan Saya', 'pesanan.html'],
       ['barang', 'tag', 'Barang Saya'],
       ['wishlist', 'heart', 'Wishlist'],
@@ -54,8 +54,10 @@
       keamanan: keamananPanel,
       bantuan: bantuanPanel,
     };
-    const crumbs = (label) =>
-      `<nav class="crumbs" aria-label="Remah roti"><a href="index.html">Beranda</a><span aria-hidden="true">/</span><a href="#profil">Akun Saya</a><span aria-hidden="true">/</span><span>${label}</span></nav>`;
+    const crumbs = (label, key) =>
+      `<nav class="crumbs" aria-label="Remah roti"><a href="index.html">Beranda</a><span aria-hidden="true">/</span>${
+        key === 'profil' ? '<span>Akun Saya</span>' : `<a href="#profil">Akun Saya</a><span aria-hidden="true">/</span><span>${label}</span>`
+      }</nav>`;
 
     function show(key, focus) {
       if (!panels[key]) key = 'profil';
@@ -64,14 +66,14 @@
         else a.removeAttribute('aria-current');
       });
       const label = [...PANELS, ...SUPPORT].find((p) => p[0] === key)[2];
-      $('#panel').innerHTML = crumbs(label) + panels[key]();
+      $('#panel').innerHTML = crumbs(label, key) + panels[key]();
       wire(key);
       if (focus) $('#panel').focus({ preventScroll: true });
     }
     addEventListener('hashchange', () => show(location.hash.slice(1), true));
     show(location.hash.slice(1));
 
-    /* --- Profil Saya --- */
+    /* --- Akun Saya --- */
     function profilPanel() {
       const area = BBK.getArea(me.areaId);
       const myOrders = BBK.orders.filter((o) => o.buyerId === me.id).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -97,7 +99,8 @@
           <dl class="profile-details">
             <div><dt class="caption">Nama lengkap</dt><dd>${BBK.icon('user', 18)}${esc(me.name)}</dd></div>
             <div><dt class="caption">Email kampus</dt><dd>${BBK.icon('mail', 18)}${esc(me.email)}</dd></div>
-            <div><dt class="caption">Fakultas</dt><dd>${BBK.icon('cap', 18)}${esc(me.faculty || '-')}</dd></div>
+            <div><dt class="caption">Kampus</dt><dd>${BBK.icon('cap', 18)}${esc(me.university || '-')}</dd></div>
+            <div><dt class="caption">Fakultas</dt><dd>${BBK.icon('book-open', 18)}${esc(me.faculty || '-')}</dd></div>
             <div><dt class="caption">Area kost</dt><dd>${BBK.icon('pin', 18)}${esc(area ? BBK.areaShortName(area.id) : '-')}</dd></div>
           </dl>
           <dl class="profile-stats">
@@ -208,13 +211,16 @@
       }
     }
 
-    /* Edit Profil dialog: name, faculty, kost area (saved in the session) */
+    /* Edit Profil dialog: name, campus, faculty, kost area (saved in the session) */
     function editProfile() {
       const dlg = document.createElement('dialog');
       dlg.className = 'dialog';
       dlg.innerHTML = `<form method="dialog" class="edit-form">
         <h2 class="dialog-title">Edit Profil</h2>
         <div class="field"><label class="field-label" for="ep-name">Nama lengkap</label><input class="input" id="ep-name" value="${esc(me.name)}" required></div>
+        <div class="field"><label class="field-label" for="ep-campus">Kampus</label><span class="select"><select id="ep-campus">
+          ${BBK.universities.some(([, n]) => n === me.university) ? '' : '<option value="">Pilih kampus</option>'}
+          ${BBK.universities.map(([s, n]) => `<option value="${esc(s)}"${n === me.university ? ' selected' : ''}>${esc(s)} · ${esc(n)}</option>`).join('')}</select></span></div>
         <div class="field"><label class="field-label" for="ep-fac">Fakultas</label><span class="select"><select id="ep-fac">
           ${BBK.faculties.map(([s, n]) => `<option value="${esc(s)}"${n === me.faculty ? ' selected' : ''}>${esc(s)} · ${esc(n)}</option>`).join('')}</select></span></div>
         <div class="field"><label class="field-label" for="ep-area">Area kost</label><span class="select"><select id="ep-area">
@@ -227,7 +233,14 @@
         if (dlg.returnValue === 'ok') {
           const name = dlg.querySelector('#ep-name').value.trim();
           const fac = BBK.faculties.find(([s]) => s === dlg.querySelector('#ep-fac').value);
-          BBK.auth.update({ ...(name ? { name } : {}), faculty: fac[1], facultyShort: fac[0], areaId: dlg.querySelector('#ep-area').value });
+          const campus = BBK.universities.find(([s]) => s === dlg.querySelector('#ep-campus').value);
+          BBK.auth.update({
+            ...(name ? { name } : {}),
+            ...(campus ? { university: campus[1], universityShort: campus[0] } : {}),
+            faculty: fac[1],
+            facultyShort: fac[0],
+            areaId: dlg.querySelector('#ep-area').value,
+          });
           BBK.flash('Profil diperbarui.');
           location.reload();
         }
@@ -254,7 +267,7 @@
           <span class="avatar avatar-lg avatar-cream" aria-hidden="true">${esc(BBK.initials(u.name))}</span>
           <div class="profile-id-text">
             <h1 class="profile-name">${esc(u.name)} <span class="muted">(${esc(BBK.cohortLabel(u))})</span></h1>
-            <p class="lead">${esc(u.faculty)} · kost di ${esc(BBK.areaShortName(u.areaId))}</p>
+            <p class="lead">${esc(u.faculty)} · ${esc(u.university || u.universityShort || '')} · kost di ${esc(BBK.areaShortName(u.areaId))}</p>
             <p class="verified caption">${BBK.icon('verified', 14)}Terverifikasi @${esc(u.email.split('@')[1])} · bergabung ${esc(joined)}</p>
           </div>
         </div>
@@ -277,7 +290,7 @@
         <p class="caption">${esc(r.itemTitle)} · ${esc(BBK.formatDayMonth(r.at))}</p></div>
         <span class="stars" aria-label="${r.rating} dari 5">${BBK.icon('star', 14).repeat(r.rating)}</span></div><p>${esc(r.text)}</p></li>`;
     };
-    const cart = setupCart(u, items);
+    const cart = setupCart(u);
     const paint = () => {
       root.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === tab)));
       $('#seller-panel').innerHTML =
@@ -299,19 +312,32 @@
    * Per-seller cart ("keranjang") on someone else's profile only: every item is handed over
    * at one COD meeting, so a buyer can only bundle items from one seller. Adds a "+" button
    * to each available card (post-processed, productCard is untouched), a floating cart
-   * button with a count, and a bottom sheet / side panel listing the items. Storage is
-   * BBK.cart; checkout.html?items=… places the bundled order.
+   * button that is always there (count badge once something is in it), and a bottom sheet /
+   * side panel listing the items. Storage is BBK.cart; checkout.html?items=… places the
+   * bundled order. Logged-out visitors are sent to masuk.html when they use the cart.
+   * The helpers below share one `cart` context object made by setupCart().
    */
-  function setupCart(seller, items) {
-    const sid = seller.id;
-    const who = BBK.firstName(seller.name);
-    const grid = $('#seller-panel');
-    let opener = null;
+  function setupCart(seller) {
+    const cart = { sid: seller.id, who: BBK.firstName(seller.name), grid: $('#seller-panel'), opener: null };
+    buildCartElements(cart);
+    cart.grid.addEventListener('click', (e) => onGridClick(cart, e));
+    cart.fab.addEventListener('click', () => (me ? openCart(cart) : redirectToLogin('Masuk dulu untuk melihat keranjangmu.')));
+    cart.layer.addEventListener('click', (e) => onLayerClick(cart, e));
+    document.addEventListener('keydown', (e) => onCartKey(cart, e));
+    // The cart can change elsewhere: another tab, or checkout clearing it before "back".
+    addEventListener('storage', () => syncCart(cart));
+    addEventListener('pageshow', (e) => {
+      if (e.persisted) syncCart(cart);
+    });
+    syncFab(cart);
+    return { decorate: () => decorateCards(cart) };
+  }
 
+  /** Floating button + the (hidden) panel layer, appended to <body>. */
+  function buildCartElements(cart) {
     const fab = document.createElement('button');
     fab.type = 'button';
     fab.className = 'cart-fab';
-    fab.hidden = true;
     fab.setAttribute('aria-haspopup', 'dialog');
 
     const layer = document.createElement('div');
@@ -320,7 +346,7 @@
     layer.innerHTML = `<div class="cart-scrim" data-cart-close></div>
       <section class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1">
         <header class="cart-head">
-          <div><h2 class="cart-title" id="cart-title">Keranjang dari ${esc(who)}</h2>
+          <div><h2 class="cart-title" id="cart-title">Keranjang dari ${esc(cart.who)}</h2>
             <p class="cart-note">${BBK.icon('info', 14)}Semua barang diserahkan dalam satu kali COD.</p></div>
           <button type="button" class="icon-btn" data-cart-close aria-label="Tutup keranjang">${BBK.icon('x', 22)}</button>
         </header>
@@ -328,157 +354,156 @@
         <footer class="cart-foot" hidden></footer>
       </section>`;
     document.body.append(fab, layer);
-    const panel = layer.querySelector('.cart-panel');
-    const body = layer.querySelector('.cart-body');
-    const foot = layer.querySelector('.cart-foot');
+    Object.assign(cart, {
+      fab,
+      layer,
+      panel: layer.querySelector('.cart-panel'),
+      body: layer.querySelector('.cart-body'),
+      foot: layer.querySelector('.cart-foot'),
+    });
+  }
 
-    const toggleLabel = (p, on) => (on ? `Hapus ${p.title} dari keranjang` : `Tambah ${p.title} ke keranjang`);
+  function redirectToLogin(text) {
+    BBK.flash(text);
+    location.href = 'masuk.html?next=' + encodeURIComponent(location.pathname.split('/').pop() + location.search + location.hash);
+  }
 
-    function decorate() {
-      grid.querySelectorAll('.pcard').forEach((li, i) => {
-        const p = items[i];
-        if (!p || p.status !== 'tersedia') return;
-        li.insertAdjacentHTML('beforeend', `<button type="button" class="cart-add" data-cart-id="${esc(p.id)}"></button>`);
-      });
-      syncButtons();
+  /* --- Card buttons ("+" / check) --- */
+  function decorateCards(cart) {
+    cart.grid.querySelectorAll('.pcard[data-id]').forEach((li) => {
+      const p = BBK.getProduct(li.dataset.id);
+      if (!p || p.sellerId !== cart.sid || p.status !== 'tersedia') return;
+      li.insertAdjacentHTML('beforeend', `<button type="button" class="cart-add" data-cart-id="${esc(p.id)}"></button>`);
+    });
+    syncButtons(cart);
+  }
+
+  function syncButtons(cart) {
+    cart.grid.querySelectorAll('.cart-add').forEach((b) => {
+      const p = BBK.getProduct(b.dataset.cartId);
+      const on = BBK.cart.has(cart.sid, b.dataset.cartId);
+      b.setAttribute('aria-pressed', String(on));
+      b.setAttribute('aria-label', on ? `Hapus ${p.title} dari keranjang` : `Tambah ${p.title} ke keranjang`);
+      b.innerHTML = BBK.icon(on ? 'check' : 'plus', 20);
+    });
+  }
+
+  /* --- Floating button + count badge --- */
+  function syncFab(cart) {
+    const { fab } = cart;
+    const n = me ? BBK.cart.ids(cart.sid).length : 0;
+    const changed = fab.dataset.count !== String(n);
+    fab.dataset.count = n;
+    fab.setAttribute('aria-label', `Buka keranjang, ${n} barang`);
+    fab.innerHTML = `${BBK.icon('bag', 24)}${n ? `<span class="cart-fab-count" aria-hidden="true">${n}</span>` : ''}`;
+    if (changed && n) {
+      fab.classList.remove('is-bump');
+      void fab.offsetWidth; // restart the animation
+      fab.classList.add('is-bump');
     }
+  }
 
-    function syncButtons() {
-      grid.querySelectorAll('.cart-add').forEach((b) => {
-        const p = BBK.getProduct(b.dataset.cartId);
-        const on = BBK.cart.has(sid, b.dataset.cartId);
-        b.setAttribute('aria-pressed', String(on));
-        b.setAttribute('aria-label', toggleLabel(p, on));
-        b.innerHTML = BBK.icon(on ? 'check' : 'plus', 20);
-      });
+  /* --- Panel content --- */
+  function renderCartPanel(cart) {
+    const { body, foot, who } = cart;
+    const products = BBK.cart.ids(cart.sid).map((pid) => BBK.getProduct(pid));
+    if (!products.length) {
+      foot.hidden = true;
+      body.innerHTML = `<div class="empty empty-compact"><span class="empty-icon">${BBK.icon('bag', 32)}</span>
+        <p class="empty-title">Keranjang masih kosong</p>
+        <p>Tekan tombol + pada barang ${esc(who)} untuk menggabungkannya dalam satu COD.</p>
+        <button type="button" class="btn btn-sm btn-outline" data-cart-close>Lanjut belanja</button></div>`;
+      return;
     }
+    const total = products.reduce((sum, p) => sum + p.price, 0);
+    body.innerHTML = `<ul class="cart-list">${products.map(cartRowHTML).join('')}</ul>`;
+    foot.hidden = false;
+    foot.innerHTML = `<p class="cart-total"><span>Total</span><strong>${BBK.formatRupiah(total)}</strong></p>
+      <a class="btn btn-block" href="checkout.html?items=${products.map((p) => encodeURIComponent(p.id)).join(',')}">Checkout (${products.length} barang)</a>`;
+  }
 
-    function syncFab() {
-      const n = BBK.cart.ids(sid).length;
-      const changed = fab.dataset.count !== String(n);
-      fab.dataset.count = n;
-      fab.hidden = !me || n === 0;
-      fab.setAttribute('aria-label', `Buka keranjang, ${n} barang`);
-      fab.innerHTML = `${BBK.icon('bag', 24)}<span class="cart-fab-count" aria-hidden="true">${n}</span>`;
-      if (changed && n) {
-        fab.classList.remove('is-bump');
-        void fab.offsetWidth; // restart the animation
-        fab.classList.add('is-bump');
-      }
+  function cartRowHTML(p) {
+    return `<li class="cart-row">
+      <a class="cart-row-main" href="produk.html?id=${encodeURIComponent(p.id)}">
+        <img src="${esc(BBK.productImage(p))}" alt="" width="56" height="56">
+        <span class="cart-row-text"><span class="cart-row-title">${esc(p.title)}</span><span class="cart-row-price">${BBK.formatRupiah(p.price)}</span></span>
+      </a>
+      <button type="button" class="icon-btn cart-row-del" data-cart-del="${esc(p.id)}" aria-label="Hapus ${esc(p.title)} dari keranjang">${BBK.icon('trash', 20)}</button>
+    </li>`;
+  }
+
+  /** Refresh everything that shows the cart (buttons, badge, and the panel when it is open). */
+  function syncCart(cart) {
+    syncButtons(cart);
+    syncFab(cart);
+    if (!cart.layer.hidden) renderCartPanel(cart);
+  }
+
+  /* --- Open / close --- */
+  function openCart(cart) {
+    cart.opener = document.activeElement;
+    renderCartPanel(cart);
+    cart.layer.hidden = false;
+    document.documentElement.classList.add('sheet-locked');
+    cart.panel.focus({ preventScroll: true });
+  }
+
+  function closeCart(cart) {
+    cart.layer.hidden = true;
+    document.documentElement.classList.remove('sheet-locked');
+    const back = cart.opener;
+    if (back && back.isConnected && back.getClientRects().length > 0) back.focus({ preventScroll: true });
+    cart.opener = null;
+  }
+
+  /* --- Events --- */
+  function onGridClick(cart, e) {
+    const b = e.target.closest('.cart-add');
+    if (!b) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (!me) return redirectToLogin('Masuk dulu untuk menambah barang ke keranjang.');
+    const pid = b.dataset.cartId;
+    if (BBK.cart.has(cart.sid, pid)) {
+      BBK.cart.remove(cart.sid, pid);
+      BBK.toast('Dihapus dari keranjang');
+    } else {
+      BBK.cart.add(cart.sid, pid);
+      BBK.toast('Ditambahkan ke keranjang');
     }
+    syncCart(cart);
+  }
 
-    function renderPanel() {
-      const products = BBK.cart.ids(sid).map((pid) => BBK.getProduct(pid));
-      if (!products.length) {
-        foot.hidden = true;
-        body.innerHTML = `<div class="empty empty-compact"><span class="empty-icon">${BBK.icon('bag', 32)}</span>
-          <p class="empty-title">Keranjang masih kosong</p>
-          <p>Tekan tombol + pada barang ${esc(who)} untuk menggabungkannya dalam satu COD.</p>
-          <button type="button" class="btn btn-sm btn-outline" data-cart-close>Lanjut belanja</button></div>`;
-        return;
-      }
-      const total = products.reduce((sum, p) => sum + p.price, 0);
-      body.innerHTML = `<ul class="cart-list">${products
-        .map(
-          (p) => `<li class="cart-row">
-            <a class="cart-row-main" href="produk.html?id=${encodeURIComponent(p.id)}">
-              <img src="${esc(BBK.productImage(p))}" alt="" width="56" height="56">
-              <span class="cart-row-text"><span class="cart-row-title">${esc(p.title)}</span><span class="cart-row-price">${BBK.formatRupiah(p.price)}</span></span>
-            </a>
-            <button type="button" class="icon-btn cart-row-del" data-cart-del="${esc(p.id)}" aria-label="Hapus ${esc(p.title)} dari keranjang">${BBK.icon('trash', 20)}</button>
-          </li>`
-        )
-        .join('')}</ul>`;
-      foot.hidden = false;
-      foot.innerHTML = `<p class="cart-total"><span>Total</span><strong>${BBK.formatRupiah(total)}</strong></p>
-        <a class="btn btn-block" href="checkout.html?items=${products.map((p) => encodeURIComponent(p.id)).join(',')}">Checkout (${products.length} barang)</a>`;
-    }
+  function onLayerClick(cart, e) {
+    if (e.target.closest('[data-cart-close]')) return closeCart(cart);
+    const del = e.target.closest('[data-cart-del]');
+    if (!del) return;
+    const at = [...cart.body.querySelectorAll('.cart-row-del')].indexOf(del);
+    BBK.cart.remove(cart.sid, del.dataset.cartDel);
+    syncCart(cart);
+    const left = cart.body.querySelectorAll('.cart-row-del');
+    (left[Math.min(at, left.length - 1)] || cart.body.querySelector('[data-cart-close]') || cart.panel).focus({ preventScroll: true });
+  }
 
-    function sync() {
-      syncButtons();
-      syncFab();
-      if (!layer.hidden) renderPanel();
-    }
-
-    function open() {
-      opener = document.activeElement;
-      renderPanel();
-      layer.hidden = false;
-      document.documentElement.classList.add('sheet-locked');
-      panel.focus({ preventScroll: true });
-    }
-
-    function close() {
-      layer.hidden = true;
-      document.documentElement.classList.remove('sheet-locked');
-      const back = !fab.hidden && opener === fab ? fab : opener;
-      if (back && back.isConnected && back.offsetParent !== null) back.focus({ preventScroll: true });
-      opener = null;
-    }
-
-    grid.addEventListener('click', (e) => {
-      const b = e.target.closest('.cart-add');
-      if (!b) return;
+  /** Escape closes the panel; Tab stays inside it. */
+  function onCartKey(cart, e) {
+    if (cart.layer.hidden) return;
+    if (e.key === 'Escape') {
       e.preventDefault();
-      e.stopPropagation();
-      if (!me) {
-        BBK.flash('Masuk dulu untuk menambah barang ke keranjang.');
-        location.href = 'masuk.html?next=' + encodeURIComponent(location.pathname.split('/').pop() + location.search + location.hash);
-        return;
-      }
-      const pid = b.dataset.cartId;
-      if (BBK.cart.has(sid, pid)) {
-        BBK.cart.remove(sid, pid);
-        BBK.toast('Dihapus dari keranjang');
-      } else {
-        BBK.cart.add(sid, pid);
-        BBK.toast('Ditambahkan ke keranjang');
-      }
-      sync();
-    });
-
-    fab.addEventListener('click', open);
-
-    layer.addEventListener('click', (e) => {
-      if (e.target.closest('[data-cart-close]')) return close();
-      const del = e.target.closest('[data-cart-del]');
-      if (!del) return;
-      const rows = [...body.querySelectorAll('.cart-row-del')];
-      const at = rows.indexOf(del);
-      BBK.cart.remove(sid, del.dataset.cartDel);
-      sync();
-      const left = body.querySelectorAll('.cart-row-del');
-      (left[Math.min(at, left.length - 1)] || body.querySelector('[data-cart-close]') || panel).focus({ preventScroll: true });
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (layer.hidden) return;
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        return close();
-      }
-      if (e.key !== 'Tab') return;
-      const focusable = [...panel.querySelectorAll('a[href], button:not([disabled])')].filter((el) => el.offsetParent !== null);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    });
-
-    // The cart can change elsewhere: another tab, or checkout clearing it before "back".
-    addEventListener('storage', sync);
-    addEventListener('pageshow', (e) => {
-      if (e.persisted) sync();
-    });
-
-    syncFab();
-    return { decorate };
+      return closeCart(cart);
+    }
+    if (e.key !== 'Tab') return;
+    const focusable = [...cart.panel.querySelectorAll('a[href], button:not([disabled])')].filter((el) => el.getClientRects().length > 0);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === cart.panel)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   function emptyHTML(icon, title, text, href, cta) {

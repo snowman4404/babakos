@@ -98,14 +98,6 @@
     if (statusOverrides[p.id]) p.status = statusOverrides[p.id];
   });
   BBK.orders = BBK.store.get('orders', BBK.orders);
-  // Orders saved by an older version used meetingPointId and had no schedule approval state.
-  BBK.orders.forEach((o) => {
-    if (!o.meetingPlace) {
-      const m = BBK.meetingPoints.find((x) => x.id === o.meetingPointId);
-      o.meetingPlace = m ? m.name : 'Titik temu belum diisi';
-    }
-    if (!o.schedule) o.schedule = ['jadwal-cod', 'bertemu', 'selesai'].includes(o.status) ? 'disetujui' : 'menunggu';
-  });
   BBK.chatThreads = BBK.store.get('chats', BBK.chatThreads);
   BBK.reviews = [...BBK.store.get('reviews', []), ...BBK.reviews];
 
@@ -133,7 +125,28 @@
       BBK.store.set('reviews', [r, ...BBK.store.get('reviews', [])]);
       BBK.reviews.unshift(r);
     },
+    /** Per-seller cart, { sellerId: [productId, …] } (see BBK.cart). */
+    cart: (map) => BBK.store.set('cart', map),
   };
+
+  /** Statuses at or after "Jadwal COD": the seller has agreed to the COD place and time. */
+  BBK.AGREED_STATUSES = ['jadwal-cod', 'bertemu', 'selesai'];
+
+  // Orders saved by an older version used meetingPointId and had no schedule approval state.
+  // Migrate them once and save, so they are not migrated again on every load.
+  let migrated = false;
+  BBK.orders.forEach((o) => {
+    if (!o.meetingPlace) {
+      const m = BBK.meetingPoints.find((x) => x.id === o.meetingPointId);
+      o.meetingPlace = m ? m.name : 'Titik temu belum diisi';
+      migrated = true;
+    }
+    if (!o.schedule) {
+      o.schedule = BBK.AGREED_STATUSES.includes(o.status) ? 'disetujui' : 'menunggu';
+      migrated = true;
+    }
+  });
+  if (migrated) BBK.save.orders();
 
   BBK.resetDemo = () => {
     ['listings', 'productStatus', 'orders', 'chats', 'reviews', 'wishlist', 'recentSearches', 'cart'].forEach(BBK.store.remove);
@@ -186,10 +199,24 @@
   };
 
   /**
-   * Latest timeline entry of a step. Schedule events (event: 'jadwal') are not steps, so the
-   * stepper stays correct when an order goes back from jadwal-cod to dikonfirmasi.
+   * Index in BBK.orderSteps of the furthest step the order is at. A cancelled order reports the
+   * step it was cancelled at. Schedule events carry the status of that moment, so an order that
+   * went back from jadwal-cod to dikonfirmasi is at 1 again.
    */
-  BBK.stepEntry = (o, status) => [...o.timeline].reverse().find((t) => t.status === status && !t.event);
+  BBK.stepProgress = (o) => {
+    if (o.status !== 'dibatalkan') return BBK.stepIndex(o.status);
+    const last = [...o.timeline].reverse().find((t) => t.status !== 'dibatalkan');
+    return last ? BBK.stepIndex(last.status) : -1;
+  };
+  /**
+   * Latest timeline entry of a step, or undefined when the order is not (or no longer) at that
+   * step: after a schedule is reopened, the old "Jadwal COD" entry is stale until re-approved.
+   * Schedule events (event: 'jadwal') are not steps and are skipped.
+   */
+  BBK.stepEntry = (o, status) => {
+    const entry = [...o.timeline].reverse().find((t) => t.status === status && !t.event);
+    return entry && BBK.stepIndex(status) <= BBK.stepProgress(o) ? entry : undefined;
+  };
 
   /* COD time rules: a datetime-local value ("2026-11-20T10:00", local time) inside BBK.codHours. */
   const hoursToMin = (text) => {
@@ -215,27 +242,32 @@
     return '';
   };
 
+  /** Error message for a free-text COD meeting place, or '' when it is fine. */
+  BBK.meetingPlaceError = (value) =>
+    String(value || '').trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan masjid kampus.';
+
   /* Schedule approval: the buyer changes place/time, the seller approves or rejects (never cancels). */
-  const pushScheduleEvent = (o, note) => o.timeline.push({ status: o.status, at: new Date().toISOString(), event: 'jadwal', note });
+  /**
+   * Put the schedule back in review: set its approval state, send an agreed order back to
+   * dikonfirmasi (the stepper then shows "Jadwal COD" as not done), log a schedule event, save.
+   */
+  const reopenSchedule = (o, state, reason, note) => {
+    o.schedule = state;
+    if (reason) o.scheduleReason = reason;
+    else delete o.scheduleReason;
+    if (o.status === 'jadwal-cod') o.status = 'dikonfirmasi';
+    o.timeline.push({ status: o.status, at: new Date().toISOString(), event: 'jadwal', note });
+    BBK.save.orders();
+  };
   /** Buyer edits place and/or time. The seller must approve again; an agreed schedule goes back to dikonfirmasi. */
   BBK.changeSchedule = (o, { meetingPlace, scheduledAt }) => {
     if (meetingPlace) o.meetingPlace = meetingPlace;
     if (scheduledAt) o.scheduledAt = scheduledAt;
-    o.schedule = 'menunggu';
-    delete o.scheduleReason;
-    if (o.status === 'jadwal-cod') o.status = 'dikonfirmasi';
-    pushScheduleEvent(o, `Jadwal diubah pembeli: ${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`);
-    BBK.save.orders();
+    reopenSchedule(o, 'menunggu', '', `Jadwal diubah pembeli: ${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`);
   };
   /** Seller rejects the schedule. The order stays alive (back at dikonfirmasi if it was agreed). */
-  BBK.rejectSchedule = (o, reason) => {
-    o.schedule = 'ditolak';
-    if (reason) o.scheduleReason = reason;
-    else delete o.scheduleReason;
-    if (o.status === 'jadwal-cod') o.status = 'dikonfirmasi';
-    pushScheduleEvent(o, reason ? `Jadwal ditolak penjual: ${reason}` : 'Jadwal ditolak penjual');
-    BBK.save.orders();
-  };
+  BBK.rejectSchedule = (o, reason) =>
+    reopenSchedule(o, 'ditolak', reason, reason ? `Jadwal ditolak penjual: ${reason}` : 'Jadwal ditolak penjual');
 
   /* ---------- Chats ---------- */
   BBK.unreadChats = (userId) =>
@@ -274,7 +306,7 @@
       const map = BBK.cart.all();
       if (ids.length) map[sellerId] = ids;
       else delete map[sellerId];
-      BBK.store.set('cart', map);
+      BBK.save.cart(map);
     },
     add(sellerId, id) {
       if (!BBK.cart.has(sellerId, id)) BBK.cart.write(sellerId, [...BBK.cart.ids(sellerId), id]);

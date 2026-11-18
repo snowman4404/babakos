@@ -25,7 +25,7 @@
 2. **Katalog**: `jelajah.html?area=ketawanggede&max=100000` (area Ketawanggede, harga ≤ Rp100.000), atau ketik di kotak cari navbar.
 3. **Detail Barang** (mis. Kipas Angin p1) → **Chat** → kartu barang terlampir di pesan pertama, penjual membalas otomatis.
 4. **Beli** → **Atur COD**: ketik titik temu (atau ketuk saran/pin peta), pilih tanggal + jam → *Buat Pesanan*.
-5. **Lacak Pesanan**: tombol "Mode demo" memainkan langkah penjual (Dikonfirmasi → Jadwal COD disetujui/ditolak → Bertemu) → *Konfirmasi Barang Diterima* → beri rating. Pembeli bisa mengubah titik temu/jadwal (ikon pensil), penjual menyetujui lagi. Pesanan multi-barang: BBK-2611-006.
+5. **Lacak Pesanan**: tombol "Mode demo" memainkan langkah penjual (Dikonfirmasi → Jadwal COD disetujui/ditolak → Bertemu) → *Konfirmasi Barang Diterima* → beri rating. Pembeli bisa mengubah titik temu/jadwal (ikon pensil), penjual menyetujui lagi. Pesanan multi-barang: BBK-2611-006 (Jas Lab + Laci Plastik dari Ayu). Setelah penjual menolak jadwal, tampilan penjual menunjukkan "Menunggu pembeli mengubah jadwal/lokasi COD"; langkah "Jadwal COD" di stepper kembali kosong sampai disetujui lagi.
 6. (Opsional) **Pesanan Saya → Penjualan**: daftar pesanan masuk (semua tindakan penjual ada di halaman Lacak), **Jual Barang** ("Isi contoh untuk demo").
 7. Footer → **Reset data demo** untuk mengulang dari awal (akun tetap masuk).
 
@@ -35,7 +35,7 @@ Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kat
 
 ### Navbar dan tab bar (semua halaman, `js/layout.js`)
 - Desktop: wordmark "BaBaKos", Beranda, Katalog, kotak cari (fokus saat kosong → pencarian terakhir), lokasi area kost, ikon chat (jumlah belum dibaca), tombol Jual, menu akun (Akun Saya, Pesanan Saya, Wishlist, Keluar; Jual cukup lewat tombol Jual). Belum masuk: Masuk + Daftar.
-- HP: wordmark + lokasi, kotak cari penuh, tab bar bawah (Beranda, Katalog, Chat, Pesanan, Profil).
+- HP: wordmark + lokasi, kotak cari penuh, tab bar bawah (Beranda, Katalog, Chat, Pesanan, Akun).
 - Halaman alur (Detail Barang, Atur COD, Lacak, Jual) memakai bar tipis: tombol kembali + judul.
 
 ### 1. Beranda `index.html`
@@ -78,13 +78,14 @@ Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kat
 ### 8. Atur COD `checkout.html`
 - `?product=p1` (satu barang) atau `?items=p1,p3,p14` (beberapa barang dari SATU penjual, bukan milik sendiri, semua tersedia; selain itu tampil status "tidak bisa dipesan"). Dari `?items`, keranjang penjual dikosongkan setelah pesanan dibuat; tombol kembali ke `profil.html?id=<penjual>`
 - Ringkasan: setiap barang (foto, judul, harga) + penjual satu kali
-- **Titik Temu COD**: kolom teks wajib (contoh "Depan Gerbang Watugong UB"). Chip saran dan peta ilustrasi (opsional, dalam "Lihat di peta ilustrasi") hanya mengisi kolom; kolom adalah sumber kebenaran. Pesanan menyimpan `meetingPlace` (teks)
+- **Titik Temu COD**: kolom teks wajib (contoh "Lobi perpustakaan kampus, depan masjid kampus"; divalidasi `BBK.meetingPlaceError`, dipakai juga di Lacak). Chip saran dan peta ilustrasi (opsional, dalam "Lihat di peta ilustrasi"; titik di UB, UM, UIN, UMM, Polinema, Matos, MX Mall) hanya mengisi kolom; kolom adalah sumber kebenaran. Pesanan menyimpan `meetingPlace` (teks)
 - **Jadwal COD**: `datetime-local` wajib, minimal sekarang, dalam jam COD (`BBK.codHours`); catatan opsional; tips aman COD
-- Rincian Pembayaran: harga (jumlah harga barang), biaya layanan gratis, total, tunai saat COD → "Buat Pesanan" (pesan otomatis ke chat penjual)
+- Rincian Pembayaran: harga (jumlah harga barang), biaya layanan gratis, total, tunai saat COD → "Buat Pesanan" (pesan otomatis ke chat penjual yang menyebut semua barang, mis. "aku pesan 2 barang: Jas Lab Putih, Laci Plastik 3 Susun"; kartu barang pertama terlampir)
 
 ### 9. Lacak Pesanan `lacak.html`
 - Ringkasan Produk (semua barang pesanan), banner status, pemberitahuan persetujuan jadwal, stepper 5 langkah dengan waktu, kartu **Jadwal Pesanan**, kartu **Lokasi Pesanan** (hanya "Bertemu di" + pembeli), Rincian Pembayaran (tiap barang + total). Tanpa peta.
 - Pembeli: Chat, Batalkan, Konfirmasi Barang Diterima, rating setelah selesai; ikon pensil di samping "Jadwal COD" dan "Bertemu di" (saat menunggu-konfirmasi / dikonfirmasi / jadwal-cod) membuka form mini (Simpan/Batal). Menyimpan perubahan mengatur `schedule: 'menunggu'` dan, bila status jadwal-cod, mengembalikannya ke dikonfirmasi
+- Stepper memakai entri terbaru tiap langkah (`BBK.stepEntry`) dan langkah setelah status sekarang tidak menampilkan waktu/catatan lama (`BBK.stepProgress`)
 - Penjual: Terima/Tolak Pesanan, Setujui Jadwal COD, Tolak Jadwal COD (alasan opsional; pesanan tidak dibatalkan; dari jadwal-cod kembali ke dikonfirmasi), Tandai Bertemu, Konfirmasi Selesai COD. Hanya penjual yang menyetujui jadwal, hanya pembeli yang mengubah titik/jam
 - Persetujuan jadwal di pesanan: `schedule` = `menunggu` | `disetujui` | `ditolak`; banner untuk kedua pihak saat ditolak / menunggu
 - Kotak mode demo memainkan langkah pihak lain (termasuk penjual menolak jadwal, pembeli mengubah jadwal)
@@ -94,19 +95,21 @@ Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kat
 - Kartu pesanan yang sama untuk Pembelian dan Penjualan (id + status, foto, judul, "Dari/Untuk <nama>", titik + waktu COD, total, "Lihat detail →"; "+N" bila multi-barang) → `lacak.html?id=…`. Penjualan tanpa tombol aksi: penjual mengonfirmasi semuanya di halaman Lacak
 
 ### 11. Jual Barang `jual.html`
-- Foto (maks 3, diperkecil di browser), nama, deskripsi, kategori, kondisi, harga (saran dari rata-rata kategori). Area barang diambil dari area kost di profil (hanya ditampilkan, tanpa input)
+- Foto (maks 3, diperkecil di browser), nama, deskripsi, kategori, kondisi, harga (saran dari rata-rata kategori). Area barang otomatis diambil dari area kost di profil (tanpa input)
 - Pratinjau kartu langsung + daftar periksa; "Isi contoh untuk demo"; terbit → halaman barangnya
 
 ### 12. Profil `profil.html`
-- Akun sendiri (Dashboard profil): menu Akun Saya, Pesanan Saya, Barang Saya, Wishlist, Keamanan Akun, Pusat Bantuan (FAQ), Keluar; Edit Profil (nama, fakultas, area kost); tombol "Buka Chat"
+- Akun sendiri (Dashboard profil): menu Akun Saya, Pesanan Saya, Barang Saya, Wishlist, Keamanan Akun, Pusat Bantuan (FAQ), Keluar; Edit Profil (nama, kampus, fakultas, area kost); kampus tampil di samping fakultas (akun sendiri dan profil toko); tombol "Buka Chat"
 - `?id=u2`: profil toko publik — Trust Score, rating, terjual, tab Barang / Ulasan
-- Keranjang per penjual (hanya di profil toko orang lain, tidak ada di akun sendiri): semua barang diserahkan dalam satu kali COD, jadi pembeli hanya bisa menggabungkan barang dari satu penjual. Tombol "+" bulat di pojok kanan atas foto kartu barang yang tersedia (berubah jadi centang, tekan lagi untuk menghapus; belum masuk → diarahkan ke `masuk.html?next=…`). Tombol keranjang melayang di kanan bawah (di atas tab bar ponsel) dengan lencana jumlah, muncul saat barang pertama ditambahkan. Panel "Keranjang dari <nama depan>": bottom sheet di ponsel, panel samping di desktop; baris foto, nama, harga, tombol hapus; total dan "Checkout (N barang)" → `checkout.html?items=p1,p3`. Esc / tombol tutup / klik latar menutup; kosong → keadaan kosong ikon polos. Data di `BBK.cart` (localStorage), dikosongkan checkout setelah pesanan dibuat
+- Keranjang per penjual (hanya di profil toko orang lain, tidak ada di akun sendiri): semua barang diserahkan dalam satu kali COD, jadi pembeli hanya bisa menggabungkan barang dari satu penjual. Tombol "+" bulat di pojok kanan atas foto kartu barang yang tersedia (berubah jadi centang, tekan lagi untuk menghapus; belum masuk → diarahkan ke `masuk.html?next=…`). Tombol keranjang melayang di kanan bawah (di atas tab bar ponsel) selalu tampil di profil toko orang lain (kosong: tanpa lencana, panel menampilkan keadaan kosong; belum masuk: diarahkan ke `masuk.html?next=…`), lencana jumlah muncul setelah ada barang. Panel "Keranjang dari <nama depan>": bottom sheet di ponsel, panel samping di desktop; baris foto, nama, harga, tombol hapus; total dan "Checkout (N barang)" → `checkout.html?items=p1,p3`. Esc / tombol tutup / klik latar menutup; kosong → keadaan kosong ikon polos. Data di `BBK.cart` (localStorage), dikosongkan checkout setelah pesanan dibuat
 
 ### 13. 404 `404.html`
 - Pesan + tombol ke Beranda dan Katalog (aset memakai base `/babakos/` agar jalan di GitHub Pages)
 
 ## Data mock (lihat `js/data.js`)
 - Kampus: beberapa kampus di Malang (UB, UM, UIN Malang, UMM, Polinema, ITN, Unisma, Unmer), dengan `BBK.universities` untuk pilihan di Daftar
+- Titik temu (`BBK.meetingPoints`): Gerbang Utama, Gerbang Watugong, Masjid Raden Patah, Perpustakaan Pusat (UB), Gerbang UIN, Gerbang UM, Gerbang Polinema, Gerbang UMM, Masjid AR Fachruddin (UMM), Matos, MX Mall
+- Setiap penjual u2–u5 punya minimal dua barang tersedia, supaya keranjang bisa dicoba di profil mereka
 - Area kost: Ketawanggede, Sumbersari, Jl. Kerto, Watugong, Dinoyo, Jl. Gajayana, Soekarno-Hatta, Kalpataru, Tlogomas
-- Pengguna demo `u1` Rizky Pratama (UB, FILKOM, Ketawanggede) punya pembelian (BBK-2611-001, -002, dan -006 multi-barang dari Nadia: p3 + p14, status dikonfirmasi, jadwal menunggu persetujuan) dan penjualan (BBK-2611-003 baru, -004 siap COD, -005 selesai)
+- Pengguna demo `u1` Rizky Pratama (UB, FILKOM, Ketawanggede) punya pembelian (BBK-2611-001, -002, dan -006 multi-barang dari Ayu: p8 + p15, status dikonfirmasi, jadwal menunggu persetujuan) dan penjualan (BBK-2611-003 baru, -004 siap COD, -005 selesai)
 - Email: mockup menerima email apa pun yang berakhiran `ac.id`, kode 6 digit apa pun, kata sandi 8+ karakter

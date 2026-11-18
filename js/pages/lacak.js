@@ -35,6 +35,7 @@
 
   function render() {
     const idx = BBK.stepIndex(o.status);
+    const progress = BBK.stepProgress(o);
     const done = o.status === 'selesai';
     const cancelled = o.status === 'dibatalkan';
 
@@ -68,9 +69,10 @@
     renderScheduleNote();
     $('#t-steps').innerHTML = BBK.orderSteps
       .map((s, i) => {
+        // stepEntry is empty for steps after the current one, so a reopened "Jadwal COD" shows no stale time or note.
         const at = BBK.stepEntry(o, s.status);
-        const state = cancelled ? (at ? 'done' : 'off') : i < idx || done ? 'done' : i === idx ? 'now' : 'off';
-        const shown = at && state !== 'off'; // a step left behind (schedule rejected) shows no stale time
+        const state = cancelled ? (i <= progress ? 'done' : 'off') : i < idx || done ? 'done' : i === idx ? 'now' : 'off';
+        const shown = state !== 'off' && at;
         return `<li class="step is-${state}"${state === 'now' ? ' aria-current="step"' : ''}>
           <span class="step-dot">${BBK.icon(state === 'done' ? 'check' : STEP_ICONS[i], 16)}</span>
           <span class="step-text"><span class="step-label">${esc(s.label)}</span>
@@ -110,7 +112,7 @@
       <li><span class="caption">${finished ? 'Selesai' : 'Dikonfirmasi penjual'}</span><span>${finished ? esc(BBK.formatDateTime(finished.at)) : confirmed ? esc(BBK.formatDateTime(confirmed.at)) : 'Belum'}</span></li>`;
     const buyer = BBK.getUser(o.buyerId);
     const placeValue = editing === 'place'
-      ? editForm('place', 'Titik temu baru', `<input class="input" id="e-place" type="text" required maxlength="100" autocomplete="off" placeholder="Contoh: Depan Gerbang Watugong UB" value="${esc(o.meetingPlace)}" aria-describedby="e-error">`)
+      ? editForm('place', 'Titik temu baru', `<input class="input" id="e-place" type="text" required maxlength="100" autocomplete="off" placeholder="Contoh: Lobi perpustakaan kampus, depan masjid kampus" value="${esc(o.meetingPlace)}" aria-describedby="e-error">`)
       : `<p>${esc(o.meetingPlace)}</p>`;
     $('#t-where').innerHTML = `
       <li><span class="where-dot is-to"></span><div><p class="where-label">Bertemu di ${pencil('place', 'Ubah lokasi COD')}</p>
@@ -151,7 +153,7 @@
         tone = 'is-rejected';
         text = isBuyer
           ? `Penjual menolak jadwal COD${o.scheduleReason ? ` ("${o.scheduleReason}")` : ''}. Ubah jadwal atau lokasi dengan ikon pensil di bawah.`
-          : `Kamu menolak jadwal COD${o.scheduleReason ? ` ("${o.scheduleReason}")` : ''}. Menunggu pembeli mengubah jadwal atau lokasi.`;
+          : `Kamu menolak jadwal COD${o.scheduleReason ? ` ("${o.scheduleReason}")` : ''}. Pesanannya tetap berjalan.`;
       } else if (o.schedule === 'menunggu') {
         tone = 'is-pending';
         text = isBuyer
@@ -178,7 +180,11 @@
       if (idx < 3 && s !== 'selesai') html += `<button type="button" class="btn btn-danger-soft" data-act="cancel">Batalkan pesanan</button>`;
     } else {
       if (s === 'menunggu-konfirmasi') html = `<button type="button" class="btn btn-danger-soft" data-act="reject">Tolak Pesanan</button><button type="button" class="btn" data-act="accept">Terima Pesanan</button>`;
-      else if (s === 'dikonfirmasi') html = o.schedule === 'ditolak' ? chat : `${chat}${rejectSchedule}<button type="button" class="btn" data-act="schedule">Setujui Jadwal COD</button>`;
+      else if (s === 'dikonfirmasi') {
+        html = o.schedule === 'ditolak'
+          ? `<div class="schedule-note is-pending" role="status">${BBK.icon('clock', 18)}<p>Menunggu pembeli mengubah jadwal/lokasi COD. Pesanan tidak dibatalkan.</p></div>${chat}`
+          : `${chat}${rejectSchedule}<button type="button" class="btn" data-act="schedule">Setujui Jadwal COD</button>`;
+      }
       else if (s === 'jadwal-cod') html = `${chat}${rejectSchedule}<button type="button" class="btn" data-act="met">Tandai Sudah Bertemu</button>`;
       else if (s === 'bertemu') html = `${chat}<button type="button" class="btn" data-act="received">${BBK.icon('check', 18)}Konfirmasi Selesai COD</button>`;
       else html = chat;
@@ -303,7 +309,7 @@
     const input = form.querySelector('input');
     const error = form.querySelector('.field-error');
     const wasAgreed = o.status === 'jadwal-cod';
-    const problem = field === 'when' ? BBK.codTimeError(input.value) : input.value.trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan Gerbang Watugong UB.';
+    const problem = field === 'when' ? BBK.codTimeError(input.value) : BBK.meetingPlaceError(input.value);
     if (problem) {
       error.textContent = problem;
       error.hidden = false;

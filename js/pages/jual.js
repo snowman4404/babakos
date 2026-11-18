@@ -21,9 +21,8 @@
   $('#conds').innerHTML = Object.entries(BBK.conditionLabels)
     .map(([id, label]) => `<button type="button" class="chip" data-cond="${esc(id)}" aria-pressed="${id === condition}">${esc(label)}</button>`)
     .join('');
-  // The listing takes its area from the seller's profile (seed user as fallback).
-  const areaId = (me && me.areaId) || BBK.users[0].areaId;
-  $('#loc').innerHTML = `${BBK.icon('pin', 16)}<span>Lokasi: ${esc(BBK.areaShortName(areaId))} (dari profilmu)</span>`;
+  // The listing takes its area from the seller's profile (this page requires login).
+  const areaId = me.areaId;
 
   const digits = (t) => Number(String(t).replace(/\D/g, '')) || 0;
 

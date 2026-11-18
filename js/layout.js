@@ -87,7 +87,7 @@
   const goneText = { terjual: 'Terjual', dipesan: 'Dipesan' };
   BBK.productCard = (p, i = 0) => {
     const gone = goneText[p.status];
-    return `<li class="pcard${gone ? ' is-gone' : ''}" style="--i:${Math.min(i, 12)}">
+    return `<li class="pcard${gone ? ' is-gone' : ''}" data-id="${esc(p.id)}" style="--i:${Math.min(i, 12)}">
       <a href="produk.html?id=${encodeURIComponent(p.id)}">
         <span class="pcard-photo">
           <img src="${esc(BBK.productImage(p))}" alt="" width="320" height="320" loading="lazy">
@@ -325,7 +325,7 @@
       }
     });
 
-    // Phone tab bar (Figma "Menu List": Home, Chat, Orders, Profile).
+    // Phone tab bar (Figma "Menu List": Home, Chat, Orders, Account).
     const tab = (href, icon, label, extra = '') =>
       `<a href="${href}"${here(href)}>${BBK.icon(icon, 22)}<span>${label}</span>${extra}</a>`;
     const tabs = document.createElement('nav');
@@ -336,7 +336,7 @@
         tab('jelajah.html', 'grid', 'Katalog') +
         tab('chat.html', 'chat-dots', 'Chat', unread ? `<span class="badge-dot">${unread}</span>` : '') +
         tab('pesanan.html', 'package', 'Pesanan') +
-        tab('profil.html', 'user', 'Profil')
+        tab('profil.html', 'user', 'Akun')
       : tab('index.html', 'house', 'Beranda') + tab('jelajah.html', 'grid', 'Katalog') + tab('masuk.html', 'user', 'Masuk');
     document.body.append(tabs);
     document.body.classList.add('has-tabbar');

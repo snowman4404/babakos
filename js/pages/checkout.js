@@ -101,7 +101,7 @@
     input.setAttribute('aria-invalid', String(!!text));
     return !text;
   }
-  const checkPlace = () => setError(place, place.value.trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan Gerbang Watugong UB.');
+  const checkPlace = () => setError(place, BBK.meetingPlaceError(place.value));
   const checkWhen = () => setError(when, BBK.codTimeError(when.value));
   place.addEventListener('blur', checkPlace);
   when.addEventListener('blur', checkWhen);
@@ -180,10 +180,12 @@
       thread = { id: BBK.newId('c'), productId: items[0].id, buyerId: me.id, sellerId: seller.id, unread: 0, messages: [] };
       BBK.chatThreads.unshift(thread);
     }
+    // Every item is named in the text; chat.js attaches one product card (the first item).
+    const what = items.length > 1 ? `${items.length} barang: ${items.map((p) => p.title).join(', ')}` : items[0].title;
     thread.messages.push({
       id: BBK.newId('m'),
       senderId: me.id,
-      text: `Halo kak, saya sudah pesan ${BBK.orderTitle(order)}. COD di ${order.meetingPlace}, ${BBK.formatShortDate(order.scheduledAt)} pukul ${BBK.formatTime(order.scheduledAt)} ya.`,
+      text: `Halo kak, aku pesan ${what}. COD di ${order.meetingPlace}, ${BBK.formatShortDate(order.scheduledAt)} pukul ${BBK.formatTime(order.scheduledAt)} ya.`,
       sentAt: now,
       attachedProductId: items[0].id,
     });

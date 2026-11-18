@@ -49,6 +49,10 @@ BBK.meetingPoints = [
   { id: 'gerbang-uin', name: 'Gerbang UIN Malang (Jl. Gajayana)', shortName: 'Gerbang UIN', description: 'Depan gerbang kampus UIN, ramai saat jam kuliah.', areaId: 'gajayana', x: 14, y: 40 },
   { id: 'matos', name: 'Malang Town Square (Matos)', shortName: 'Matos', description: 'Lobi utama mal, di seberang kampus.', areaId: 'sumbersari', x: 22, y: 88 },
   { id: 'mx-mall', name: 'MX Mall', shortName: 'MX Mall', description: 'Pintu masuk depan, dekat Jl. Veteran.', areaId: 'sumbersari', x: 78, y: 90 },
+  { id: 'gerbang-um', name: 'Gerbang UM (Jl. Semarang)', shortName: 'Gerbang UM', description: 'Depan pos satpam gerbang Universitas Negeri Malang, ramai saat jam kuliah.', areaId: 'sumbersari', x: 36, y: 66 },
+  { id: 'gerbang-polinema', name: 'Gerbang Polinema (Jl. Soekarno-Hatta)', shortName: 'Gerbang Polinema', description: 'Dekat pos satpam Politeknik Negeri Malang, cocok untuk penghuni Soehat.', areaId: 'soehat', x: 88, y: 58 },
+  { id: 'gerbang-umm', name: 'Gerbang UMM (Jl. Raya Tlogomas)', shortName: 'Gerbang UMM', description: 'Depan gerbang kampus 3 Universitas Muhammadiyah Malang, terang dan ramai.', areaId: 'tlogomas', x: 14, y: 62 },
+  { id: 'masjid-umm', name: 'Masjid AR Fachruddin UMM', shortName: 'Masjid AR Fachruddin', description: 'Teras depan masjid kampus UMM, ramai sepanjang hari.', areaId: 'tlogomas', x: 16, y: 20 },
 ];
 
 // Homepage banner slides (scene photos, credited in BBK.photoCredits).
@@ -94,19 +98,19 @@ BBK.users = [
 // status: tersedia | dipesan | terjual
 BBK.products = [
   { id: 'p11', title: 'Teko Listrik 1.7L', description: 'Mendidih cepat, mati otomatis. Bagian dalam sudah dibersihkan dari kerak.', price: 55000, categoryId: 'dapur', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p11-teko.jpg'], postedAt: '2026-11-17T20:10:00+07:00', status: 'dipesan' },
-  { id: 'p12', title: 'Tas Carrier 50L', description: 'Dipakai 2x naik Panderman. Resleting dan rain cover lengkap.', price: 180000, categoryId: 'lainnya', condition: 'seperti-baru', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p12-tas.jpg'], postedAt: '2026-11-17T16:00:00+07:00', status: 'tersedia' },
-  { id: 'p13', title: 'Gitar Akustik Walden', description: 'Senar baru, ada softcase. Suara masih nyaring.', price: 400000, categoryId: 'lainnya', condition: 'baik', areaId: 'kerto', sellerId: 'u3', images: ['assets/products/p13-gitar.jpg'], postedAt: '2026-11-17T09:30:00+07:00', status: 'tersedia' },
-  { id: 'p14', title: 'Setrika Uap Russell Hobbs', description: 'Uap masih keluar normal, alas tidak lengket.', price: 50000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p14-setrika.jpg'], postedAt: '2026-11-16T21:00:00+07:00', status: 'dipesan' },
-  { id: 'p15', title: 'Laci Plastik 3 Susun', description: 'Ukuran meja, 35x27x36 cm. Pas untuk alat tulis dan skincare.', price: 65000, categoryId: 'perabot', condition: 'seperti-baru', areaId: 'gajayana', sellerId: 'u4', images: ['assets/products/p15-laci.jpg'], postedAt: '2026-11-16T14:20:00+07:00', status: 'tersedia' },
+  { id: 'p12', title: 'Tas Carrier 50L', description: 'Dipakai 2x naik Panderman. Resleting dan rain cover lengkap.', price: 180000, categoryId: 'lainnya', condition: 'seperti-baru', areaId: 'dinoyo', sellerId: 'u5', images: ['assets/products/p12-tas.jpg'], postedAt: '2026-11-17T16:00:00+07:00', status: 'tersedia' },
+  { id: 'p13', title: 'Gitar Akustik Walden', description: 'Senar baru, ada softcase. Suara masih nyaring.', price: 400000, categoryId: 'lainnya', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p13-gitar.jpg'], postedAt: '2026-11-17T09:30:00+07:00', status: 'tersedia' },
+  { id: 'p14', title: 'Setrika Uap Russell Hobbs', description: 'Uap masih keluar normal, alas tidak lengket.', price: 50000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p14-setrika.jpg'], postedAt: '2026-11-16T21:00:00+07:00', status: 'tersedia' },
+  { id: 'p15', title: 'Laci Plastik 3 Susun', description: 'Ukuran meja, 35x27x36 cm. Pas untuk alat tulis dan skincare.', price: 65000, categoryId: 'perabot', condition: 'seperti-baru', areaId: 'gajayana', sellerId: 'u4', images: ['assets/products/p15-laci.jpg'], postedAt: '2026-11-16T14:20:00+07:00', status: 'dipesan' },
   { id: 'p16', title: 'Wajan Teflon 24 cm', description: 'Lapisan masih rata, gagang kokoh. Cocok untuk masak di kost.', price: 40000, categoryId: 'dapur', condition: 'baik', areaId: 'sumbersari', sellerId: 'u3', images: ['assets/products/p16-wajan.jpg'], postedAt: '2026-11-15T18:40:00+07:00', status: 'tersedia' },
   { id: 'p1', title: 'Kipas Angin Miyako 16 inch', description: 'Masih kencang, 3 kecepatan. Dijual karena pindah kost ber-AC.', price: 85000, categoryId: 'elektronik', condition: 'baik', areaId: 'ketawanggede', sellerId: 'u2', images: ['assets/products/p1-kipas.jpg'], postedAt: '2026-11-15T09:00:00+07:00', status: 'tersedia' },
   { id: 'p2', title: 'Rice Cooker Cosmos 1.8L', description: 'Lapisan anti lengket masih bagus, lengkap dengan centong.', price: 120000, categoryId: 'dapur', condition: 'baik', areaId: 'sumbersari', sellerId: 'u3', images: ['assets/products/p2-ricecooker.jpg'], postedAt: '2026-11-14T13:30:00+07:00', status: 'tersedia' },
-  { id: 'p3', title: 'Meja Lipat Belajar Lesehan', description: 'Kayu, ada sedikit goresan di pinggir. Muat laptop + buku.', price: 45000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p3-meja.jpg'], postedAt: '2026-11-13T19:00:00+07:00', status: 'dipesan' },
+  { id: 'p3', title: 'Meja Lipat Belajar Lesehan', description: 'Kayu, ada sedikit goresan di pinggir. Muat laptop + buku.', price: 45000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p3-meja.jpg'], postedAt: '2026-11-13T19:00:00+07:00', status: 'tersedia' },
   { id: 'p4', title: 'Kalkulus Purcell Jilid 1 & 2', description: 'Buku wajib Matematika Dasar. Ada stabilo di beberapa halaman.', price: 60000, categoryId: 'buku', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p4-buku.jpg'], postedAt: '2026-11-12T08:15:00+07:00', status: 'tersedia' },
   { id: 'p5', title: 'Kasur Busa Inoac 90x200', description: 'Tebal 15 cm, sudah dicuci sarungnya. Harus diambil sendiri.', price: 250000, categoryId: 'perabot', condition: 'baik', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p5-kasur.png'], postedAt: '2026-11-11T16:45:00+07:00', status: 'dipesan' },
   { id: 'p6', title: 'Dispenser Galon Sanken', description: 'Hanya air normal & panas. Berfungsi normal.', price: 90000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p6-dispenser.jpg'], postedAt: '2026-11-10T10:20:00+07:00', status: 'dipesan' },
   { id: 'p7', title: 'Sepeda Lipat United 20"', description: 'Rem dan gigi aman, ban baru diganti bulan lalu.', price: 850000, categoryId: 'kendaraan', condition: 'seperti-baru', areaId: 'gajayana', sellerId: 'u5', images: ['assets/products/p7-sepeda.jpg'], postedAt: '2026-11-09T07:00:00+07:00', status: 'tersedia' },
-  { id: 'p8', title: 'Jas Lab Putih Ukuran L', description: 'Dipakai 1 semester praktikum, sudah dilaundry.', price: 35000, categoryId: 'pakaian', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p8-jaslab.jpg'], postedAt: '2026-11-08T12:00:00+07:00', status: 'tersedia' },
+  { id: 'p8', title: 'Jas Lab Putih Ukuran L', description: 'Dipakai 1 semester praktikum, sudah dilaundry.', price: 35000, categoryId: 'pakaian', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p8-jaslab.jpg'], postedAt: '2026-11-08T12:00:00+07:00', status: 'dipesan' },
   { id: 'p9', title: 'Rak Sepatu Susun 4', description: 'Besi + kain, mudah dibongkar pasang.', price: 30000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p9-rak.jpg'], postedAt: '2026-11-07T15:00:00+07:00', status: 'terjual' },
   { id: 'p10', title: 'Monitor LG 22" Full HD', description: 'Tidak ada dead pixel, termasuk kabel HDMI.', price: 750000, categoryId: 'elektronik', condition: 'seperti-baru', areaId: 'tlogomas', sellerId: 'u3', images: ['assets/products/p10-monitor.png'], postedAt: '2026-11-06T20:30:00+07:00', status: 'terjual' },
 ];
@@ -184,11 +188,11 @@ BBK.orders = [
   },
   {
     id: 'BBK-2611-004', productIds: ['p5'], buyerId: 'u3', sellerId: 'u1', price: 250000,
-    meetingPlace: 'Perpustakaan Pusat UB', schedule: 'disetujui', scheduledAt: '2026-11-20T16:00:00+07:00', status: 'jadwal-cod', createdAt: '2026-11-16T13:00:00+07:00',
+    meetingPlace: 'Gerbang UIN Malang (Jl. Gajayana)', schedule: 'disetujui', scheduledAt: '2026-11-20T16:00:00+07:00', status: 'jadwal-cod', createdAt: '2026-11-16T13:00:00+07:00',
     timeline: [
       { status: 'menunggu-konfirmasi', at: '2026-11-16T13:00:00+07:00' },
       { status: 'dikonfirmasi', at: '2026-11-16T13:20:00+07:00' },
-      { status: 'jadwal-cod', at: '2026-11-16T13:22:00+07:00', note: 'Perpustakaan Pusat UB, Jumat 16.00' },
+      { status: 'jadwal-cod', at: '2026-11-16T13:22:00+07:00', note: 'Gerbang UIN Malang (Jl. Gajayana), Jumat 16.00' },
     ],
   },
   {
@@ -203,8 +207,8 @@ BBK.orders = [
     ],
   },
   {
-    id: 'BBK-2611-006', productIds: ['p3', 'p14'], buyerId: 'u1', sellerId: 'u2', price: 95000,
-    meetingPlace: 'Depan Gerbang Watugong UB', schedule: 'menunggu', scheduledAt: '2026-11-21T14:00:00+07:00', status: 'dikonfirmasi', createdAt: '2026-11-18T07:30:00+07:00',
+    id: 'BBK-2611-006', productIds: ['p8', 'p15'], buyerId: 'u1', sellerId: 'u4', price: 100000,
+    meetingPlace: 'Lobi MX Mall, pintu masuk depan', schedule: 'menunggu', scheduledAt: '2026-11-21T14:00:00+07:00', status: 'dikonfirmasi', createdAt: '2026-11-18T07:30:00+07:00',
     timeline: [
       { status: 'menunggu-konfirmasi', at: '2026-11-18T07:30:00+07:00' },
       { status: 'dikonfirmasi', at: '2026-11-18T07:50:00+07:00' },
@@ -225,7 +229,7 @@ BBK.reviews = [
 BBK.faq = [
   ['Siapa yang bisa memakai BaBaKos?', 'Hanya mahasiswa dengan email kampus berakhiran ac.id. Setiap akun diverifikasi dengan kode yang dikirim ke email itu.'],
   ['Bagaimana cara membayar?', 'Tunai saat COD. Cek barangnya dulu di titik temu, baru bayar. Tidak ada transfer di muka.'],
-  ['Di mana titik COD yang aman?', 'Titik di peta kampus: Gerbang Utama, Gerbang Watugong, Masjid Raden Patah, Perpustakaan Pusat, Matos, dan MX Mall. Semuanya ramai dan terang.'],
+  ['Di mana titik COD yang aman?', 'Pilih tempat ramai dan terang, misalnya gerbang kampus, masjid atau perpustakaan kampus, Matos, atau MX Mall. Peta di halaman Atur COD memberi saran titik aman di sekitar kampus-kampus Malang.'],
   ['Barang tidak sesuai, bagaimana?', 'Jangan bayar. Batalkan pesanan dari halaman Lacak Pesanan dan ceritakan alasannya.'],
   ['Apa itu Trust Score?', 'Nilai 0–100 dari email terverifikasi, transaksi selesai, rating pembeli, dan kecepatan membalas chat.'],
 ];
