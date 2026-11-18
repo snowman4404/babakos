@@ -2,6 +2,7 @@
  * Shared layout: injects the navbar into <header id="site-header"> and the footer
  * into <footer id="site-footer"> on every page, and guards pages marked
  * <body data-auth="required"> (redirects to masuk.html when not logged in).
+ * Also provides BBK.initReveal() for the scroll-in motion.
  * Requires js/data.js and js/utils.js.
  */
 (function () {
@@ -30,39 +31,97 @@
   const user = BBK.auth.currentUser();
 
   const navLink = (href, icon, label) => {
-    const active = currentFile === href ? ' is-active' : '';
-    return `<a class="nav-link${active}" href="${href}" aria-label="${label}">${BBK.icon(icon)}<span class="nav-label">${label}</span></a>`;
+    const current = currentFile === href ? ' aria-current="page"' : '';
+    return `<a class="nav-link" href="${href}"${current}>${BBK.icon(icon, 20)}<span class="nav-label">${label}</span></a>`;
   };
 
+  // Three parts like a menu card: links left, wordmark centre, links right.
+  // Logged in there are five links, so on phones they shrink to icons (class nav-compact).
   const header = document.getElementById('site-header');
   if (header) {
-    header.className = 'site-header';
+    header.classList.add('site-header');
+    const start = user
+      ? navLink('jelajah.html', 'search', 'Jelajah') + navLink('jual.html', 'plus', 'Jual')
+      : navLink('jelajah.html', 'search', 'Jelajah');
+    const end = user
+      ? navLink('chat.html', 'chat', 'Chat') + navLink('pesanan.html', 'package', 'Pesanan') + navLink('profil.html', 'user', 'Profil')
+      : navLink('masuk.html', 'user', 'Masuk');
     header.innerHTML = `
-      <nav class="container nav">
-        <a class="brand" href="index.html">
-          <img src="assets/icon.svg" alt="" width="32" height="32"> BaBaKos
-        </a>
-        ${navLink('jelajah.html', 'search', 'Jelajah')}
-        ${
-          user
-            ? navLink('jual.html', 'plus', 'Jual') +
-              navLink('chat.html', 'chat', 'Chat') +
-              navLink('pesanan.html', 'package', 'Pesanan') +
-              navLink('profil.html', 'user', 'Profil')
-            : '<a class="btn btn-primary" href="masuk.html">Masuk</a>'
-        }
+      <nav class="nav${user ? ' nav-compact' : ''}" aria-label="Utama">
+        <div class="nav-side">${start}</div>
+        <a class="wordmark" href="index.html">BaBaKos</a>
+        <div class="nav-side nav-end">${end}</div>
       </nav>`;
   }
 
   const footer = document.getElementById('site-footer');
   if (footer) {
-    footer.className = 'site-footer';
-    footer.innerHTML =
-      '<div class="container">BaBaKos — Barang Bekas Kost · Khusus mahasiswa Universitas Brawijaya · Mockup tanpa backend</div>';
+    footer.classList.add('site-footer');
+    const credits = BBK.photoCredits
+      .map(([what, by, url]) => `<a href="${BBK.escape(url)}">${BBK.escape(what)}</a> oleh ${BBK.escape(by)}`)
+      .join('; ');
+    footer.innerHTML = `
+      <div class="container">
+        <p class="credits">Foto contoh dari Wikimedia Commons: ${credits}.</p>
+        <div class="foot-line">
+          <p>BaBaKos, barang bekas kost</p>
+          <nav aria-label="Footer">
+            <a href="jelajah.html">Barang</a>
+            <a href="index.html#perjalanan">Cara COD</a>
+            ${user ? '<a href="jual.html">Jual</a>' : '<a href="daftar.html">Daftar</a>'}
+          </nav>
+          <p>2026 · Mockup tugas kuliah</p>
+        </div>
+      </div>`;
   }
 
   // Fill placeholder badges (used until each page is implemented).
   document.querySelectorAll('[data-icon]').forEach((el) => {
     el.insertAdjacentHTML('afterbegin', BBK.icon(el.dataset.icon));
   });
+
+  /*
+   * Entrance motion: elements with [data-reveal] rise in once when they enter the screen.
+   * Children of one [data-reveal-group] are staggered 70ms apart. Content stays visible
+   * without JS or with reduced motion (the hidden state is only applied here).
+   * Call it after the page has rendered its dynamic content.
+   */
+  BBK.initReveal = () => {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    document.documentElement.classList.add('reveal-ready');
+    document.querySelectorAll('[data-reveal-group]').forEach((g) => {
+      g.querySelectorAll('[data-reveal]').forEach((el, i) => el.style.setProperty('--delay', i * 70 + 'ms'));
+    });
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    // Safety net for fast jumps (anchor links, flicked scrolling): anything already above
+    // the bottom of the screen is shown, so no section is ever left blank.
+    let queued = false;
+    const sweep = () => {
+      queued = false;
+      document.querySelectorAll('[data-reveal]:not(.is-in)').forEach((el) => {
+        if (el.getBoundingClientRect().top < innerHeight) {
+          el.classList.add('is-in');
+          io.unobserve(el);
+        }
+      });
+    };
+    addEventListener('scroll', () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(sweep);
+      }
+    }, { passive: true });
+  };
 })();

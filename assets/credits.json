@@ -1,6 +1,6 @@
 [
  {
-  "file": "mockups/assets/ub-aerial.jpg",
+  "file": "assets/photos/ub-aerial.jpg",
   "media": "image",
   "ref": "commons:138399433",
   "title": "Universitas-Brawijaya-tampak-dari-atas",
@@ -24,7 +24,7 @@
   "saved": "2026-11-18T12:00:30.753Z"
  },
  {
-  "file": "mockups/assets/ub-gerbang.jpg",
+  "file": "assets/photos/ub-gerbang.jpg",
   "media": "image",
   "ref": "commons:176051154",
   "title": "04 270925 universitas brawijaya gerbang",
@@ -46,7 +46,7 @@
   "saved": "2026-11-18T12:00:55.411Z"
  },
  {
-  "file": "mockups/assets/malang-ijen.jpg",
+  "file": "assets/photos/malang-ijen.jpg",
   "media": "image",
   "ref": "commons:98130412",
   "title": "Idjen Street, Malang, 2019",
@@ -70,7 +70,7 @@
   "saved": "2026-11-18T12:00:57.686Z"
  },
  {
-  "file": "mockups/assets/p1-kipas.jpg",
+  "file": "assets/products/p1-kipas.jpg",
   "media": "image",
   "ref": "commons:148699661",
   "title": "Mounted electric fan in a classroom",
@@ -94,7 +94,7 @@
   "saved": "2026-11-18T12:01:09.859Z"
  },
  {
-  "file": "mockups/assets/p2-ricecooker.jpg",
+  "file": "assets/products/p2-ricecooker.jpg",
   "media": "image",
   "ref": "commons:145223754",
   "title": "Panasonic RICE COOKER SR-L15H8",
@@ -118,7 +118,7 @@
   "saved": "2026-11-18T12:01:11.355Z"
  },
  {
-  "file": "mockups/assets/p3-meja.jpg",
+  "file": "assets/products/p3-meja.jpg",
   "media": "image",
   "ref": "commons:106246624",
   "title": "EEZTOP folding table at Dana Point fishing",
@@ -142,7 +142,7 @@
   "saved": "2026-11-18T12:01:11.997Z"
  },
  {
-  "file": "mockups/assets/p4-buku.jpg",
+  "file": "assets/products/p4-buku.jpg",
   "media": "image",
   "ref": "commons:182426609",
   "title": "Stack of multicolored books on a table",
@@ -164,7 +164,7 @@
   "saved": "2026-11-18T12:01:12.665Z"
  },
  {
-  "file": "mockups/assets/p5-kasur.png",
+  "file": "assets/products/p5-kasur.png",
   "media": "image",
   "ref": "commons:114434861",
   "title": "Noa Mattress Review",
@@ -188,7 +188,7 @@
   "saved": "2026-11-18T12:01:21.177Z"
  },
  {
-  "file": "mockups/assets/p6-dispenser.jpg",
+  "file": "assets/products/p6-dispenser.jpg",
   "media": "image",
   "ref": "commons:136522144",
   "title": "Water-dispenser-aqua-clara-1",
@@ -212,7 +212,7 @@
   "saved": "2026-11-18T12:01:22.222Z"
  },
  {
-  "file": "mockups/assets/p7-sepeda.jpg",
+  "file": "assets/products/p7-sepeda.jpg",
   "media": "image",
   "ref": "commons:186336513",
   "title": "Lulu Bike Sport folding bicycle bikepacking",
@@ -236,7 +236,7 @@
   "saved": "2026-11-18T12:01:23.745Z"
  },
  {
-  "file": "mockups/assets/p8-jaslab.jpg",
+  "file": "assets/products/p8-jaslab.jpg",
   "media": "image",
   "ref": "commons:4477452",
   "title": "Lab coats",
@@ -258,7 +258,7 @@
   "saved": "2026-11-18T12:01:25.118Z"
  },
  {
-  "file": "mockups/assets/p9-rak.jpg",
+  "file": "assets/products/p9-rak.jpg",
   "media": "image",
   "ref": "commons:49317001",
   "title": "Tobang with shoe rack",
@@ -280,7 +280,7 @@
   "saved": "2026-11-18T12:01:26.743Z"
  },
  {
-  "file": "mockups/assets/p10-monitor.png",
+  "file": "assets/products/p10-monitor.png",
   "media": "image",
   "ref": "commons:75784071",
   "title": "EIZO Foris FG2421 VGA computer monitor displaying test pattern",
@@ -304,7 +304,7 @@
   "saved": "2026-11-18T12:01:27.767Z"
  },
  {
-  "file": "mockups/assets/p11-teko.jpg",
+  "file": "assets/products/p11-teko.jpg",
   "media": "image",
   "ref": "commons:133742540",
   "title": "2023 Czajnik elektryczny N'OVEEN",
@@ -328,7 +328,7 @@
   "saved": "2026-11-18T12:02:34.611Z"
  },
  {
-  "file": "mockups/assets/p12-tas.jpg",
+  "file": "assets/products/p12-tas.jpg",
   "media": "image",
   "ref": "commons:80619479",
   "title": "Plecak Hiker 50 L HiMountain",
@@ -350,7 +350,7 @@
   "saved": "2026-11-18T12:02:35.536Z"
  },
  {
-  "file": "mockups/assets/p13-gitar.jpg",
+  "file": "assets/products/p13-gitar.jpg",
   "media": "image",
   "ref": "commons:130775196",
   "title": "00 Walden Acoustic Guitar D310e 01",
@@ -374,7 +374,7 @@
   "saved": "2026-11-18T12:02:36.527Z"
  },
  {
-  "file": "mockups/assets/p14-setrika.jpg",
+  "file": "assets/products/p14-setrika.jpg",
   "media": "image",
   "ref": "commons:18353019",
   "title": "Electric steam iron",
@@ -398,7 +398,7 @@
   "saved": "2026-11-18T12:02:37.338Z"
  },
  {
-  "file": "mockups/assets/p15-laci.jpg",
+  "file": "assets/products/p15-laci.jpg",
   "media": "image",
   "ref": "commons:61761700",
   "title": "Blue plastic chest of drawers for desktop",
@@ -420,7 +420,7 @@
   "saved": "2026-11-18T12:02:39.093Z"
  },
  {
-  "file": "mockups/assets/p16-wajan.jpg",
+  "file": "assets/products/p16-wajan.jpg",
   "media": "image",
   "ref": "commons:63353933",
   "title": "Frying pan pan",

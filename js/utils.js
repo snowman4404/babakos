@@ -3,12 +3,13 @@
  * Requires js/data.js to be loaded first.
  */
 (function () {
-  const rupiah = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
   const dateTime = new Intl.DateTimeFormat('id-ID', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 
-  /** 85000 -> "Rp 85.000" */
-  BBK.formatRupiah = (value) => rupiah.format(value);
+  /** 85000 -> "Rp85.000" (built by hand: Intl's currency style inserts a non-breaking space some fonts render oddly). */
+  BBK.formatRupiah = (value) => 'Rp' + Number(value).toLocaleString('id-ID');
   BBK.formatDateTime = (iso) => dateTime.format(new Date(iso));
+  /** 0.5 -> "0,5" */
+  BBK.formatKm = (km) => String(Math.round(km * 10) / 10).replace('.', ',');
 
   /** Mock campus-email check: any Indonesian academic domain (…ac.id). */
   BBK.isCampusEmail = (email) => /^[^\s@]+@([a-z0-9-]+\.)*ac\.id$/i.test(String(email).trim());
@@ -26,6 +27,28 @@
   BBK.getArea = byId(BBK.kostAreas);
   BBK.getMeetingPoint = byId(BBK.meetingPoints);
   BBK.getCategory = byId(BBK.categories);
+
+  /** Short area name for tight spots: "Jl. Kerto (Kertopamuji, …)" -> "Jl. Kerto". */
+  BBK.areaShortName = (id) => BBK.getArea(id).name.split(' (')[0];
+
+  /** Cover photo of a product (path relative to the site root). */
+  BBK.productImage = (p) => (p.images && p.images[0]) || 'assets/photos/ub-aerial.jpg';
+
+  /** Straight-line distance in km between two kost areas (mock x/y in data.js). */
+  BBK.areaDistance = (a, b) => {
+    const A = BBK.getArea(a);
+    const B = BBK.getArea(b);
+    return Math.hypot(A.x - B.x, A.y - B.y);
+  };
+
+  /** The meeting point with the smallest combined distance from two kost areas. */
+  BBK.nearestMeetingPoint = (areaIdA, areaIdB) =>
+    BBK.meetingPoints
+      .map((m) => ({ m, d: BBK.areaDistance(areaIdA, m.areaId) + BBK.areaDistance(areaIdB, m.areaId) }))
+      .sort((x, y) => x.d - y.d)[0].m;
+
+  /** Walking minutes at ~5 km/h, at least 2. */
+  BBK.walkMinutes = (km) => Math.max(2, Math.round((km / 5) * 60));
 
   /*
    * Tiny localStorage wrapper. Pages are separate HTML files, so anything that must

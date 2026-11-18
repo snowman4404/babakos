@@ -3,30 +3,198 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BaBaKos — marketplace barang bekas kost khusus mahasiswa Universitas Brawijaya.">
-    <title>Beranda — BaBaKos</title>
+    <meta name="description" content="BaBaKos — pasar barang bekas kost khusus mahasiswa Universitas Brawijaya. Cari per area kost, chat penjualnya, lalu COD di kampus.">
+    <title>BaBaKos — Barang Kost, Pindah Tangan</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <header id="site-header"></header>
+    <a class="skip" href="#perjalanan">Langsung ke isi</a>
 
-    <main class="container">
-      <!-- TODO: replace this placeholder with the real page (see docs/PAGES.md) -->
-      <section class="placeholder">
-        <div class="placeholder-tag" data-icon="construction">Dalam pengerjaan</div>
-        <h1>Beranda</h1>
-        <p class="placeholder-file">index.html</p>
-        <ul>
-          <li>Hero: jual-beli barang bekas kost khusus mahasiswa UB</li>
-          <li>Keunggulan: akun terverifikasi email ac.id, COD di titik aman, lacak pesanan</li>
-          <li>Cara kerja 3 langkah: Daftar → Chat → COD</li>
-          <li>Kategori populer &amp; barang terbaru</li>
-          <li>CTA Daftar / Jelajah</li>
-        </ul>
+    <main>
+    <!-- Part 1: the split stage. The left column scrolls, the photograph on the right stays. -->
+    <div class="stage">
+      <div class="column">
+        <section class="sheet" aria-labelledby="hero-title">
+          <header id="site-header" class="site-header--sheet"></header>
+          <div class="sheet-main">
+            <h1 id="hero-title" class="hero-title" data-reveal>Barang kost, pindah tangan</h1>
+            <p class="hero-sub" data-reveal>Pasar barang bekas khusus mahasiswa Universitas Brawijaya. Cari per area kost, chat penjualnya, lalu COD di kampus.</p>
+            <a class="btn" href="#barang" data-reveal>Lihat barang yang dijual</a>
+            <div class="follow" data-reveal>
+              <p class="follow-label" id="follow-label">Ikuti satu barang dari kost penjual sampai ke kamarmu:</p>
+              <div class="follow-tabs" role="tablist" aria-labelledby="follow-label" id="follow-tabs">
+                <button type="button" role="tab" aria-selected="true" data-id="p1">Kipas angin</button>
+                <button type="button" role="tab" aria-selected="false" tabindex="-1" data-id="p2">Rice cooker</button>
+                <button type="button" role="tab" aria-selected="false" tabindex="-1" data-id="p7">Sepeda lipat</button>
+                <button type="button" role="tab" aria-selected="false" tabindex="-1" data-id="p4">Buku kalkulus</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- The journey: one item, five chapters. [data-f] fields are filled by js/pages/index.js. -->
+        <section class="journey" id="perjalanan" aria-labelledby="journey-title">
+          <h2 id="journey-title" class="sr-only">Perjalanan satu barang</h2>
+
+          <article class="chapter" data-photo="item" data-reveal-group>
+            <h3 class="title" data-reveal>Dijual di <span data-f="sellerArea">Ketawanggede</span></h3>
+            <p data-reveal data-f="soldText">Nadia dari Fakultas Ekonomi dan Bisnis sedang beres-beres kamar. Kipas Angin Miyako 16 inch difoto, diberi harga Rp85.000, dan tayang hanya untuk akun @student.ub.ac.id.</p>
+            <dl class="facts" data-reveal>
+              <div><dt>Harga</dt><dd data-f="price">Rp85.000</dd></div>
+              <div><dt>Kondisi</dt><dd data-f="condition">Baik</dd></div>
+              <div><dt>Penjual</dt><dd data-f="seller">Nadia, terverifikasi</dd></div>
+            </dl>
+          </article>
+
+          <article class="chapter" data-photo="street" data-reveal-group>
+            <h3 class="title" data-reveal>Ditemukan dari kostmu</h3>
+            <p data-reveal data-f="foundText">Kamu di Ketawanggede menyaring barang di bawah Rp100.000 dalam 30 menit jalan kaki. Kipas Angin Miyako 16 inch muncul, 2 menit dari kamarmu.</p>
+            <p class="walk-figure" data-reveal><span data-f="minutes">2</span><span class="walk-unit">menit jalan kaki dari <span data-f="buyerArea">Ketawanggede</span></span></p>
+          </article>
+
+          <article class="chapter" data-photo="item" data-reveal-group>
+            <h3 class="title" data-reveal>Chat, barangnya ikut</h3>
+            <p data-reveal>Begitu kamu menekan Chat penjual, kartu barangnya menempel di percakapan. Tidak ada yang salah paham soal barang yang mana.</p>
+            <div class="demo-chat" data-reveal aria-label="Contoh percakapan">
+              <div class="demo-card">
+                <img data-f="thumb" src="assets/products/p1-kipas.jpg" alt="" width="72" height="72">
+                <div><p class="demo-card-title" data-f="title">Kipas Angin Miyako 16 inch</p><p data-f="price">Rp85.000</p></div>
+              </div>
+              <p class="demo-bubble me">Halo kak, <span data-f="shortTitle">kipasnya</span> masih ada?</p>
+              <p class="demo-bubble them">Masih ada! Bisa COD di <span data-f="codName">Masjid Raden Patah UB</span> <span data-f="codDay">Kamis</span> jam <span data-f="codTime">12.30</span>?</p>
+              <p class="demo-bubble me">Bisa, sampai ketemu.</p>
+            </div>
+          </article>
+
+          <article class="chapter" data-photo="gate" data-reveal-group>
+            <h3 class="title" data-reveal>Ketemu di tempat ramai</h3>
+            <p data-reveal data-f="codText">Titik temu dipilih dari peta kampus: Masjid Raden Patah UB. Area parkir depan masjid kampus. Dua pihak sepakat Kamis pukul 12.30.</p>
+            <ul class="cod-tips" data-reveal>
+              <li>Cek barangnya dulu, baru bayar tunai.</li>
+              <li>Tidak sesuai? Batalkan dari halaman pesanan.</li>
+              <li>Jadwal tersimpan di halaman pesanan.</li>
+            </ul>
+          </article>
+
+          <article class="chapter" data-photo="item" data-reveal-group>
+            <h3 class="title" data-reveal>Selesai, tercatat</h3>
+            <p data-reveal>Setiap langkah tercatat di pesanan sampai barangnya diterima.</p>
+            <div class="slip" data-reveal data-f="slip" aria-label="Riwayat pesanan">
+              <p class="slip-head">Pesanan BBK-2611-101</p>
+              <p class="slip-day">Senin</p>
+              <dl>
+                <div><dt>Dipesan</dt><dd>10.10</dd></div>
+                <div><dt>Dikonfirmasi penjual</dt><dd>10.20</dd></div>
+                <div><dt>Jadwal COD disepakati</dt><dd>10.25</dd></div>
+              </dl>
+              <p class="slip-day">Kamis</p>
+              <dl>
+                <div><dt>Bertemu di Masjid Raden Patah</dt><dd>12.34</dd></div>
+                <div><dt>Barang dicek dan dibayar</dt><dd>Rp85.000</dd></div>
+              </dl>
+              <p class="slip-total"><span>Selesai, barang di kamarmu</span><span>12.41</span></p>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <!-- The photograph that never moves; it crossfades as each chapter arrives. -->
+      <figure class="photo">
+        <img class="ph is-on" data-key="item" src="assets/products/p1-kipas.jpg" alt="Kipas Angin Miyako 16 inch yang dijual" width="960" height="720">
+        <img class="ph" data-key="street" src="assets/photos/malang-ijen.jpg" alt="Jalan Ijen di Malang" width="960" height="720">
+        <img class="ph" data-key="gate" src="assets/photos/ub-gerbang.jpg" alt="Gerbang Universitas Brawijaya" width="960" height="1280">
+        <figcaption class="photo-bar"><span data-f="title">Kipas Angin Miyako 16 inch</span><span><span data-f="sellerArea">Ketawanggede</span> · <span data-f="price">Rp85.000</span></span></figcaption>
+      </figure>
+    </div>
+
+      <!-- Part 2: full-width blue field. Pinned heading, passing rows. -->
+      <section class="safe" aria-labelledby="safe-title">
+        <div class="container safe-grid">
+          <h2 id="safe-title" class="safe-title">Aman karena sesama</h2>
+          <div class="safe-rows">
+            <article class="srow" data-reveal-group>
+              <h3 data-reveal>Hanya email kampus</h3>
+              <div class="srow-body">
+                <img data-reveal src="assets/photos/ub-aerial.jpg" alt="Kampus Universitas Brawijaya dari atas" width="960" height="640" loading="lazy">
+                <ul data-reveal><li>Daftar dengan @student.ub.ac.id</li><li>Kode 6 digit ke email kampus</li><li>Tanda terverifikasi di profil</li><li>Bukan mahasiswa, tidak bisa transaksi</li></ul>
+              </div>
+            </article>
+            <article class="srow srow-flip" data-reveal-group>
+              <h3 data-reveal>Cari per area dan harga</h3>
+              <div class="srow-body">
+                <img data-reveal src="assets/products/p15-laci.jpg" alt="Laci plastik tiga susun" width="960" height="1280" loading="lazy">
+                <ul data-reveal><li>Sembilan area kost di sekitar UB</li><li>Rentang harga minimum dan maksimum</li><li>Urutkan dari yang terdekat</li><li>Kategori dan kondisi barang</li></ul>
+              </div>
+            </article>
+            <article class="srow" data-reveal-group>
+              <h3 data-reveal>Chat dengan barang terlampir</h3>
+              <div class="srow-body">
+                <img data-reveal src="assets/products/p11-teko.jpg" alt="Teko listrik" width="960" height="1113" loading="lazy">
+                <ul data-reveal><li>Kartu barang menempel otomatis</li><li>Tanya kondisi, minta foto lagi</li><li>Tawar harga langsung</li><li>Ajukan COD dari chat</li></ul>
+              </div>
+            </article>
+            <article class="srow srow-flip" data-reveal-group>
+              <h3 data-reveal>COD di titik aman</h3>
+              <div class="srow-body">
+                <img data-reveal src="assets/photos/ub-gerbang.jpg" alt="Gerbang Universitas Brawijaya" width="960" height="1280" loading="lazy">
+                <ul data-reveal><li>Enam titik ramai di peta kampus</li><li>Gerbang, masjid, perpustakaan, mal</li><li>Tanggal dan jam disepakati</li><li>Bayar tunai setelah cek barang</li></ul>
+              </div>
+            </article>
+            <article class="srow" data-reveal-group>
+              <h3 data-reveal>Lacak sampai selesai</h3>
+              <div class="srow-body">
+                <img data-reveal src="assets/products/p13-gitar.jpg" alt="Gitar akustik" width="960" height="1280" loading="lazy">
+                <ul data-reveal><li>Menunggu konfirmasi penjual</li><li>Dikonfirmasi, jadwal COD disepakati</li><li>Bertemu di lokasi</li><li>Selesai, lalu beri rating</li></ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 3: the listing as two-ended rows, grouped by area -->
+      <section class="home-section" id="barang" aria-labelledby="list-title">
+        <div class="list-col">
+          <h2 id="list-title" class="title" data-reveal>Sedang dijual</h2>
+          <div class="list-areas" id="list" data-reveal-group></div>
+          <a class="list-more" href="jelajah.html">Buka semua barang dan filter</a>
+        </div>
+      </section>
+
+      <!-- Part 4: questions beside a tall photograph -->
+      <section class="home-section faq" id="faq" aria-labelledby="faq-title">
+        <div class="container faq-grid">
+          <div class="faq-col">
+            <h2 id="faq-title" class="title" data-reveal>Sebelum mulai</h2>
+            <ul class="faq-facts" data-reveal>
+              <li>Khusus mahasiswa dengan email @student.ub.ac.id</li>
+              <li>COD di enam titik kampus, pukul <span id="cod-hours">07.00 sampai 21.00</span></li>
+              <li>Tanpa ongkir dan tanpa biaya, bayar tunai di tempat</li>
+            </ul>
+            <div class="faq-list">
+              <details><summary>Bagaimana cara daftar?</summary><p>Masukkan email @student.ub.ac.id, lalu kode 6 digit yang dikirim ke email kampusmu. Untuk uji coba, email berakhiran ac.id lain juga diterima.</p></details>
+              <details><summary>Bisa nego harga?</summary><p>Bisa, lewat chat. Barangnya sudah terlampir, jadi tinggal tawar.</p></details>
+              <details><summary>Kalau barang tidak sesuai?</summary><p>Jangan bayar. Tekan Batalkan di halaman pesanan dan laporkan lewat chat. Rating penjual ikut tercatat.</p></details>
+              <details><summary>Barang apa yang tidak boleh dijual?</summary><p>Makanan basah, obat, dan barang yang melanggar aturan kampus atau hukum.</p></details>
+              <details><summary>Kapan barang paling banyak?</summary><p>Akhir semester dan musim wisuda, saat kakak tingkat pindahan.</p></details>
+            </div>
+            <div class="faq-actions" id="faq-actions"><a class="btn" href="daftar.html">Daftar dengan email kampus</a><a href="#barang">Lihat barang dulu</a></div>
+          </div>
+          <div class="faq-pics" data-reveal>
+            <img class="pic-tall" src="assets/products/p9-rak.jpg" alt="Rak sepatu di teras rumah" width="960" height="1280" loading="lazy">
+            <img class="pic-sq" src="assets/products/p7-sepeda.jpg" alt="Sepeda lipat" width="960" height="960" loading="lazy">
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 5: one plain sentence -->
+      <section class="home-cta container" aria-labelledby="cta-title">
+        <h2 id="cta-title" class="sr-only">Jual barangmu</h2>
+        <p data-reveal>Mau pindahan? Barangmu bisa jadi isi kamar adik tingkat minggu ini.</p>
+        <div class="cta-actions" data-reveal><a class="btn btn-small" href="jual.html">Jual barang</a><a href="#perjalanan">Lihat caranya</a></div>
       </section>
     </main>
 
@@ -35,5 +203,6 @@
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/layout.js"></script>
+    <script src="js/pages/index.js"></script>
   </body>
 </html>

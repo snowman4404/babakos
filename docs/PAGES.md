@@ -24,13 +24,22 @@ Beranda → Daftar (email `@student.ub.ac.id`) → Verifikasi OTP → Jelajah (f
 
 ## Isi tiap halaman
 
-### 1. Beranda `index.html`
-- Navbar: logo, Jelajah, Masuk/Daftar
-- Hero: "Jual-beli barang bekas kost, khusus mahasiswa UB" + search bar + CTA
-- 3 keunggulan: akun terverifikasi ac.id · COD di titik aman kampus · lacak pesanan
-- Cara kerja: Daftar → Chat → COD
-- Kategori populer, barang terbaru (4–8 kartu)
-- Footer
+### 1. Beranda `index.html` ✅ (dari mockup D, "Pindah tangan")
+- Panggung terbelah: kolom kiri bergulir, foto di kanan diam dan berganti saat bab berganti (di HP: foto di atas, kolom menutupinya)
+- Hero: navbar di dalam lembar, judul "Barang kost, pindah tangan", tombol ke daftar barang, tab "Ikuti satu barang" (kipas, rice cooker, sepeda lipat, buku)
+- Perjalanan satu barang, 5 bab yang teksnya diisi dari data: Dijual di area penjual → Ditemukan dari kostmu (menit jalan kaki) → Chat dengan kartu barang → COD di titik aman → Slip pesanan selesai
+- "Aman karena sesama": 5 keunggulan (email kampus, filter area & harga, chat terlampir, COD titik aman, lacak pesanan)
+- "Sedang dijual": semua barang dikelompokkan per area kost, terdekat dari gerbang dulu → `produk.html?id=…`
+- FAQ "Sebelum mulai" + tombol Daftar (sudah masuk: tombol Jelajah/Jual), kalimat penutup + tombol Jual
+- Footer: kredit foto Wikimedia Commons
+- Beda dari rencana awal (sengaja, mengikuti mockup D):
+  - Tidak ada search bar di hero; pencarian ada di Jelajah
+  - Judul "Barang kost, pindah tangan"
+  - Navbar tanpa tautan Daftar (Daftar ada di FAQ dan footer) dan memakai wordmark teks
+  - "Cara kerja Daftar → Chat → COD" menjadi perjalanan 5 bab
+  - 5 keunggulan, bukan 3
+  - Tidak ada "Kategori populer"
+  - Daftar barang menampilkan semua barang per area kost, bukan 4–8 kartu terbaru
 
 ### 2. Daftar `daftar.html`
 - Nama, email kampus, fakultas, area kost

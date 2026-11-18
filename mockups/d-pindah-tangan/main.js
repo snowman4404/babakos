@@ -21,12 +21,12 @@
     return {
       title: p.title,
       shortTitle: nick[p.id] || 'barangnya',
-      price: BBK.rp(p.price),
+      price: BBK.formatRupiah(p.price),
       condition: BBK.conditionLabels[p.condition],
       seller: `${first}, terverifikasi`,
       sellerArea: short(p.areaId),
-      soldText: `${first} dari ${seller.faculty} sedang beres-beres kamar. ${p.title} difoto, diberi harga ${BBK.rp(p.price)}, dan tayang hanya untuk akun @student.ub.ac.id.`,
-      foundText: `Kamu di Ketawanggede menyaring barang di bawah ${BBK.rp(ceiling)} dalam 30 menit jalan kaki. ${p.title} muncul, ${min} menit dari kamarmu.`,
+      soldText: `${first} dari ${seller.faculty} sedang beres-beres kamar. ${p.title} difoto, diberi harga ${BBK.formatRupiah(p.price)}, dan tayang hanya untuk akun @student.ub.ac.id.`,
+      foundText: `Kamu di Ketawanggede menyaring barang di bawah ${BBK.formatRupiah(ceiling)} dalam 30 menit jalan kaki. ${p.title} muncul, ${min} menit dari kamarmu.`,
       minutes: String(min),
       codName: point.name,
       codShort: point.name.replace(' UB', '').replace(' (Jl. Veteran)', '').replace('Malang Town Square (Matos)', 'Matos'),
@@ -100,7 +100,7 @@
         items.map((p) => `<a class="lrow" href="#">
           <span class="ldot"><img src="${BBK.productImage(p)}" alt="" width="16" height="16" loading="lazy"></span>
           <span class="lname">${BBK.escape(p.title)}</span>
-          <span class="lval">${p.status === 'tersedia' ? BBK.rp(p.price) : p.status === 'terjual' ? 'Terjual' : 'Dipesan'}</span>
+          <span class="lval">${p.status === 'tersedia' ? BBK.formatRupiah(p.price) : p.status === 'terjual' ? 'Terjual' : 'Dipesan'}</span>
         </a>`).join('') + '</div>';
     })
     .join('');

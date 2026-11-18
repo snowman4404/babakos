@@ -28,7 +28,8 @@ js/data.js                      data mock (produk, pengguna, area kost, titik CO
 js/utils.js                     helper: format Rupiah, auth mock, localStorage
 js/layout.js                    navbar & footer bersama
 js/pages/                       logika per halaman
-assets/                         logo & gambar
+assets/                         logo, foto barang (products/) & foto suasana (photos/)
+mockups/                        eksplorasi desain beranda (referensi)
 ```
 
 ## Menjalankan secara lokal
