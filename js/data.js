@@ -24,16 +24,17 @@ BBK.conditionLabels = {
 };
 
 // Kost neighbourhoods around Universitas Brawijaya, Malang. distanceKm = to UB main gate (mock).
+// x/y = mock position in km from the main gate (east/south positive), for area-to-area distances.
 BBK.kostAreas = [
-  { id: 'ketawanggede', name: 'Ketawanggede', distanceKm: 0.5 },
-  { id: 'sumbersari', name: 'Sumbersari', distanceKm: 0.8 },
-  { id: 'kerto', name: 'Jl. Kerto (Kertopamuji, Kertosentono)', distanceKm: 0.7 },
-  { id: 'watugong', name: 'Watugong', distanceKm: 0.6 },
-  { id: 'dinoyo', name: 'Dinoyo', distanceKm: 1.5 },
-  { id: 'gajayana', name: 'Jl. Gajayana', distanceKm: 1.2 },
-  { id: 'soehat', name: 'Soekarno-Hatta (Soehat)', distanceKm: 1.8 },
-  { id: 'kalpataru', name: 'Kalpataru', distanceKm: 2.0 },
-  { id: 'tlogomas', name: 'Tlogomas', distanceKm: 3.0 },
+  { id: 'ketawanggede', name: 'Ketawanggede', distanceKm: 0.5, x: -0.2, y: -0.45 },
+  { id: 'sumbersari', name: 'Sumbersari', distanceKm: 0.8, x: 0.3, y: 0.75 },
+  { id: 'kerto', name: 'Jl. Kerto (Kertopamuji, Kertosentono)', distanceKm: 0.7, x: 0.6, y: -0.35 },
+  { id: 'watugong', name: 'Watugong', distanceKm: 0.6, x: 0.2, y: -0.57 },
+  { id: 'dinoyo', name: 'Dinoyo', distanceKm: 1.5, x: -1.3, y: -0.75 },
+  { id: 'gajayana', name: 'Jl. Gajayana', distanceKm: 1.2, x: -1.0, y: -0.65 },
+  { id: 'soehat', name: 'Soekarno-Hatta (Soehat)', distanceKm: 1.8, x: 1.2, y: -1.35 },
+  { id: 'kalpataru', name: 'Kalpataru', distanceKm: 2.0, x: 0.9, y: -1.8 },
+  { id: 'tlogomas', name: 'Tlogomas', distanceKm: 3.0, x: -2.6, y: -1.5 },
 ];
 
 // Safe public COD meeting points. x/y = % position on the illustrated mock map (no maps API).
@@ -56,6 +57,12 @@ BBK.users = [
 
 // images: [] means the UI shows a category placeholder. Put real photos in assets/products/.
 BBK.products = [
+  { id: 'p11', title: 'Teko Listrik 1.7L', description: 'Mendidih cepat, mati otomatis. Bagian dalam sudah dibersihkan dari kerak.', price: 55000, categoryId: 'dapur', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: [], postedAt: '2026-11-17T20:10:00+07:00', status: 'tersedia' },
+  { id: 'p12', title: 'Tas Carrier 50L', description: 'Dipakai 2x naik Panderman. Resleting dan rain cover lengkap.', price: 180000, categoryId: 'lainnya', condition: 'seperti-baru', areaId: 'sumbersari', sellerId: 'u5', images: [], postedAt: '2026-11-17T16:00:00+07:00', status: 'tersedia' },
+  { id: 'p13', title: 'Gitar Akustik Walden', description: 'Senar baru, ada softcase. Suara masih nyaring.', price: 400000, categoryId: 'lainnya', condition: 'baik', areaId: 'kerto', sellerId: 'u3', images: [], postedAt: '2026-11-17T09:30:00+07:00', status: 'tersedia' },
+  { id: 'p14', title: 'Setrika Uap Russell Hobbs', description: 'Uap masih keluar normal, alas tidak lengket.', price: 50000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'ketawanggede', sellerId: 'u2', images: [], postedAt: '2026-11-16T21:00:00+07:00', status: 'tersedia' },
+  { id: 'p15', title: 'Laci Plastik 3 Susun', description: 'Ukuran meja, 35x27x36 cm. Pas untuk alat tulis dan skincare.', price: 65000, categoryId: 'perabot', condition: 'seperti-baru', areaId: 'gajayana', sellerId: 'u4', images: [], postedAt: '2026-11-16T14:20:00+07:00', status: 'tersedia' },
+  { id: 'p16', title: 'Wajan Teflon 24 cm', description: 'Lapisan masih rata, gagang kokoh. Cocok untuk masak di kost.', price: 40000, categoryId: 'dapur', condition: 'baik', areaId: 'dinoyo', sellerId: 'u5', images: [], postedAt: '2026-11-15T18:40:00+07:00', status: 'tersedia' },
   { id: 'p1', title: 'Kipas Angin Miyako 16 inch', description: 'Masih kencang, 3 kecepatan. Dijual karena pindah kost ber-AC.', price: 85000, categoryId: 'elektronik', condition: 'baik', areaId: 'ketawanggede', sellerId: 'u2', images: [], postedAt: '2026-11-15T09:00:00+07:00', status: 'tersedia' },
   { id: 'p2', title: 'Rice Cooker Cosmos 1.8L', description: 'Lapisan anti lengket masih bagus, lengkap dengan centong.', price: 120000, categoryId: 'dapur', condition: 'baik', areaId: 'sumbersari', sellerId: 'u3', images: [], postedAt: '2026-11-14T13:30:00+07:00', status: 'tersedia' },
   { id: 'p3', title: 'Meja Lipat Belajar Lesehan', description: 'Kayu, ada sedikit goresan di pinggir. Muat laptop + buku.', price: 45000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: [], postedAt: '2026-11-13T19:00:00+07:00', status: 'tersedia' },
