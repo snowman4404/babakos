@@ -72,7 +72,7 @@
   const km = buyerAreaId ? BBK.areaDistance(buyerAreaId, p.areaId) : area.distanceKm;
   $('#p-near').textContent = buyerAreaId
     ? `${BBK.walkMinutes(km)} menit jalan kaki dari kostmu di ${BBK.areaShortName(buyerAreaId)}. COD pukul ${BBK.codHours.open}–${BBK.codHours.close}.`
-    : `${BBK.formatKm(area.distanceKm)} km ke gerbang utama UB. COD pukul ${BBK.codHours.open}–${BBK.codHours.close}.`;
+    : `${BBK.formatKm(area.distanceKm)} km dari kawasan kampus. COD pukul ${BBK.codHours.open}–${BBK.codHours.close}.`;
   $('#p-desc').textContent = p.description;
   $('#p-posted').textContent = `Diunggah ${BBK.timeAgo(p.postedAt).toLowerCase()} · ${category.label}`;
 
@@ -101,18 +101,6 @@
     paintWish(on);
     BBK.toast(on ? 'Disimpan ke wishlist.' : 'Dihapus dari wishlist.');
   });
-
-  /* ---------- Bundle that contains this item ---------- */
-  const bundle = BBK.bundles.find((b) => b.productIds.includes(p.id) && BBK.bundleInfo(b).available);
-  if (bundle && !isOwn && p.status === 'tersedia') {
-    const info = BBK.bundleInfo(bundle);
-    const link = $('#p-bundle');
-    link.hidden = false;
-    link.href = `checkout.html?bundle=${encodeURIComponent(bundle.id)}`;
-    link.innerHTML = `<span class="tag tag-solid">Lebih Hemat</span>
-      <span><strong>${esc(bundle.title)}</strong> · ${info.items.length} barang ${BBK.formatRupiah(bundle.price)}
-      <s>${BBK.formatRupiah(info.normal)}</s></span>${BBK.icon('chevron-right', 18)}`;
-  }
 
   /* ---------- Seller row (Figma: avatar, "Nama (FEB '22)", Trust Score, Chat) ---------- */
   const thread = user && BBK.threadForProduct(p.id, user.id);
@@ -159,7 +147,7 @@
   $('#shop-link').href = profileHref;
   $('#shop-avatar').textContent = BBK.initials(seller.name);
   $('#shop-name').textContent = seller.name;
-  $('#shop-meta').textContent = `${BBK.cohortLabel(seller)} · ${seller.faculty}`;
+  $('#shop-meta').textContent = `${BBK.cohortLabel(seller)} · ${seller.faculty}${seller.universityShort ? ` · ${seller.universityShort}` : ''}`;
   $('#shop-trust').textContent = seller.trustScore;
   $('#shop-rating').innerHTML = `${BBK.icon('star', 14)}${seller.rating.toLocaleString('id-ID', { minimumFractionDigits: 1 })}`;
   $('#shop-sold').textContent = seller.totalSold;

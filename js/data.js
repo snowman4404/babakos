@@ -26,7 +26,7 @@ BBK.conditionLabels = {
   'layak-pakai': 'Layak Pakai',
 };
 
-// Kost neighbourhoods around Universitas Brawijaya, Malang. distanceKm = to UB main gate (mock).
+// Kost neighbourhoods around the campuses in Malang (mostly near UB Veteran). distanceKm = to UB main gate (mock).
 // x/y = mock position in km from the main gate (east/south positive), for area-to-area distances.
 BBK.kostAreas = [
   { id: 'ketawanggede', name: 'Ketawanggede', distanceKm: 0.5, x: -0.2, y: -0.45 },
@@ -42,28 +42,37 @@ BBK.kostAreas = [
 
 // Safe public COD meeting points. x/y = % position on the illustrated mock map (no maps API).
 BBK.meetingPoints = [
-  { id: 'gerbang-veteran', name: 'Gerbang Utama UB (Jl. Veteran)', shortName: 'Gerbang Utama', description: 'Depan pos satpam gerbang utama, ramai dan terang.', areaId: 'sumbersari', x: 50, y: 82 },
+  { id: 'gerbang-veteran', name: 'Gerbang Utama UB (Jl. Veteran)', shortName: 'Gerbang Utama', description: 'Depan pos satpam gerbang utama, ramai dan terang. Dekat kampus UB.', areaId: 'sumbersari', x: 50, y: 82 },
   { id: 'gerbang-watugong', name: 'Gerbang Watugong UB', shortName: 'Gerbang Watugong', description: 'Dekat pos satpam, cocok untuk penghuni Watugong & Kerto.', areaId: 'watugong', x: 76, y: 30 },
   { id: 'masjid-raden-patah', name: 'Masjid Raden Patah UB', shortName: 'Masjid Raden Patah', description: 'Area parkir depan masjid kampus.', areaId: 'ketawanggede', x: 34, y: 46 },
   { id: 'perpustakaan-ub', name: 'Perpustakaan Pusat UB', shortName: 'Perpustakaan Pusat', description: 'Lobi perpustakaan, buka jam kuliah.', areaId: 'ketawanggede', x: 56, y: 52 },
+  { id: 'gerbang-uin', name: 'Gerbang UIN Malang (Jl. Gajayana)', shortName: 'Gerbang UIN', description: 'Depan gerbang kampus UIN, ramai saat jam kuliah.', areaId: 'gajayana', x: 14, y: 40 },
   { id: 'matos', name: 'Malang Town Square (Matos)', shortName: 'Matos', description: 'Lobi utama mal, di seberang kampus.', areaId: 'sumbersari', x: 22, y: 88 },
   { id: 'mx-mall', name: 'MX Mall', shortName: 'MX Mall', description: 'Pintu masuk depan, dekat Jl. Veteran.', areaId: 'sumbersari', x: 78, y: 90 },
 ];
 
 // Homepage banner slides (scene photos, credited in BBK.photoCredits).
 BBK.banners = [
-  { image: 'assets/photos/ub-gerbang.jpg', title: 'Barang kost, pindah tangan', text: 'Jual beli barang bekas antar mahasiswa UB. COD di titik aman kampus.', cta: 'Lihat katalog', href: 'jelajah.html' },
+  { image: 'assets/photos/ub-gerbang.jpg', title: 'Barang kost, pindah tangan', text: 'Jual beli barang bekas antar mahasiswa se-Malang. COD di titik aman kampus.', cta: 'Lihat katalog', href: 'jelajah.html' },
   { image: 'assets/photos/ub-aerial.jpg', title: 'Cari dari kost terdekat', text: 'Saring per area kost dan harga, lalu jalan kaki ke titik COD.', cta: 'Cari di Ketawanggede', href: 'jelajah.html?area=ketawanggede' },
-  { image: 'assets/photos/malang-ijen.jpg', title: 'Pindah kost? Jual barangmu', text: 'Foto, beri harga, dan tayang untuk sesama akun ac.id.', cta: 'Jual barang', href: 'jual.html' },
+  { image: 'assets/photos/malang-ijen.jpg', title: 'Pindah kost? Jual barangmu', text: 'Foto, beri harga, dan tayang untuk sesama mahasiswa kampus di Malang.', cta: 'Jual barang', href: 'jual.html' },
 ];
 
-// Faculties for the signup form: [short, full name].
+// Campuses in Malang for the signup form: [short, full name].
+BBK.universities = [
+  ['UB', 'Universitas Brawijaya'], ['UM', 'Universitas Negeri Malang'], ['UIN Malang', 'UIN Maulana Malik Ibrahim Malang'],
+  ['UMM', 'Universitas Muhammadiyah Malang'], ['Polinema', 'Politeknik Negeri Malang'], ['ITN', 'Institut Teknologi Nasional Malang'],
+  ['Unisma', 'Universitas Islam Malang'], ['Unmer', 'Universitas Merdeka Malang'], ['Lainnya', 'Kampus lain di Malang'],
+];
+
+// Faculties (or jurusan) for the signup form: [short, full name]. Generic, shared by all campuses.
 BBK.faculties = [
-  ['FILKOM', 'Fakultas Ilmu Komputer'], ['FEB', 'Fakultas Ekonomi dan Bisnis'], ['FT', 'Fakultas Teknik'],
-  ['FMIPA', 'Fakultas MIPA'], ['FP', 'Fakultas Pertanian'], ['FH', 'Fakultas Hukum'],
-  ['FISIP', 'Fakultas Ilmu Sosial dan Ilmu Politik'], ['FIB', 'Fakultas Ilmu Budaya'], ['FK', 'Fakultas Kedokteran'],
-  ['FTP', 'Fakultas Teknologi Pertanian'], ['FPIK', 'Fakultas Perikanan dan Ilmu Kelautan'], ['FAPET', 'Fakultas Peternakan'],
-  ['FIA', 'Fakultas Ilmu Administrasi'], ['FV', 'Fakultas Vokasi'],
+  ['FILKOM', 'Fakultas Ilmu Komputer'], ['FEB', 'Fakultas Ekonomi dan Bisnis'], ['FE', 'Fakultas Ekonomi'],
+  ['FT', 'Fakultas Teknik'], ['FMIPA', 'Fakultas MIPA'], ['FST', 'Fakultas Sains dan Teknologi'],
+  ['FP', 'Fakultas Pertanian'], ['FH', 'Fakultas Hukum'], ['FISIP', 'Fakultas Ilmu Sosial dan Ilmu Politik'],
+  ['FIB', 'Fakultas Ilmu Budaya'], ['FK', 'Fakultas Kedokteran'], ['FAI', 'Fakultas Agama Islam'],
+  ['FKIP', 'Fakultas Keguruan dan Ilmu Pendidikan'], ['FIA', 'Fakultas Ilmu Administrasi'], ['FV', 'Fakultas Vokasi'],
+  ['JTE', 'Jurusan Teknik Elektro'], ['JTI', 'Jurusan Teknologi Informasi'], ['LAINNYA', 'Fakultas atau jurusan lain'],
 ];
 
 // Quick max-price steps (Rp) for the Katalog filter.
@@ -74,11 +83,11 @@ BBK.codHours = { open: '07.00', close: '21.00' };
 
 // trustScore (0–100) = verified email + finished deals + ratings + reply speed (mock).
 BBK.users = [
-  { id: 'u1', name: 'Rizky Pratama', email: 'rizkypratama@student.ub.ac.id', faculty: 'Fakultas Ilmu Komputer', facultyShort: 'FILKOM', cohort: 2023, areaId: 'ketawanggede', verified: true, rating: 4.8, totalSold: 3, trustScore: 92, joinedAt: '2026-08-20' },
-  { id: 'u2', name: 'Nadia Putri', email: 'nadiaputri@student.ub.ac.id', faculty: 'Fakultas Ekonomi dan Bisnis', facultyShort: 'FEB', cohort: 2022, areaId: 'kerto', verified: true, rating: 4.9, totalSold: 12, trustScore: 95, joinedAt: '2025-09-01' },
-  { id: 'u3', name: 'Bagus Setiawan', email: 'bagussetiawan@student.ub.ac.id', faculty: 'Fakultas Teknik', facultyShort: 'FT', cohort: 2021, areaId: 'sumbersari', verified: true, rating: 4.6, totalSold: 7, trustScore: 88, joinedAt: '2025-02-14' },
-  { id: 'u4', name: 'Ayu Lestari', email: 'ayulestari@student.ub.ac.id', faculty: 'Fakultas MIPA', facultyShort: 'FMIPA', cohort: 2023, areaId: 'watugong', verified: true, rating: 5.0, totalSold: 4, trustScore: 97, joinedAt: '2026-01-10' },
-  { id: 'u5', name: 'Fajar Nugroho', email: 'fajarnugroho@student.ub.ac.id', faculty: 'Fakultas Pertanian', facultyShort: 'FP', cohort: 2020, areaId: 'dinoyo', verified: true, rating: 4.7, totalSold: 9, trustScore: 90, joinedAt: '2024-10-05' },
+  { id: 'u1', name: 'Rizky Pratama', email: 'rizkypratama@student.ub.ac.id', university: 'Universitas Brawijaya', universityShort: 'UB', faculty: 'Fakultas Ilmu Komputer', facultyShort: 'FILKOM', cohort: 2023, areaId: 'ketawanggede', verified: true, rating: 4.8, totalSold: 3, trustScore: 92, joinedAt: '2026-08-20' },
+  { id: 'u2', name: 'Nadia Putri', email: 'nadiaputri@students.um.ac.id', university: 'Universitas Negeri Malang', universityShort: 'UM', faculty: 'Fakultas Ekonomi', facultyShort: 'FE', cohort: 2022, areaId: 'kerto', verified: true, rating: 4.9, totalSold: 12, trustScore: 95, joinedAt: '2025-09-01' },
+  { id: 'u3', name: 'Bagus Setiawan', email: 'bagussetiawan@student.uin-malang.ac.id', university: 'UIN Maulana Malik Ibrahim Malang', universityShort: 'UIN Malang', faculty: 'Fakultas Sains dan Teknologi', facultyShort: 'FST', cohort: 2021, areaId: 'sumbersari', verified: true, rating: 4.6, totalSold: 7, trustScore: 88, joinedAt: '2025-02-14' },
+  { id: 'u4', name: 'Ayu Lestari', email: 'ayulestari@student.ub.ac.id', university: 'Universitas Brawijaya', universityShort: 'UB', faculty: 'Fakultas MIPA', facultyShort: 'FMIPA', cohort: 2023, areaId: 'watugong', verified: true, rating: 5.0, totalSold: 4, trustScore: 97, joinedAt: '2026-01-10' },
+  { id: 'u5', name: 'Fajar Nugroho', email: 'fajarnugroho@webmail.umm.ac.id', university: 'Universitas Muhammadiyah Malang', universityShort: 'UMM', faculty: 'Fakultas Pertanian', facultyShort: 'FP', cohort: 2020, areaId: 'dinoyo', verified: true, rating: 4.7, totalSold: 9, trustScore: 90, joinedAt: '2024-10-05' },
 ];
 
 // images: paths relative to the site root; images[0] is the cover. Sample photos are credited in BBK.photoCredits.
@@ -87,12 +96,12 @@ BBK.products = [
   { id: 'p11', title: 'Teko Listrik 1.7L', description: 'Mendidih cepat, mati otomatis. Bagian dalam sudah dibersihkan dari kerak.', price: 55000, categoryId: 'dapur', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p11-teko.jpg'], postedAt: '2026-11-17T20:10:00+07:00', status: 'dipesan' },
   { id: 'p12', title: 'Tas Carrier 50L', description: 'Dipakai 2x naik Panderman. Resleting dan rain cover lengkap.', price: 180000, categoryId: 'lainnya', condition: 'seperti-baru', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p12-tas.jpg'], postedAt: '2026-11-17T16:00:00+07:00', status: 'tersedia' },
   { id: 'p13', title: 'Gitar Akustik Walden', description: 'Senar baru, ada softcase. Suara masih nyaring.', price: 400000, categoryId: 'lainnya', condition: 'baik', areaId: 'kerto', sellerId: 'u3', images: ['assets/products/p13-gitar.jpg'], postedAt: '2026-11-17T09:30:00+07:00', status: 'tersedia' },
-  { id: 'p14', title: 'Setrika Uap Russell Hobbs', description: 'Uap masih keluar normal, alas tidak lengket.', price: 50000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p14-setrika.jpg'], postedAt: '2026-11-16T21:00:00+07:00', status: 'tersedia' },
+  { id: 'p14', title: 'Setrika Uap Russell Hobbs', description: 'Uap masih keluar normal, alas tidak lengket.', price: 50000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p14-setrika.jpg'], postedAt: '2026-11-16T21:00:00+07:00', status: 'dipesan' },
   { id: 'p15', title: 'Laci Plastik 3 Susun', description: 'Ukuran meja, 35x27x36 cm. Pas untuk alat tulis dan skincare.', price: 65000, categoryId: 'perabot', condition: 'seperti-baru', areaId: 'gajayana', sellerId: 'u4', images: ['assets/products/p15-laci.jpg'], postedAt: '2026-11-16T14:20:00+07:00', status: 'tersedia' },
   { id: 'p16', title: 'Wajan Teflon 24 cm', description: 'Lapisan masih rata, gagang kokoh. Cocok untuk masak di kost.', price: 40000, categoryId: 'dapur', condition: 'baik', areaId: 'sumbersari', sellerId: 'u3', images: ['assets/products/p16-wajan.jpg'], postedAt: '2026-11-15T18:40:00+07:00', status: 'tersedia' },
   { id: 'p1', title: 'Kipas Angin Miyako 16 inch', description: 'Masih kencang, 3 kecepatan. Dijual karena pindah kost ber-AC.', price: 85000, categoryId: 'elektronik', condition: 'baik', areaId: 'ketawanggede', sellerId: 'u2', images: ['assets/products/p1-kipas.jpg'], postedAt: '2026-11-15T09:00:00+07:00', status: 'tersedia' },
   { id: 'p2', title: 'Rice Cooker Cosmos 1.8L', description: 'Lapisan anti lengket masih bagus, lengkap dengan centong.', price: 120000, categoryId: 'dapur', condition: 'baik', areaId: 'sumbersari', sellerId: 'u3', images: ['assets/products/p2-ricecooker.jpg'], postedAt: '2026-11-14T13:30:00+07:00', status: 'tersedia' },
-  { id: 'p3', title: 'Meja Lipat Belajar Lesehan', description: 'Kayu, ada sedikit goresan di pinggir. Muat laptop + buku.', price: 45000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p3-meja.jpg'], postedAt: '2026-11-13T19:00:00+07:00', status: 'tersedia' },
+  { id: 'p3', title: 'Meja Lipat Belajar Lesehan', description: 'Kayu, ada sedikit goresan di pinggir. Muat laptop + buku.', price: 45000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'kerto', sellerId: 'u2', images: ['assets/products/p3-meja.jpg'], postedAt: '2026-11-13T19:00:00+07:00', status: 'dipesan' },
   { id: 'p4', title: 'Kalkulus Purcell Jilid 1 & 2', description: 'Buku wajib Matematika Dasar. Ada stabilo di beberapa halaman.', price: 60000, categoryId: 'buku', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p4-buku.jpg'], postedAt: '2026-11-12T08:15:00+07:00', status: 'tersedia' },
   { id: 'p5', title: 'Kasur Busa Inoac 90x200', description: 'Tebal 15 cm, sudah dicuci sarungnya. Harus diambil sendiri.', price: 250000, categoryId: 'perabot', condition: 'baik', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p5-kasur.png'], postedAt: '2026-11-11T16:45:00+07:00', status: 'dipesan' },
   { id: 'p6', title: 'Dispenser Galon Sanken', description: 'Hanya air normal & panas. Berfungsi normal.', price: 90000, categoryId: 'elektronik', condition: 'layak-pakai', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p6-dispenser.jpg'], postedAt: '2026-11-10T10:20:00+07:00', status: 'dipesan' },
@@ -100,13 +109,6 @@ BBK.products = [
   { id: 'p8', title: 'Jas Lab Putih Ukuran L', description: 'Dipakai 1 semester praktikum, sudah dilaundry.', price: 35000, categoryId: 'pakaian', condition: 'baik', areaId: 'watugong', sellerId: 'u4', images: ['assets/products/p8-jaslab.jpg'], postedAt: '2026-11-08T12:00:00+07:00', status: 'tersedia' },
   { id: 'p9', title: 'Rak Sepatu Susun 4', description: 'Besi + kain, mudah dibongkar pasang.', price: 30000, categoryId: 'perabot', condition: 'layak-pakai', areaId: 'ketawanggede', sellerId: 'u1', images: ['assets/products/p9-rak.jpg'], postedAt: '2026-11-07T15:00:00+07:00', status: 'terjual' },
   { id: 'p10', title: 'Monitor LG 22" Full HD', description: 'Tidak ada dead pixel, termasuk kabel HDMI.', price: 750000, categoryId: 'elektronik', condition: 'seperti-baru', areaId: 'tlogomas', sellerId: 'u3', images: ['assets/products/p10-monitor.png'], postedAt: '2026-11-06T20:30:00+07:00', status: 'terjual' },
-];
-
-// "Paket Bundling Hemat": items from ONE seller sold together for less (one COD meeting).
-BBK.bundles = [
-  { id: 'b1', title: 'Paket Kamar Kos Baru', productIds: ['p1', 'p3', 'p14'], price: 155000 },
-  { id: 'b2', title: 'Paket Maba Praktikum', productIds: ['p8', 'p4'], price: 80000 },
-  { id: 'b3', title: 'Paket Dapur Kos', productIds: ['p2', 'p16'], price: 140000 },
 ];
 
 // Seed chats. attachedProductId on a message = product card attached automatically.
@@ -150,11 +152,14 @@ BBK.orderSteps = [
   { status: 'selesai', label: 'Selesai', long: 'Transaksi selesai' },
 ];
 
-// productIds: one item, or every item of a bundle (bundleId set). Payment is always cash at the COD.
+// productIds: one item, or several items of ONE seller that the buyer bundled into a single COD.
+// price = sum of the item prices. Payment is always cash at the COD.
+// meetingPlace: free text typed by the buyer. schedule: the seller's approval of the COD time + place
+// ('menunggu' | 'disetujui' | 'ditolak'); only the buyer changes place/time, only the seller approves.
 BBK.orders = [
   {
     id: 'BBK-2611-001', productIds: ['p11'], buyerId: 'u1', sellerId: 'u4', price: 55000,
-    meetingPointId: 'gerbang-watugong', scheduledAt: '2026-11-19T12:30:00+07:00', status: 'jadwal-cod', createdAt: '2026-11-17T20:25:00+07:00',
+    meetingPlace: 'Gerbang Watugong UB', schedule: 'disetujui', scheduledAt: '2026-11-19T12:30:00+07:00', status: 'jadwal-cod', createdAt: '2026-11-17T20:25:00+07:00',
     timeline: [
       { status: 'menunggu-konfirmasi', at: '2026-11-17T20:25:00+07:00' },
       { status: 'dikonfirmasi', at: '2026-11-17T20:40:00+07:00' },
@@ -163,7 +168,7 @@ BBK.orders = [
   },
   {
     id: 'BBK-2611-002', productIds: ['p10'], buyerId: 'u1', sellerId: 'u3', price: 750000,
-    meetingPointId: 'matos', scheduledAt: '2026-11-12T16:00:00+07:00', status: 'selesai', createdAt: '2026-11-10T09:00:00+07:00',
+    meetingPlace: 'Malang Town Square (Matos)', schedule: 'disetujui', scheduledAt: '2026-11-12T16:00:00+07:00', status: 'selesai', createdAt: '2026-11-10T09:00:00+07:00',
     timeline: [
       { status: 'menunggu-konfirmasi', at: '2026-11-10T09:00:00+07:00' },
       { status: 'dikonfirmasi', at: '2026-11-10T09:30:00+07:00' },
@@ -174,12 +179,12 @@ BBK.orders = [
   },
   {
     id: 'BBK-2611-003', productIds: ['p6'], buyerId: 'u5', sellerId: 'u1', price: 90000,
-    meetingPointId: 'masjid-raden-patah', scheduledAt: '2026-11-20T10:00:00+07:00', status: 'menunggu-konfirmasi', createdAt: '2026-11-18T08:10:00+07:00',
+    meetingPlace: 'Masjid Raden Patah UB', schedule: 'menunggu', scheduledAt: '2026-11-20T10:00:00+07:00', status: 'menunggu-konfirmasi', createdAt: '2026-11-18T08:10:00+07:00',
     timeline: [{ status: 'menunggu-konfirmasi', at: '2026-11-18T08:10:00+07:00' }],
   },
   {
     id: 'BBK-2611-004', productIds: ['p5'], buyerId: 'u3', sellerId: 'u1', price: 250000,
-    meetingPointId: 'perpustakaan-ub', scheduledAt: '2026-11-20T16:00:00+07:00', status: 'jadwal-cod', createdAt: '2026-11-16T13:00:00+07:00',
+    meetingPlace: 'Perpustakaan Pusat UB', schedule: 'disetujui', scheduledAt: '2026-11-20T16:00:00+07:00', status: 'jadwal-cod', createdAt: '2026-11-16T13:00:00+07:00',
     timeline: [
       { status: 'menunggu-konfirmasi', at: '2026-11-16T13:00:00+07:00' },
       { status: 'dikonfirmasi', at: '2026-11-16T13:20:00+07:00' },
@@ -188,13 +193,21 @@ BBK.orders = [
   },
   {
     id: 'BBK-2611-005', productIds: ['p9'], buyerId: 'u4', sellerId: 'u1', price: 30000,
-    meetingPointId: 'perpustakaan-ub', scheduledAt: '2026-11-08T13:00:00+07:00', status: 'selesai', createdAt: '2026-11-07T18:00:00+07:00', reviewId: 'r5',
+    meetingPlace: 'Perpustakaan Pusat UB', schedule: 'disetujui', scheduledAt: '2026-11-08T13:00:00+07:00', status: 'selesai', createdAt: '2026-11-07T18:00:00+07:00', reviewId: 'r5',
     timeline: [
       { status: 'menunggu-konfirmasi', at: '2026-11-07T18:00:00+07:00' },
       { status: 'dikonfirmasi', at: '2026-11-07T18:10:00+07:00' },
       { status: 'jadwal-cod', at: '2026-11-07T18:12:00+07:00' },
       { status: 'bertemu', at: '2026-11-08T13:02:00+07:00' },
       { status: 'selesai', at: '2026-11-08T13:10:00+07:00', note: 'Pembeli konfirmasi barang diterima' },
+    ],
+  },
+  {
+    id: 'BBK-2611-006', productIds: ['p3', 'p14'], buyerId: 'u1', sellerId: 'u2', price: 95000,
+    meetingPlace: 'Depan Gerbang Watugong UB', schedule: 'menunggu', scheduledAt: '2026-11-21T14:00:00+07:00', status: 'dikonfirmasi', createdAt: '2026-11-18T07:30:00+07:00',
+    timeline: [
+      { status: 'menunggu-konfirmasi', at: '2026-11-18T07:30:00+07:00' },
+      { status: 'dikonfirmasi', at: '2026-11-18T07:50:00+07:00' },
     ],
   },
 ];

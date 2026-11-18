@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Atur COD di BaBaKos: pilih titik temu aman di kampus UB, tanggal, dan jam.">
+    <meta name="description" content="Atur COD di BaBaKos: tulis titik temu aman di sekitar kampusmu, lalu pilih tanggal dan jam.">
     <title>Atur COD — BaBaKos</title>
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
     <header id="site-header" data-bar="Atur COD" data-back="jelajah.html"></header>
 
     <main class="container page">
-      <!-- Order summary, map of safe meeting points, schedule, payment summary. Filled by js/pages/checkout.js. -->
+      <!-- Order summary, free-text meeting place (map = optional helper), schedule, payment summary. Filled by js/pages/checkout.js. -->
       <form class="checkout" id="checkout-form" novalidate>
         <div class="checkout-main">
           <section class="card" aria-labelledby="sum-title">
@@ -28,26 +28,32 @@
             <div class="card-head">
               <div>
                 <h2 class="h3" id="point-title">Titik Temu COD</h2>
-                <p class="caption">Pilih tempat ramai di sekitar kampus. Ketuk pin di peta atau pilih dari daftar.</p>
+                <p class="caption">Tulis tempat ramai yang kalian berdua mudah jangkau.</p>
               </div>
             </div>
-            <div id="map"></div>
-            <fieldset class="points" id="points">
-              <legend class="sr-only">Titik temu</legend>
-            </fieldset>
+            <div class="field">
+              <label class="field-label" for="place">Titik temu</label>
+              <input class="input" id="place" name="place" type="text" maxlength="100" required autocomplete="off" placeholder="Contoh: Depan Gerbang Watugong UB" aria-describedby="place-error">
+              <p class="field-error" id="place-error" hidden></p>
+            </div>
+            <div class="place-suggest">
+              <p class="caption">Saran titik aman, ketuk untuk mengisi:</p>
+              <div class="chips" id="place-chips"></div>
+              <details class="place-map">
+                <summary>Lihat di peta ilustrasi</summary>
+                <div id="map"></div>
+              </details>
+            </div>
           </section>
 
           <section class="card" aria-labelledby="when-title">
             <h2 class="h3 card-head" id="when-title">Jadwal COD</h2>
-            <fieldset class="field">
-              <legend class="field-label">Tanggal</legend>
-              <div class="date-chips" id="dates"></div>
-            </fieldset>
-            <fieldset class="field when-time">
-              <legend class="field-label">Jam</legend>
-              <div class="chips" id="times"></div>
-              <p class="field-hint" id="hours-hint"></p>
-            </fieldset>
+            <div class="field">
+              <label class="field-label" for="when">Tanggal dan jam</label>
+              <input class="input" id="when" name="when" type="datetime-local" required aria-describedby="when-hint when-error">
+              <p class="field-hint" id="when-hint"></p>
+              <p class="field-error" id="when-error" hidden></p>
+            </div>
             <div class="field when-note">
               <label class="field-label" for="note">Catatan untuk penjual <span class="muted">(opsional)</span></label>
               <textarea class="textarea" id="note" name="note" maxlength="200" placeholder="Mis. aku pakai jaket almamater, tunggu di depan pos satpam."></textarea>
@@ -57,7 +63,7 @@
           <section class="card-soft tips" aria-labelledby="tips-title">
             <h2 class="h3" id="tips-title"><span data-icon="shield"></span>Tips aman COD</h2>
             <ul>
-              <li>Bertemu di titik ramai yang ada di peta, pada jam terang.</li>
+              <li>Bertemu di titik ramai di sekitar kampus, pada jam terang.</li>
               <li>Cek barangnya dulu, baru bayar tunai.</li>
               <li>Tidak sesuai? Jangan bayar, batalkan dari halaman Lacak Pesanan.</li>
             </ul>

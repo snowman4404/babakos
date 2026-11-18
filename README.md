@@ -2,7 +2,7 @@
 
 # BaBaKos — Barang Bekas Kost
 
-Marketplace barang bekas kost **khusus mahasiswa Universitas Brawijaya**. Proyek ini adalah **mockup frontend** (tanpa backend) yang dibuat hanya dengan **HTML, CSS, dan JavaScript**.
+Marketplace barang bekas kost **khusus mahasiswa kampus-kampus di Malang** (UB, UM, UIN Malang, UMM, dan lainnya). Proyek ini adalah **mockup frontend** (tanpa backend) yang dibuat hanya dengan **HTML, CSS, dan JavaScript**.
 
 **Demo:** https://snowman4404.github.io/babakos/
 
@@ -15,7 +15,7 @@ Marketplace barang bekas kost **khusus mahasiswa Universitas Brawijaya**. Proyek
 - Verifikasi email `ac.id` (mock OTP: kode 6 digit apa pun)
 - Search dan filter berdasarkan area kost, rentang harga, kategori, dan kondisi
 - Chat dengan kartu produk otomatis terlampir
-- Peta mockup titik COD di sekitar kampus UB
+- Peta mockup titik COD di sekitar kampus-kampus Malang
 - Lacak pesanan: Menunggu → Dikonfirmasi → Jadwal COD → Bertemu → Selesai
 
 Daftar halaman lengkap ada di [docs/PAGES.md](docs/PAGES.md).

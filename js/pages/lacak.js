@@ -1,10 +1,12 @@
 /*
  * Lacak Pesanan (lacak.html?id=BBK-2611-001), from the Figma "Pesanan Saya" frame.
  * Status stepper Menunggu → Dikonfirmasi → Jadwal COD → Bertemu → Selesai, schedule,
- * meeting point on the campus map, payment summary. Actions depend on the role:
- * the buyer can cancel or confirm receipt (then rate the seller); the seller can
- * accept, reject, set the schedule and mark the meeting. A demo button plays the
- * other side so the whole flow can be shown alone.
+ * meeting place, payment summary. Actions depend on the role:
+ * - buyer: cancel, confirm receipt (then rate the seller), and change the COD place/time
+ *   with the pencil buttons (the seller must approve the new schedule again);
+ * - seller: accept/reject the order, approve or reject the schedule (rejecting a schedule
+ *   never cancels the order), mark the meeting.
+ * A demo button plays the other side so the whole flow can be shown alone.
  */
 (function () {
   const $ = (selector) => document.querySelector(selector); // tiny querySelector alias
@@ -26,9 +28,12 @@
   document.title = `Pesanan ${o.id} — BaBaKos`;
 
   const STEP_ICONS = ['clock', 'circle-check', 'calendar', 'users', 'package'];
+  const EDITABLE = ['menunggu-konfirmasi', 'dikonfirmasi', 'jadwal-cod']; // statuses where the buyer may change place/time
+  const SCHEDULE_LABEL = { menunggu: 'Menunggu persetujuan penjual', disetujui: 'Disetujui penjual', ditolak: 'Ditolak penjual' };
+  let editing = null; // 'when' | 'place' | null (buyer's inline form)
+  let rejecting = false; // seller's inline "reason" form for Tolak Jadwal COD
 
   function render() {
-    const point = BBK.getMeetingPoint(o.meetingPointId);
     const idx = BBK.stepIndex(o.status);
     const done = o.status === 'selesai';
     const cancelled = o.status === 'dibatalkan';
@@ -38,7 +43,7 @@
     $('#t-created').textContent = `${o.id} · Dibuat pada ${BBK.formatDate(o.createdAt)}`;
     $('#t-pill').innerHTML = BBK.statusPill(o.status);
 
-    /* Items */
+    /* Items: every item of the order */
     $('#t-items').innerHTML = items
       .map(
         (p) => `<a class="track-item" href="produk.html?id=${encodeURIComponent(p.id)}">
@@ -60,20 +65,25 @@
     const banner = $('#t-banner');
     banner.className = `status-banner is-${BBK.statusTone(o.status)}`;
     banner.innerHTML = `<span>${esc(cancelled ? 'Dibatalkan' : BBK.orderSteps[idx].long)}</span>${BBK.icon(cancelled ? 'x' : done ? 'circle-check' : STEP_ICONS[idx], 36)}`;
+    renderScheduleNote();
     $('#t-steps').innerHTML = BBK.orderSteps
       .map((s, i) => {
-        const at = o.timeline.find((t) => t.status === s.status);
+        const at = BBK.stepEntry(o, s.status);
         const state = cancelled ? (at ? 'done' : 'off') : i < idx || done ? 'done' : i === idx ? 'now' : 'off';
+        const shown = at && state !== 'off'; // a step left behind (schedule rejected) shows no stale time
         return `<li class="step is-${state}"${state === 'now' ? ' aria-current="step"' : ''}>
           <span class="step-dot">${BBK.icon(state === 'done' ? 'check' : STEP_ICONS[i], 16)}</span>
           <span class="step-text"><span class="step-label">${esc(s.label)}</span>
-          <span class="caption">${at ? esc(BBK.formatDateTime(at.at)) + (at.note ? ' · ' + esc(at.note) : '') : '&nbsp;'}</span></span>
+          <span class="caption">${shown ? esc(BBK.formatDateTime(at.at)) + (at.note ? ' · ' + esc(at.note) : '') : '&nbsp;'}</span></span>
         </li>`;
       })
       .join('');
-    const cancelEntry = o.timeline.find((t) => t.status === 'dibatalkan');
+    const cancelEntry = BBK.stepEntry(o, 'dibatalkan');
+    const live = EDITABLE.includes(o.status);
     $('#t-status-kv').innerHTML = `
       <div><dt>Status pesanan</dt><dd class="status-text is-${BBK.statusTone(o.status)}">${esc(BBK.statusLabel(o.status))}</dd></div>
+      ${live ? `<div><dt>Jadwal dan lokasi COD</dt><dd>${esc(SCHEDULE_LABEL[o.schedule] || SCHEDULE_LABEL.menunggu)}</dd></div>` : ''}
+      ${live && o.schedule === 'ditolak' && o.scheduleReason ? `<div><dt>Alasan penjual</dt><dd>${esc(o.scheduleReason)}</dd></div>` : ''}
       <div><dt>Metode pembayaran</dt><dd>Tunai saat COD</dd></div>
       <div><dt>Total biaya</dt><dd>${BBK.formatRupiah(o.price)}</dd></div>
       ${o.note ? `<div><dt>Catatan pembeli</dt><dd>${esc(o.note)}</dd></div>` : ''}
@@ -82,37 +92,83 @@
     renderActions(idx);
     renderReview();
 
-    /* Schedule + places */
-    const confirmed = o.timeline.find((t) => t.status === 'dikonfirmasi');
-    const finished = o.timeline.find((t) => t.status === 'selesai');
+    /* Schedule + place (the buyer can edit both while the order is still open) */
+    const confirmed = BBK.stepEntry(o, 'dikonfirmasi');
+    const finished = BBK.stepEntry(o, 'selesai');
+    const canEdit = isBuyer && live;
+    const pencil = (field, label) =>
+      canEdit && editing !== field
+        ? `<button type="button" class="icon-btn icon-btn-soft edit-btn" data-act="edit" data-field="${field}" aria-label="${label}" title="${label}">${BBK.icon('pencil', 16)}</button>`
+        : '';
+    const whenValue = editing === 'when'
+      ? editForm('when', 'Jadwal COD baru', `<input class="input" id="e-when" type="datetime-local" required min="${esc(BBK.toLocalInput(new Date()))}" value="${esc(BBK.toLocalInput(o.scheduledAt))}" aria-describedby="e-error">`,
+          `COD bisa pukul ${BBK.codHours.open}–${BBK.codHours.close}.`)
+      : `<span>${esc(BBK.formatDate(o.scheduledAt))}, ${esc(BBK.formatTime(o.scheduledAt))}</span>`;
     $('#t-when').innerHTML = `
       <li><span class="caption">Tanggal pemesanan</span><span>${esc(BBK.formatDate(o.createdAt))}</span></li>
-      <li><span class="caption">Jadwal COD</span><span>${esc(BBK.formatDate(o.scheduledAt))}, ${esc(BBK.formatTime(o.scheduledAt))}</span></li>
+      <li><span class="when-head"><span class="caption">Jadwal COD</span>${pencil('when', 'Ubah jadwal COD')}</span>${whenValue}</li>
       <li><span class="caption">${finished ? 'Selesai' : 'Dikonfirmasi penjual'}</span><span>${finished ? esc(BBK.formatDateTime(finished.at)) : confirmed ? esc(BBK.formatDateTime(confirmed.at)) : 'Belum'}</span></li>`;
-    const seller = BBK.getUser(o.sellerId);
     const buyer = BBK.getUser(o.buyerId);
+    const placeValue = editing === 'place'
+      ? editForm('place', 'Titik temu baru', `<input class="input" id="e-place" type="text" required maxlength="100" autocomplete="off" placeholder="Contoh: Depan Gerbang Watugong UB" value="${esc(o.meetingPlace)}" aria-describedby="e-error">`)
+      : `<p>${esc(o.meetingPlace)}</p>`;
     $('#t-where').innerHTML = `
-      <li><span class="where-dot is-from"></span><div><p class="where-label">Barang dari</p>
-        <p>Kost ${esc(seller.name)} di ${esc(BBK.areaShortName(items[0].areaId))}</p></div></li>
-      <li><span class="where-dot is-to"></span><div><p class="where-label">Bertemu di</p>
-        <p>${esc(point.name)}</p><p class="caption">${esc(buyer.name)} — ${esc(buyer.email)}</p></div></li>`;
-    $('#t-map').innerHTML = BBK.campusMap({ selected: point.id });
-    $('#t-map-note').textContent = `${point.description} COD pukul ${BBK.codHours.open}–${BBK.codHours.close}.`;
+      <li><span class="where-dot is-to"></span><div><p class="where-label">Bertemu di ${pencil('place', 'Ubah lokasi COD')}</p>
+        ${placeValue}<p class="caption">${esc(buyer.name)} — ${esc(buyer.email)}</p></div></li>`;
+    const field = editing && $(`#e-${editing}`);
+    if (field) field.focus();
 
-    /* Payment */
-    const normal = items.reduce((s, p) => s + p.price, 0);
+    /* Payment: every item, then the total */
     $('#t-pay').innerHTML = `
-      <div><dt>Biaya produk</dt><dd>${BBK.formatRupiah(normal)}</dd></div>
-      ${normal > o.price ? `<div class="kv-good"><dt>Hemat paket</dt><dd>– ${BBK.formatRupiah(normal - o.price)}</dd></div>` : ''}
+      ${items.length > 1
+        ? items.map((p) => `<div><dt>${esc(p.title)}</dt><dd>${BBK.formatRupiah(p.price)}</dd></div>`).join('')
+        : `<div><dt>Biaya produk</dt><dd>${BBK.formatRupiah(o.price)}</dd></div>`}
       <div class="kv-good"><dt>Biaya layanan</dt><dd>Gratis</dd></div>
-      <div class="kv-total"><dt>Total biaya</dt><dd>${BBK.formatRupiah(o.price)}</dd></div>
+      <div class="kv-total"><dt>Total biaya${items.length > 1 ? ` (${items.length} barang)` : ''}</dt><dd>${BBK.formatRupiah(o.price)}</dd></div>
       <div><dt>Metode pembayaran</dt><dd>Tunai saat COD</dd></div>`;
+  }
+
+  /** Inline mini form used by the buyer's pencil buttons (datetime-local or text input + Simpan/Batal). */
+  function editForm(field, label, inputHtml, hint = '') {
+    return `<form class="mini-form" data-form="${field}" novalidate>
+      <label class="sr-only" for="e-${field}">${esc(label)}</label>
+      ${inputHtml}
+      ${hint ? `<p class="field-hint">${esc(hint)}</p>` : ''}
+      <p class="field-error" id="e-error" hidden></p>
+      <div class="mini-form-actions"><button type="submit" class="btn btn-sm">Simpan</button><button type="button" class="btn btn-sm btn-outline" data-act="edit-cancel">Batal</button></div>
+    </form>`;
+  }
+
+  /* ---------- Notice about the schedule approval (both roles) ---------- */
+  function renderScheduleNote() {
+    const box = $('#t-schedule-note');
+    const s = o.status;
+    const changed = o.timeline.some((t) => t.event);
+    let tone = '';
+    let text = '';
+    if (s === 'dikonfirmasi' || (s === 'menunggu-konfirmasi' && changed)) {
+      if (o.schedule === 'ditolak') {
+        tone = 'is-rejected';
+        text = isBuyer
+          ? `Penjual menolak jadwal COD${o.scheduleReason ? ` ("${o.scheduleReason}")` : ''}. Ubah jadwal atau lokasi dengan ikon pensil di bawah.`
+          : `Kamu menolak jadwal COD${o.scheduleReason ? ` ("${o.scheduleReason}")` : ''}. Menunggu pembeli mengubah jadwal atau lokasi.`;
+      } else if (o.schedule === 'menunggu') {
+        tone = 'is-pending';
+        text = isBuyer
+          ? 'Menunggu persetujuan penjual atas jadwal dan lokasi COD.'
+          : `${BBK.firstName(otherUser.name)} mengajukan jadwal dan lokasi COD. Setujui atau tolak jadwalnya.`;
+      }
+    }
+    box.hidden = !text;
+    box.className = `schedule-note ${tone}`;
+    box.innerHTML = text ? `${BBK.icon('info', 18)}<p>${esc(text)}</p>` : '';
   }
 
   /* ---------- Actions per role and status ---------- */
   function renderActions(idx) {
     const s = o.status;
     const chat = `<a class="btn btn-outline" href="${chatHref}">${BBK.icon('chat-dots', 20)}Chat ${isBuyer ? 'penjual' : 'pembeli'}</a>`;
+    const rejectSchedule = `<button type="button" class="btn btn-danger-soft" data-act="schedule-reject">Tolak Jadwal COD</button>`;
     let html = '';
     if (s === 'dibatalkan') html = `<a class="btn" href="jelajah.html">Cari barang lain</a>`;
     else if (isBuyer) {
@@ -122,27 +178,40 @@
       if (idx < 3 && s !== 'selesai') html += `<button type="button" class="btn btn-danger-soft" data-act="cancel">Batalkan pesanan</button>`;
     } else {
       if (s === 'menunggu-konfirmasi') html = `<button type="button" class="btn btn-danger-soft" data-act="reject">Tolak Pesanan</button><button type="button" class="btn" data-act="accept">Terima Pesanan</button>`;
-      else if (s === 'dikonfirmasi') html = `${chat}<button type="button" class="btn" data-act="schedule">Setujui Jadwal COD</button>`;
-      else if (s === 'jadwal-cod') html = `${chat}<button type="button" class="btn" data-act="met">Tandai Sudah Bertemu</button>`;
+      else if (s === 'dikonfirmasi') html = o.schedule === 'ditolak' ? chat : `${chat}${rejectSchedule}<button type="button" class="btn" data-act="schedule">Setujui Jadwal COD</button>`;
+      else if (s === 'jadwal-cod') html = `${chat}${rejectSchedule}<button type="button" class="btn" data-act="met">Tandai Sudah Bertemu</button>`;
       else if (s === 'bertemu') html = `${chat}<button type="button" class="btn" data-act="received">${BBK.icon('check', 18)}Konfirmasi Selesai COD</button>`;
       else html = chat;
     }
+    // Seller is rejecting the schedule: ask for an optional reason first.
+    if (rejecting && !isBuyer && (s === 'dikonfirmasi' || s === 'jadwal-cod')) {
+      html = `<form class="mini-form reject-form" id="reject-form">
+        <label class="field-label" for="reject-reason">Alasan menolak jadwal <span class="muted">(opsional)</span></label>
+        <textarea class="textarea" id="reject-reason" maxlength="160" placeholder="Mis. aku ada kuliah jam segitu, bisa besok sore?"></textarea>
+        <p class="field-hint">Pesanan tidak dibatalkan. Pembeli diminta mengubah jadwal atau lokasi.</p>
+        <div class="mini-form-actions"><button type="submit" class="btn btn-danger-soft">Tolak Jadwal COD</button><button type="button" class="btn btn-outline" data-act="reject-cancel">Batal</button></div>
+      </form>`;
+    }
     $('#t-actions').innerHTML = html;
 
-    // Demo: play the other side's next step.
+    // Demo: play the other side's next step(s).
     const demo = $('#t-demo');
-    const other = isBuyer
-      ? { 'menunggu-konfirmasi': ['dikonfirmasi', 'Penjual menerima pesanan'], dikonfirmasi: ['jadwal-cod', 'Penjual menyetujui jadwal'], 'jadwal-cod': ['bertemu', 'Kalian bertemu di titik COD'] }[s]
-      : { 'jadwal-cod': ['bertemu', 'Pembeli datang ke titik COD'], bertemu: ['selesai', 'Pembeli konfirmasi barang diterima'] }[s];
-    demo.hidden = !other;
-    if (other) {
+    const steps = [];
+    if (isBuyer) {
+      if (s === 'menunggu-konfirmasi') steps.push(['dikonfirmasi', 'Penjual menerima pesanan']);
+      else if (s === 'dikonfirmasi' && o.schedule !== 'ditolak') steps.push(['jadwal-cod', 'Penjual menyetujui jadwal'], ['schedule-reject', 'Penjual menolak jadwal']);
+      else if (s === 'jadwal-cod') steps.push(['bertemu', 'Kalian bertemu di titik COD'], ['schedule-reject', 'Penjual menolak jadwal']);
+    } else if (s === 'dikonfirmasi' && o.schedule === 'ditolak') steps.push(['schedule-change', 'Pembeli mengubah jadwal']);
+    else if (s === 'jadwal-cod') steps.push(['bertemu', 'Pembeli datang ke titik COD']);
+    else if (s === 'bertemu') steps.push(['selesai', 'Pembeli konfirmasi barang diterima']);
+    demo.hidden = !steps.length;
+    if (steps.length) {
       demo.innerHTML = `${BBK.icon('info', 18)}<p>Mode demo: mainkan langkah ${isBuyer ? 'penjual' : 'pembeli'} berikutnya.</p>
-        <button type="button" class="link-btn" data-act="demo" data-to="${other[0]}">${esc(other[1])} →</button>`;
+        ${steps.map(([to, label]) => `<button type="button" class="link-btn" data-act="demo" data-to="${to}">${esc(label)} →</button>`).join('')}`;
     }
   }
 
-  const point = () => BBK.getMeetingPoint(o.meetingPointId);
-  const scheduleNote = () => `${point().name}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`;
+  const scheduleNote = () => `${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`;
 
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('[data-act]');
@@ -164,7 +233,25 @@
       BBK.toast('Pesanan diterima. Setujui jadwal COD-nya.');
     } else if (act === 'schedule') {
       BBK.setOrderStatus(o, 'jadwal-cod', scheduleNote());
-      BBK.toast('Jadwal COD disepakati.');
+      BBK.toast('Jadwal COD disetujui.');
+    } else if (act === 'schedule-reject') {
+      rejecting = true; // opens the reason form
+      render();
+      const field = $('#reject-reason');
+      if (field) field.focus();
+      return;
+    } else if (act === 'reject-cancel') {
+      rejecting = false;
+      render();
+      return;
+    } else if (act === 'edit') {
+      editing = b.dataset.field;
+      render();
+      return;
+    } else if (act === 'edit-cancel') {
+      editing = null;
+      render();
+      return;
     } else if (act === 'met') {
       BBK.setOrderStatus(o, 'bertemu');
       BBK.toast('Ditandai sudah bertemu.');
@@ -180,11 +267,54 @@
       BBK.toast('Transaksi selesai. Terima kasih!');
     } else if (act === 'demo') {
       const to = b.dataset.to;
-      BBK.setOrderStatus(o, to, to === 'jadwal-cod' ? scheduleNote() : to === 'selesai' ? 'Pembeli konfirmasi barang diterima' : undefined);
-      BBK.toast(BBK.orderSteps.find((s) => s.status === to).long + '.');
+      if (to === 'schedule-reject') {
+        BBK.rejectSchedule(o, 'Jadwal bentrok dengan kuliah');
+        BBK.toast('Penjual menolak jadwal COD.');
+      } else if (to === 'schedule-change') {
+        // Next day at the same time of day (never in the past), approval starts over.
+        const next = new Date(Math.max(Date.now(), new Date(o.scheduledAt).getTime()) + 24 * 3600e3);
+        BBK.changeSchedule(o, { scheduledAt: next.toISOString() });
+        BBK.toast('Pembeli mengubah jadwal COD.');
+      } else {
+        BBK.setOrderStatus(o, to, to === 'jadwal-cod' ? scheduleNote() : to === 'selesai' ? 'Pembeli konfirmasi barang diterima' : undefined);
+        BBK.toast(BBK.orderSteps.find((s) => s.status === to).long + '.');
+      }
     } else return;
+    rejecting = false;
+    editing = null;
     render();
     $('#t-banner').animate([{ transform: 'scale(0.98)', opacity: 0.6 }, { transform: 'none', opacity: 1 }], { duration: 300, easing: 'ease-out' });
+  });
+
+  /* ---------- Inline forms: buyer edit (place/time) and seller rejection reason ---------- */
+  document.addEventListener('submit', (e) => {
+    const form = e.target;
+    if (form.id === 'reject-form') {
+      e.preventDefault();
+      BBK.rejectSchedule(o, $('#reject-reason').value.trim());
+      BBK.toast('Jadwal COD ditolak. Pembeli diminta mengubahnya.');
+      rejecting = false;
+      render();
+      return;
+    }
+    if (!form.dataset.form) return;
+    e.preventDefault();
+    const field = form.dataset.form;
+    const input = form.querySelector('input');
+    const error = form.querySelector('.field-error');
+    const wasAgreed = o.status === 'jadwal-cod';
+    const problem = field === 'when' ? BBK.codTimeError(input.value) : input.value.trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan Gerbang Watugong UB.';
+    if (problem) {
+      error.textContent = problem;
+      error.hidden = false;
+      input.setAttribute('aria-invalid', 'true');
+      input.focus();
+      return;
+    }
+    BBK.changeSchedule(o, field === 'when' ? { scheduledAt: new Date(input.value).toISOString() } : { meetingPlace: input.value.trim() });
+    BBK.toast(wasAgreed ? 'Diubah. Penjual perlu menyetujui jadwal lagi.' : 'Diubah. Menunggu persetujuan penjual.');
+    editing = null;
+    render();
   });
 
   /* ---------- Rating after a finished order (buyer) ---------- */

@@ -18,7 +18,7 @@
       <form class="auth-card" id="signup-form" novalidate>
         <div class="auth-head">
           <h1 class="auth-title">Daftar Gratis</h1>
-          <p class="auth-sub">Khusus mahasiswa dengan email kampus (ac.id)</p>
+          <p class="auth-sub">Khusus mahasiswa kampus se-Malang dengan email kampus (ac.id)</p>
         </div>
 
         <ol class="auth-steps" aria-label="Langkah daftar">
@@ -41,7 +41,7 @@
 
           <div class="field">
             <label class="field-label" for="email">Email kampus</label>
-            <input class="input auth-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nama@student.ub.ac.id" aria-describedby="email-hint email-error" required>
+            <input class="input auth-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nama@student.ub.ac.id atau nama@students.um.ac.id" aria-describedby="email-hint email-error" required>
             <p class="field-hint" id="email-hint">Kode verifikasi dikirim ke email ini.</p>
             <p class="field-error" id="email-error" hidden></p>
           </div>
@@ -56,9 +56,14 @@
             <p class="field-error" id="password-error" hidden></p>
           </div>
 
+          <div class="field">
+            <label class="field-label" for="campus">Kampus</label>
+            <span class="select"><select id="campus" name="campus" required></select></span>
+          </div>
+
           <div class="auth-split">
             <div class="field">
-              <label class="field-label" for="faculty">Fakultas</label>
+              <label class="field-label" for="faculty">Fakultas / jurusan</label>
               <span class="select"><select id="faculty" name="faculty" required></select></span>
             </div>
             <div class="field">

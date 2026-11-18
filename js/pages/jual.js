@@ -21,9 +21,9 @@
   $('#conds').innerHTML = Object.entries(BBK.conditionLabels)
     .map(([id, label]) => `<button type="button" class="chip" data-cond="${esc(id)}" aria-pressed="${id === condition}">${esc(label)}</button>`)
     .join('');
-  f.area.innerHTML = BBK.kostAreas
-    .map((a) => `<option value="${esc(a.id)}"${a.id === me.areaId ? ' selected' : ''}>${esc(BBK.areaShortName(a.id))}</option>`)
-    .join('');
+  // The listing takes its area from the seller's profile (seed user as fallback).
+  const areaId = (me && me.areaId) || BBK.users[0].areaId;
+  $('#loc').innerHTML = `${BBK.icon('pin', 16)}<span>Lokasi: ${esc(BBK.areaShortName(areaId))} (dari profilmu)</span>`;
 
   const digits = (t) => Number(String(t).replace(/\D/g, '')) || 0;
 
@@ -146,7 +146,7 @@
       price: digits(f.price.value),
       categoryId: category || 'lainnya',
       condition,
-      areaId: f.area.value,
+      areaId,
       sellerId: me.id,
       images: photos.length ? photos.slice() : [],
       postedAt: new Date().toISOString(),

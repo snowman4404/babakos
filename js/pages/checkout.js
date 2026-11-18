@@ -1,32 +1,38 @@
 /*
- * Atur COD (checkout.html?product=p1 or ?bundle=b1). Summary of the item(s), the
- * illustrated campus map with safe meeting points, date + time, a note, and the
- * payment summary (cash at the COD). "Buat Pesanan" saves a new order in BBK.store,
- * marks the items as reserved, posts a message in the chat and opens lacak.html.
+ * Atur COD (checkout.html?product=p1, or ?items=p1,p3,p14 for the buyer's own bundle from
+ * one seller). Summary of the item(s), a free-text meeting place (suggestion chips and the
+ * illustrated campus map only fill the input), a datetime-local COD time inside
+ * BBK.codHours, a note, and the payment summary (cash at the COD). "Buat Pesanan" saves a
+ * new order in BBK.store, marks the items as reserved, empties the seller's cart when the
+ * order came from ?items, posts a message in the chat and opens lacak.html.
  */
 (function () {
   const $ = (selector) => document.querySelector(selector); // tiny querySelector alias
   const esc = BBK.escape;
   const me = BBK.auth.currentUser();
 
-  const bundle = BBK.getBundle(BBK.param('bundle'));
-  const single = BBK.getProduct(BBK.param('product'));
-  const items = bundle ? BBK.bundleInfo(bundle).items : single ? [single] : [];
+  /* ---------- Which items? ---------- */
+  const itemsParam = BBK.param('items');
+  const fromCart = itemsParam !== null;
+  const ids = [...new Set((fromCart ? itemsParam.split(',') : [BBK.param('product')]).map((id) => String(id || '').trim()).filter(Boolean))];
+  const found = ids.map(BBK.getProduct);
+  const items = found.length && found.every(Boolean) ? found : [];
   const seller = items[0] && BBK.getUser(items[0].sellerId);
-  const normal = items.reduce((sum, p) => sum + p.price, 0);
-  const total = bundle ? bundle.price : normal;
+  const total = items.reduce((sum, p) => sum + p.price, 0);
 
   /* ---------- Can this be ordered? ---------- */
   const existing = items.length && BBK.orders.find((o) => o.buyerId === me.id && o.status !== 'dibatalkan' && o.productIds.some((id) => items.some((p) => p.id === id)));
   const problem = !items.length
     ? ['Barang tidak ditemukan', 'Tautannya mungkin salah. Pilih barang dari katalog.']
-    : seller.id === me.id
-      ? ['Ini barangmu sendiri', 'Kamu tidak bisa memesan barang yang kamu jual.']
-      : existing
-        ? ['Sudah kamu pesan', `Pesanan ${existing.id} sedang berjalan.`]
-        : items.some((p) => p.status !== 'tersedia')
-          ? ['Sudah dipesan orang lain', 'Barang ini baru saja dipesan atau terjual. Coba barang serupa.']
-          : null;
+    : items.some((p) => p.sellerId !== seller.id)
+      ? ['Barang dari penjual berbeda', 'Satu pesanan hanya untuk barang dari satu penjual, supaya cukup sekali COD.']
+      : seller.id === me.id
+        ? ['Ini barangmu sendiri', 'Kamu tidak bisa memesan barang yang kamu jual.']
+        : existing
+          ? ['Sudah kamu pesan', `Pesanan ${existing.id} sedang berjalan.`]
+          : items.some((p) => p.status !== 'tersedia')
+            ? ['Sudah dipesan orang lain', 'Barang ini baru saja dipesan atau terjual. Coba barang serupa.']
+            : null;
   if (problem) {
     $('#checkout-form').hidden = true;
     $('#checkout-bar').hidden = true;
@@ -41,7 +47,7 @@
     return;
   }
   document.body.classList.add('has-actionbar');
-  $('.back-btn').href = bundle ? 'index.html' : `produk.html?id=${encodeURIComponent(single.id)}`;
+  $('.back-btn').href = fromCart ? `profil.html?id=${encodeURIComponent(seller.id)}` : `produk.html?id=${encodeURIComponent(items[0].id)}`;
 
   /* ---------- Summary ---------- */
   $('#items').innerHTML = items
@@ -53,98 +59,77 @@
       </li>`,
     )
     .join('');
-  if (bundle) $('#sum-title').textContent = `${bundle.title} (${items.length} barang)`;
+  if (items.length > 1) $('#sum-title').textContent = `Ringkasan Barang (${items.length})`;
   $('#seller').innerHTML = `${BBK.avatar(seller, 'sm')}<div><p><strong>${esc(seller.name)}</strong> (${esc(BBK.cohortLabel(seller))})</p>
     <p class="caption verified">${BBK.icon('verified', 14)}Terverifikasi · Trust Score ${seller.trustScore}</p></div>`;
 
-  /* ---------- Meeting point: map + list, kept in sync ---------- */
-  const myArea = BBK.getArea(me.areaId) ? me.areaId : items[0].areaId;
-  const recommended = BBK.nearestMeetingPoint(items[0].areaId, myArea);
-  let point = recommended.id;
-  const kmFor = (m) => BBK.areaDistance(myArea, m.areaId);
-  // Recommended first (closest for both sides), then by walking distance from the buyer.
-  const pointsByDistance = BBK.meetingPoints.slice().sort((a, b) => (b.id === recommended.id) - (a.id === recommended.id) || kmFor(a) - kmFor(b));
-
-  $('#points').insertAdjacentHTML(
-    'beforeend',
-    pointsByDistance
-      .map(
-        (m) => `<label class="point">
-          <input type="radio" name="point" value="${esc(m.id)}"${m.id === point ? ' checked' : ''}>
-          <span class="point-body">
-            <span class="point-name">${esc(m.name)}${m.id === recommended.id ? ' <span class="tag tag-green">Rekomendasi untuk kalian berdua</span>' : ''}</span>
-            <span class="caption">${esc(m.description)} · ${BBK.walkMinutes(kmFor(m))} menit jalan dari kostmu</span>
-          </span>
-        </label>`,
-      )
-      .join(''),
-  );
-  const renderMap = () => ($('#map').innerHTML = BBK.campusMap({ selected: point, interactive: true, recommended: recommended.id }));
-  const choosePoint = (id) => {
-    point = id;
-    $('#points').querySelector(`input[value="${id}"]`).checked = true;
+  /* ---------- Meeting place: a text input; chips and map pins only fill it in ---------- */
+  const place = $('#place');
+  const when = $('#when');
+  $('#place-chips').innerHTML = BBK.meetingPoints.map((m) => `<button type="button" class="chip" data-point="${esc(m.id)}">${esc(m.shortName)}</button>`).join('');
+  const renderMap = () => {
+    const selected = BBK.meetingPoints.find((m) => m.name === place.value.trim());
+    $('#map').innerHTML = BBK.campusMap({ selected: selected ? selected.id : '', interactive: true });
+  };
+  const fillPlace = (id) => {
+    const m = BBK.meetingPoints.find((x) => x.id === id);
+    if (!m) return;
+    place.value = m.name;
+    setError(place, '');
     renderMap();
     updateSummary();
   };
+  $('#place-chips').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-point]');
+    if (b) fillPlace(b.dataset.point);
+  });
   $('#map').addEventListener('click', (e) => {
     const pin = e.target.closest('[data-point]');
-    if (pin) choosePoint(pin.dataset.point);
+    if (pin) fillPlace(pin.dataset.point);
   });
-  $('#points').addEventListener('change', (e) => choosePoint(e.target.value));
+  renderMap();
 
   /* ---------- Date + time ---------- */
-  const TIMES = ['08.00', '10.00', '12.30', '15.00', '16.30', '19.00'];
-  const dayName = new Intl.DateTimeFormat('id-ID', { weekday: 'short' });
-  const dayNum = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' });
-  const days = Array.from({ length: 6 }, (_, i) => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() + i + 1);
-    return d;
-  });
-  let dayIdx = 0;
-  let time = '12.30';
-  $('#dates').innerHTML = days
-    .map(
-      (d, i) => `<button type="button" class="date-chip" data-i="${i}" aria-pressed="${i === dayIdx}">
-        <span>${i === 0 ? 'Besok' : esc(dayName.format(d))}</span><strong>${esc(dayNum.format(d))}</strong></button>`,
-    )
-    .join('');
-  $('#times').innerHTML = TIMES.map((t) => `<button type="button" class="chip" data-t="${t}" aria-pressed="${t === time}">${t}</button>`).join('');
-  $('#hours-hint').textContent = `COD bisa pukul ${BBK.codHours.open}–${BBK.codHours.close} di semua titik.`;
-  $('#dates').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-i]');
-    if (!b) return;
-    dayIdx = Number(b.dataset.i);
-    $('#dates').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  when.min = BBK.toLocalInput(new Date());
+  $('#when-hint').textContent = `COD bisa pukul ${BBK.codHours.open}–${BBK.codHours.close}. Penjual yang menyetujui jadwalnya.`;
+
+  /* ---------- Validation ---------- */
+  function setError(input, text) {
+    const box = $(`#${input.id}-error`);
+    box.textContent = text;
+    box.hidden = !text;
+    input.setAttribute('aria-invalid', String(!!text));
+    return !text;
+  }
+  const checkPlace = () => setError(place, place.value.trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan Gerbang Watugong UB.');
+  const checkWhen = () => setError(when, BBK.codTimeError(when.value));
+  place.addEventListener('blur', checkPlace);
+  when.addEventListener('blur', checkWhen);
+  place.addEventListener('input', () => {
+    if (place.getAttribute('aria-invalid') === 'true') checkPlace();
+    renderMap();
     updateSummary();
   });
-  $('#times').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-t]');
-    if (!b) return;
-    time = b.dataset.t;
-    $('#times').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  when.addEventListener('input', () => {
+    if (when.getAttribute('aria-invalid') === 'true') checkWhen();
     updateSummary();
   });
-  const scheduled = () => {
-    const d = new Date(days[dayIdx]);
-    const [h, m] = time.split('.').map(Number);
-    d.setHours(h, m);
-    return d;
-  };
 
   /* ---------- Payment summary ---------- */
   $('#pay').innerHTML = `
-    <div><dt>Harga barang${items.length > 1 ? ` (${items.length})` : ''}</dt><dd>${BBK.formatRupiah(normal)}</dd></div>
-    ${bundle ? `<div class="kv-good"><dt>Hemat paket</dt><dd>– ${BBK.formatRupiah(normal - total)}</dd></div>` : ''}
+    <div><dt>Harga barang${items.length > 1 ? ` (${items.length})` : ''}</dt><dd>${BBK.formatRupiah(total)}</dd></div>
     <div class="kv-good"><dt>Biaya layanan</dt><dd>Gratis</dd></div>
     <div class="kv-total"><dt>Total biaya</dt><dd>${BBK.formatRupiah(total)}</dd></div>`;
   $('#bar-total').textContent = BBK.formatRupiah(total);
   function updateSummary() {
-    const m = BBK.getMeetingPoint(point);
-    $('#pay-summary').innerHTML = `${BBK.icon('calendar', 14)} ${esc(BBK.formatDate(scheduled()))}, ${esc(time)} · ${esc(m.shortName)}`;
+    const text = place.value.trim();
+    const d = when.value && new Date(when.value);
+    const valid = d && !Number.isNaN(d.getTime());
+    $('#pay-summary').innerHTML =
+      text || valid
+        ? `${BBK.icon('calendar', 14)} ${valid ? esc(`${BBK.formatDate(d)}, ${BBK.formatTime(d)}`) : 'Jadwal belum dipilih'}${text ? ' · ' + esc(text) : ''}`
+        : 'Isi titik temu dan jadwal COD dulu.';
   }
-  renderMap();
   updateSummary();
 
   /* ---------- Create the order ---------- */
@@ -157,23 +142,28 @@
 
   $('#checkout-form').addEventListener('submit', (e) => {
     e.preventDefault();
+    const okPlace = checkPlace();
+    const okWhen = checkWhen();
+    if (!okPlace || !okWhen) {
+      (okPlace ? when : place).focus();
+      return;
+    }
     const buttons = document.querySelectorAll('[type="submit"]');
     buttons.forEach((b) => {
       b.disabled = true;
       b.textContent = 'Membuat pesanan…';
     });
     const now = new Date().toISOString();
-    const m = BBK.getMeetingPoint(point);
     const note = $('#note').value.trim();
     const order = {
       id: nextOrderId(),
       productIds: items.map((p) => p.id),
-      ...(bundle ? { bundleId: bundle.id } : {}),
       buyerId: me.id,
       sellerId: seller.id,
       price: total,
-      meetingPointId: point,
-      scheduledAt: scheduled().toISOString(),
+      meetingPlace: place.value.trim(),
+      scheduledAt: new Date(when.value).toISOString(),
+      schedule: 'menunggu',
       status: 'menunggu-konfirmasi',
       createdAt: now,
       ...(note ? { note } : {}),
@@ -182,6 +172,7 @@
     BBK.orders.unshift(order);
     BBK.save.orders();
     BBK.save.productStatus(order.productIds, 'dipesan');
+    if (fromCart) BBK.cart.clear(seller.id);
 
     // Tell the seller in the chat (the product card is attached automatically).
     let thread = BBK.threadForProduct(items[0].id, me.id);
@@ -192,7 +183,7 @@
     thread.messages.push({
       id: BBK.newId('m'),
       senderId: me.id,
-      text: `Halo kak, saya sudah pesan ${BBK.orderTitle(order)}. COD di ${m.shortName}, ${BBK.formatShortDate(order.scheduledAt)} pukul ${time} ya.`,
+      text: `Halo kak, saya sudah pesan ${BBK.orderTitle(order)}. COD di ${order.meetingPlace}, ${BBK.formatShortDate(order.scheduledAt)} pukul ${BBK.formatTime(order.scheduledAt)} ya.`,
       sentAt: now,
       attachedProductId: items[0].id,
     });

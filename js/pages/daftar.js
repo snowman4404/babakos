@@ -14,7 +14,8 @@
   if (BBK.auth.currentUser()) location.replace(next);
   $('#to-login').href = `masuk.html${rawNext ? '?next=' + encodeURIComponent(next) : ''}`;
 
-  f.faculty.innerHTML = `<option value="">Pilih fakultas</option>` + BBK.faculties.map(([s, name]) => `<option value="${esc(s)}">${esc(s)} · ${esc(name)}</option>`).join('');
+  f.campus.innerHTML = `<option value="">Pilih kampus</option>` + BBK.universities.map(([s, name]) => `<option value="${esc(s)}">${esc(s)} · ${esc(name)}</option>`).join('');
+  f.faculty.innerHTML = `<option value="">Pilih fakultas atau jurusan</option>` + BBK.faculties.map(([s, name]) => `<option value="${esc(s)}">${esc(s)} · ${esc(name)}</option>`).join('');
   f.area.innerHTML =
     `<option value="">Pilih area</option>` +
     BBK.kostAreas
@@ -53,7 +54,7 @@
     },
     email() {
       const v = f.email.value.trim();
-      const err = !v ? 'Isi email kampusmu.' : !BBK.isCampusEmail(v) ? 'Harus email kampus yang berakhiran ac.id, mis. nama@student.ub.ac.id.' : '';
+      const err = !v ? 'Isi email kampusmu.' : !BBK.isCampusEmail(v) ? 'Harus email kampus yang berakhiran ac.id, mis. nama@student.ub.ac.id atau nama@students.um.ac.id.' : '';
       showError('email-error', err, f.email);
       return !err;
     },
@@ -83,9 +84,11 @@
       firstBad[1].focus();
       return;
     }
+    const campus = BBK.universities.find(([s]) => s === f.campus.value);
     const faculty = BBK.faculties.find(([s]) => s === f.faculty.value);
     const profile = {
       name: `${f.first.value.trim()} ${f.last.value.trim()}`.trim(),
+      ...(campus ? { university: campus[1], universityShort: campus[0] } : {}),
       ...(faculty ? { faculty: faculty[1], facultyShort: faculty[0] } : {}),
       ...(f.area.value ? { areaId: f.area.value } : {}),
       cohort: new Date().getFullYear(),

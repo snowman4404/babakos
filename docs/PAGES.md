@@ -5,14 +5,14 @@
 
 | # | Halaman | File | Frame Figma | Prioritas | Fitur utama |
 |---|---------|------|-------------|-----------|-------------|
-| 1 | Beranda | `index.html` | BERANDA | P1 | Banner, kategori, paket hemat, barang dekat kost |
+| 1 | Beranda | `index.html` | BERANDA | P1 | Banner, kategori, barang dekat kost |
 | 2 | Daftar | `daftar.html` | Signup | P1 | Verifikasi email ac.id |
 | 3 | Verifikasi Email | `verifikasi.html` | Forgot Password (Verification Email) | P1 | Kode 6 digit, badge terverifikasi |
 | 4 | Masuk | `masuk.html` | Login | P2 | Email ac.id + kata sandi, lupa kata sandi |
 | 5 | Katalog | `jelajah.html` | KATALOG + Android 89/90/91 | P1 | Search & filter area kost + harga |
 | 6 | Detail Barang | `produk.html?id=p1` | DETAIL PRODUK | P1 | Pintu masuk ke chat & COD |
 | 7 | Chat | `chat.html?thread=c1` / `?product=p1` | Android 90 (chat widget) | P1 | Kartu barang otomatis terlampir |
-| 8 | Atur COD | `checkout.html?product=p1` / `?bundle=b1` | — | P1 | Peta mockup titik COD |
+| 8 | Atur COD | `checkout.html?product=p1` / `?items=p1,p3,p14` | — | P1 | Titik temu bebas (teks) + jadwal COD |
 | 9 | Lacak Pesanan | `lacak.html?id=BBK-2611-001` | Web Landscape - Pesanan Saya | P1 | Status sampai selesai + rating |
 | 10 | Pesanan Saya | `pesanan.html` / `?tab=penjualan` | Kelola Pesanan - Penjualan | P2 | Pembelian & penjualan |
 | 11 | Jual Barang | `jual.html` | — | P2 | Membuat listing |
@@ -21,12 +21,12 @@
 
 ## Alur demo (urutan presentasi)
 
-1. Beranda → **Daftar** (email `@student.ub.ac.id`; coba dulu `@gmail.com` untuk melihat pesan error) → **Verifikasi** (6 angka apa saja) → badge *Mahasiswa Terverifikasi*.
+1. Beranda → **Daftar** (email kampus, mis. `@student.ub.ac.id`; coba dulu `@gmail.com` untuk melihat pesan error) → **Verifikasi** (6 angka apa saja) → badge *Mahasiswa Terverifikasi*.
 2. **Katalog**: `jelajah.html?area=ketawanggede&max=100000` (area Ketawanggede, harga ≤ Rp100.000), atau ketik di kotak cari navbar.
 3. **Detail Barang** (mis. Kipas Angin p1) → **Chat** → kartu barang terlampir di pesan pertama, penjual membalas otomatis.
-4. **Beli** → **Atur COD**: pilih pin di peta, tanggal, jam → *Buat Pesanan*.
-5. **Lacak Pesanan**: tombol "Mode demo" memainkan langkah penjual (Dikonfirmasi → Jadwal COD → Bertemu) → *Konfirmasi Barang Diterima* → beri rating.
-6. (Opsional) **Pesanan Saya → Penjualan**: terima pesanan baru (hitung mundur), **Jual Barang** ("Isi contoh untuk demo").
+4. **Beli** → **Atur COD**: ketik titik temu (atau ketuk saran/pin peta), pilih tanggal + jam → *Buat Pesanan*.
+5. **Lacak Pesanan**: tombol "Mode demo" memainkan langkah penjual (Dikonfirmasi → Jadwal COD disetujui/ditolak → Bertemu) → *Konfirmasi Barang Diterima* → beri rating. Pembeli bisa mengubah titik temu/jadwal (ikon pensil), penjual menyetujui lagi. Pesanan multi-barang: BBK-2611-006.
+6. (Opsional) **Pesanan Saya → Penjualan**: daftar pesanan masuk (semua tindakan penjual ada di halaman Lacak), **Jual Barang** ("Isi contoh untuk demo").
 7. Footer → **Reset data demo** untuk mengulang dari awal (akun tetap masuk).
 
 Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kata sandi 8+ karakter apa saja).
@@ -34,18 +34,17 @@ Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kat
 ## Isi tiap halaman
 
 ### Navbar dan tab bar (semua halaman, `js/layout.js`)
-- Desktop: wordmark "BaBaKos", Beranda, Katalog, kotak cari (fokus saat kosong → pencarian terakhir), lokasi area kost, ikon chat (jumlah belum dibaca), tombol Jual, menu akun (Profil, Pesanan, Wishlist, Jual, Keluar). Belum masuk: Masuk + Daftar.
+- Desktop: wordmark "BaBaKos", Beranda, Katalog, kotak cari (fokus saat kosong → pencarian terakhir), lokasi area kost, ikon chat (jumlah belum dibaca), tombol Jual, menu akun (Akun Saya, Pesanan Saya, Wishlist, Keluar; Jual cukup lewat tombol Jual). Belum masuk: Masuk + Daftar.
 - HP: wordmark + lokasi, kotak cari penuh, tab bar bawah (Beranda, Katalog, Chat, Pesanan, Profil).
 - Halaman alur (Detail Barang, Atur COD, Lacak, Jual) memakai bar tipis: tombol kembali + judul.
 
 ### 1. Beranda `index.html`
 - Banner geser 3 slide (otomatis 6 detik, berhenti saat disentuh/hover)
 - Ikon kategori (lingkaran maroon) → `jelajah.html?cat=…`
-- "Paket Bundling Hemat Mahasiswa Kos": beberapa barang dari satu penjual, harga paket + harga normal dicoret → `checkout.html?bundle=…`
 - "Dekat kostmu di …" (sudah masuk), "Baru diunggah", 4 langkah aman
 
 ### 2. Daftar `daftar.html`
-- Nama depan/belakang, email kampus (harus `ac.id`), kata sandi (meter kekuatan), fakultas, area kost, persetujuan
+- Nama depan/belakang, email kampus (harus `ac.id`), kata sandi (meter kekuatan), kampus (pilihan kampus se-Malang), fakultas/jurusan, area kost, persetujuan
 - Validasi saat keluar dari kolom; tombol "Kirim Kode Verifikasi"
 
 ### 3. Verifikasi `verifikasi.html`
@@ -59,14 +58,14 @@ Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kat
 
 ### 5. Katalog `jelajah.html`
 - Bar maroon "Katalog / <judul>", chip kategori, grid kartu (foto, nama, harga, area)
-- Filter: area kost (urut jarak ke gerbang), harga min–maks + tombol cepat, kondisi, tampilkan yang sudah laku. Desktop: sidebar; HP: bottom sheet "Tampilkan N barang"
+- Filter: area kost (urut jarak dari kawasan kampus), harga min–maks + tombol cepat, kondisi, tampilkan yang sudah laku. Desktop: sidebar; HP: bottom sheet "Tampilkan N barang"
 - Token filter aktif bisa dihapus satu per satu; urutkan terbaru/termurah/termahal/terdekat
 - Saat mengetik: "Sedang mencari…"; kosong: "Yah, barangnya belum ada nih" (ikon, tanpa maskot)
 - Semua filter di URL: `q`, `area`, `min`, `max`, `cat`, `cond`, `all=1`, `sort`
 
 ### 6. Detail Barang `produk.html`
 - Foto + thumbnail, judul, harga maroon, tag Kondisi/Kategori/Dijual, lokasi COD + menit jalan kaki, bagikan, wishlist
-- Deskripsi, info paket hemat bila barang ada di paket
+- Deskripsi
 - Baris penjual: nama (fakultas angkatan), Trust Score, Chat; tombol ikon chat + **Beli**. HP: tombol menempel di bawah
 - Status: barang sendiri, sudah kamu pesan (→ Lacak), dipesan orang lain, terjual
 - Profil Toko (Trust Score, rating, terjual), Ulasan Penjual, Barang serupa
@@ -77,33 +76,37 @@ Akun demo di Masuk: tombol "Isi akun demo" (`rizkypratama@student.ub.ac.id`, kat
 - Pesan pertama otomatis membawa kartu barang; balasan cepat; penjual "mengetik…" lalu membalas
 
 ### 8. Atur COD `checkout.html`
-- Ringkasan barang/paket + penjual terverifikasi
-- **Peta ilustrasi** kampus UB (bukan Google Maps) dengan pin: Gerbang Utama, Gerbang Watugong, Masjid Raden Patah, Perpustakaan Pusat, Matos, MX Mall; rekomendasi titik untuk kedua pihak
-- Tanggal (6 hari ke depan), jam, catatan; tips aman COD
-- Rincian Pembayaran: harga, hemat paket, biaya layanan gratis, total, tunai saat COD → "Buat Pesanan" (pesan otomatis ke chat penjual)
+- `?product=p1` (satu barang) atau `?items=p1,p3,p14` (beberapa barang dari SATU penjual, bukan milik sendiri, semua tersedia; selain itu tampil status "tidak bisa dipesan"). Dari `?items`, keranjang penjual dikosongkan setelah pesanan dibuat; tombol kembali ke `profil.html?id=<penjual>`
+- Ringkasan: setiap barang (foto, judul, harga) + penjual satu kali
+- **Titik Temu COD**: kolom teks wajib (contoh "Depan Gerbang Watugong UB"). Chip saran dan peta ilustrasi (opsional, dalam "Lihat di peta ilustrasi") hanya mengisi kolom; kolom adalah sumber kebenaran. Pesanan menyimpan `meetingPlace` (teks)
+- **Jadwal COD**: `datetime-local` wajib, minimal sekarang, dalam jam COD (`BBK.codHours`); catatan opsional; tips aman COD
+- Rincian Pembayaran: harga (jumlah harga barang), biaya layanan gratis, total, tunai saat COD → "Buat Pesanan" (pesan otomatis ke chat penjual)
 
 ### 9. Lacak Pesanan `lacak.html`
-- Ringkasan Produk, banner status, stepper 5 langkah dengan waktu, Jadwal Pesanan, Barang dari / Bertemu di, peta mini, Rincian Pembayaran
-- Pembeli: Chat, Batalkan, Konfirmasi Barang Diterima, rating setelah selesai. Penjual: Terima/Tolak, Setujui Jadwal, Tandai Bertemu, Konfirmasi Selesai COD
-- Kotak mode demo memainkan langkah pihak lain
+- Ringkasan Produk (semua barang pesanan), banner status, pemberitahuan persetujuan jadwal, stepper 5 langkah dengan waktu, kartu **Jadwal Pesanan**, kartu **Lokasi Pesanan** (hanya "Bertemu di" + pembeli), Rincian Pembayaran (tiap barang + total). Tanpa peta.
+- Pembeli: Chat, Batalkan, Konfirmasi Barang Diterima, rating setelah selesai; ikon pensil di samping "Jadwal COD" dan "Bertemu di" (saat menunggu-konfirmasi / dikonfirmasi / jadwal-cod) membuka form mini (Simpan/Batal). Menyimpan perubahan mengatur `schedule: 'menunggu'` dan, bila status jadwal-cod, mengembalikannya ke dikonfirmasi
+- Penjual: Terima/Tolak Pesanan, Setujui Jadwal COD, Tolak Jadwal COD (alasan opsional; pesanan tidak dibatalkan; dari jadwal-cod kembali ke dikonfirmasi), Tandai Bertemu, Konfirmasi Selesai COD. Hanya penjual yang menyetujui jadwal, hanya pembeli yang mengubah titik/jam
+- Persetujuan jadwal di pesanan: `schedule` = `menunggu` | `disetujui` | `ditolak`; banner untuk kedua pihak saat ditolak / menunggu
+- Kotak mode demo memainkan langkah pihak lain (termasuk penjual menolak jadwal, pembeli mengubah jadwal)
 
 ### 10. Pesanan Saya `pesanan.html`
 - Tab Pembelian / Penjualan, cari, filter status
-- Penjualan (Kelola Pesanan): pita warna per status, pembeli + Trust Score, baris barang, panel pembayaran, hitung mundur "Terima sebelum", Tolak / Terima / Konfirmasi Selesai COD
+- Kartu pesanan yang sama untuk Pembelian dan Penjualan (id + status, foto, judul, "Dari/Untuk <nama>", titik + waktu COD, total, "Lihat detail →"; "+N" bila multi-barang) → `lacak.html?id=…`. Penjualan tanpa tombol aksi: penjual mengonfirmasi semuanya di halaman Lacak
 
 ### 11. Jual Barang `jual.html`
-- Foto (maks 3, diperkecil di browser), nama, deskripsi, kategori, kondisi, harga (saran dari rata-rata kategori), area kost
+- Foto (maks 3, diperkecil di browser), nama, deskripsi, kategori, kondisi, harga (saran dari rata-rata kategori). Area barang diambil dari area kost di profil (hanya ditampilkan, tanpa input)
 - Pratinjau kartu langsung + daftar periksa; "Isi contoh untuk demo"; terbit → halaman barangnya
 
 ### 12. Profil `profil.html`
-- Akun sendiri (Dashboard profil): menu Profil Saya, Pesanan Saya, Barang Saya, Wishlist, Keamanan Akun, Pusat Bantuan (FAQ), Keluar; Edit Profil (nama, fakultas, area kost); tombol "Buka Chat"
+- Akun sendiri (Dashboard profil): menu Akun Saya, Pesanan Saya, Barang Saya, Wishlist, Keamanan Akun, Pusat Bantuan (FAQ), Keluar; Edit Profil (nama, fakultas, area kost); tombol "Buka Chat"
 - `?id=u2`: profil toko publik — Trust Score, rating, terjual, tab Barang / Ulasan
+- Keranjang per penjual (hanya di profil toko orang lain, tidak ada di akun sendiri): semua barang diserahkan dalam satu kali COD, jadi pembeli hanya bisa menggabungkan barang dari satu penjual. Tombol "+" bulat di pojok kanan atas foto kartu barang yang tersedia (berubah jadi centang, tekan lagi untuk menghapus; belum masuk → diarahkan ke `masuk.html?next=…`). Tombol keranjang melayang di kanan bawah (di atas tab bar ponsel) dengan lencana jumlah, muncul saat barang pertama ditambahkan. Panel "Keranjang dari <nama depan>": bottom sheet di ponsel, panel samping di desktop; baris foto, nama, harga, tombol hapus; total dan "Checkout (N barang)" → `checkout.html?items=p1,p3`. Esc / tombol tutup / klik latar menutup; kosong → keadaan kosong ikon polos. Data di `BBK.cart` (localStorage), dikosongkan checkout setelah pesanan dibuat
 
 ### 13. 404 `404.html`
 - Pesan + tombol ke Beranda dan Katalog (aset memakai base `/babakos/` agar jalan di GitHub Pages)
 
 ## Data mock (lihat `js/data.js`)
-- Kampus: Universitas Brawijaya, Malang
+- Kampus: beberapa kampus di Malang (UB, UM, UIN Malang, UMM, Polinema, ITN, Unisma, Unmer), dengan `BBK.universities` untuk pilihan di Daftar
 - Area kost: Ketawanggede, Sumbersari, Jl. Kerto, Watugong, Dinoyo, Jl. Gajayana, Soekarno-Hatta, Kalpataru, Tlogomas
-- Pengguna demo `u1` Rizky Pratama (FILKOM, Ketawanggede) punya pembelian (BBK-2611-001, -002) dan penjualan (BBK-2611-003 baru, -004 siap COD, -005 selesai)
+- Pengguna demo `u1` Rizky Pratama (UB, FILKOM, Ketawanggede) punya pembelian (BBK-2611-001, -002, dan -006 multi-barang dari Nadia: p3 + p14, status dikonfirmasi, jadwal menunggu persetujuan) dan penjualan (BBK-2611-003 baru, -004 siap COD, -005 selesai)
 - Email: mockup menerima email apa pun yang berakhiran `ac.id`, kode 6 digit apa pun, kata sandi 8+ karakter

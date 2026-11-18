@@ -98,7 +98,7 @@ Price on product detail is large maroon bold (~32px). Card prices are 16px, dark
 - **Status tag**: green pill, white 14/700 text ("Selesai").
 - **Product card**: white, photo on top, thin divider, name (12–13px), price 16px, pickup point with pin icon. 6 per row on desktop.
 - **Category icons** (Beranda): 50px maroon-outlined circles with a maroon icon, maroon label below.
-- **Bundle cards** ("Paket Bundling Hemat"): maroon banner with "Lihat lainnya", then pink cards with a "Lebih Hemat" maroon tag, maroon price and struck-through old price.
+- ~~Bundle cards ("Paket Bundling Hemat")~~: removed. Buying several items from one seller is now the buyer's own bundle (per-seller cart on `profil.html?id=…` → `checkout.html?items=…`).
 - **Sidebar menu** (profile): 52px rows, 12px radius, icon + label; active row on Maroon/Light with a small maroon dot.
 - **Floating chat**: white rounded panel, seller header with online dot, product context card, bubbles, rounded input with send icon. "Buka Chat" maroon launcher bottom right.
 - **Empty state**: centered gray message ("Yah, barangnya belum ada nih, Yuk cari yang lain!") with a maroon Lucide icon in a Maroon/Light circle above it, in place of the mascot.

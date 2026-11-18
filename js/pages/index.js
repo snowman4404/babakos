@@ -1,6 +1,6 @@
 /*
  * Beranda (index.html), from the Figma BERANDA frame: banner carousel, category
- * icons, "Paket Bundling Hemat", items near the user's kost, newest items.
+ * icons, items near the user's kost, newest items.
  */
 (function () {
   const $ = (selector) => document.querySelector(selector); // tiny querySelector alias
@@ -63,29 +63,6 @@
     })
     .join('');
 
-  /* ---------- Bundles ---------- */
-  $('#bundles').innerHTML = BBK.bundles
-    .map((b) => {
-      const info = BBK.bundleInfo(b);
-      const names = info.items.map((p) => p.title.split(' ').slice(0, 2).join(' ')).join(' + ');
-      const href = info.available ? `checkout.html?bundle=${encodeURIComponent(b.id)}` : '#';
-      return `<li data-reveal><a class="bundle${info.available ? '' : ' is-gone'}" href="${href}"${info.available ? '' : ' aria-disabled="true"'}>
-        <span class="tag tag-solid bundle-tag">${info.available ? 'Lebih Hemat' : 'Sudah laku'}</span>
-        <span class="bundle-thumbs">${info.items.map((p) => `<img src="${esc(BBK.productImage(p))}" alt="" width="56" height="56" loading="lazy">`).join('')}</span>
-        <span class="bundle-title">${esc(b.title)}</span>
-        <span class="bundle-items">${esc(names)}</span>
-        <span class="bundle-price"><strong>${BBK.formatRupiah(b.price)}</strong><s>${BBK.formatRupiah(info.normal)}</s></span>
-        <span class="bundle-seller">${BBK.icon('verified', 14)}${esc(BBK.firstName(info.seller.name))} · ${esc(BBK.areaShortName(info.items[0].areaId))}</span>
-      </a></li>`;
-    })
-    .join('');
-  $('#bundles').addEventListener('click', (e) => {
-    if (e.target.closest('[aria-disabled="true"]')) {
-      e.preventDefault();
-      BBK.toast('Salah satu barang di paket ini sudah dipesan.', 'error');
-    }
-  });
-
   /* ---------- Near your kost (logged in), then newest ---------- */
   const area = user && BBK.getArea(user.areaId);
   if (area) {
@@ -105,7 +82,7 @@
   const newest = available.slice().sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt)).slice(0, 12);
   $('#new-grid').innerHTML = newest.map(BBK.productCard).join('');
   const areaCount = new Set(available.map((p) => p.areaId)).size;
-  $('#new-sub').textContent = `${available.length} barang tersedia dari ${areaCount} area kost di sekitar UB.`;
+  $('#new-sub').textContent = `${available.length} barang tersedia dari ${areaCount} area kost di Malang.`;
 
   if (user) {
     $('#safe-cta').textContent = 'Jual barangmu';

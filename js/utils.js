@@ -98,6 +98,14 @@
     if (statusOverrides[p.id]) p.status = statusOverrides[p.id];
   });
   BBK.orders = BBK.store.get('orders', BBK.orders);
+  // Orders saved by an older version used meetingPointId and had no schedule approval state.
+  BBK.orders.forEach((o) => {
+    if (!o.meetingPlace) {
+      const m = BBK.meetingPoints.find((x) => x.id === o.meetingPointId);
+      o.meetingPlace = m ? m.name : 'Titik temu belum diisi';
+    }
+    if (!o.schedule) o.schedule = ['jadwal-cod', 'bertemu', 'selesai'].includes(o.status) ? 'disetujui' : 'menunggu';
+  });
   BBK.chatThreads = BBK.store.get('chats', BBK.chatThreads);
   BBK.reviews = [...BBK.store.get('reviews', []), ...BBK.reviews];
 
@@ -128,7 +136,7 @@
   };
 
   BBK.resetDemo = () => {
-    ['listings', 'productStatus', 'orders', 'chats', 'reviews', 'wishlist', 'recentSearches'].forEach(BBK.store.remove);
+    ['listings', 'productStatus', 'orders', 'chats', 'reviews', 'wishlist', 'recentSearches', 'cart'].forEach(BBK.store.remove);
   };
 
   /** Short unique id with a prefix, e.g. "m-lx3k9a". */
@@ -139,11 +147,9 @@
   BBK.getProduct = byId('products');
   BBK.getUser = byId('users');
   BBK.getArea = byId('kostAreas');
-  BBK.getMeetingPoint = byId('meetingPoints');
   BBK.getCategory = byId('categories');
   BBK.getOrder = byId('orders');
   BBK.getThread = byId('chatThreads');
-  BBK.getBundle = byId('bundles');
 
   /** Short area name for tight spots: "Jl. Kerto (Kertopamuji, …)" -> "Jl. Kerto". */
   BBK.areaShortName = (id) => (BBK.getArea(id) ? BBK.getArea(id).name.split(' (')[0] : '');
@@ -151,23 +157,13 @@
   /** Cover photo of a product (path relative to the site root, or a data URL for new listings). */
   BBK.productImage = (p) => (p && p.images && p.images[0]) || 'assets/photos/ub-aerial.jpg';
 
-  /** Products of a bundle, its normal total and whether every item is still available. */
-  BBK.bundleInfo = (b) => {
-    const items = b.productIds.map(BBK.getProduct).filter(Boolean);
-    return {
-      items,
-      seller: BBK.getUser(items[0].sellerId),
-      normal: items.reduce((sum, p) => sum + p.price, 0),
-      available: items.every((p) => p.status === 'tersedia'),
-    };
-  };
-
   /* ---------- Orders ---------- */
   BBK.orderItems = (o) => o.productIds.map(BBK.getProduct).filter(Boolean);
-  /** "Kipas Angin Miyako" or the bundle name with its item count. */
+  /** One item: its title. Several: "Kipas Angin Miyako + 2 barang lainnya". */
   BBK.orderTitle = (o) => {
-    const b = o.bundleId && BBK.getBundle(o.bundleId);
-    return b ? `${b.title} (${o.productIds.length} barang)` : (BBK.orderItems(o)[0] || {}).title || 'Barang';
+    const items = BBK.orderItems(o);
+    if (!items.length) return 'Barang';
+    return items.length === 1 ? items[0].title : `${items[0].title} + ${items.length - 1} barang lainnya`;
   };
   BBK.stepIndex = (status) => BBK.orderSteps.findIndex((s) => s.status === status);
   BBK.statusLabel = (status) =>
@@ -179,9 +175,65 @@
   /** Move an order to a status, stamp the timeline, update the items, save. */
   BBK.setOrderStatus = (o, status, note) => {
     o.status = status;
+    if (status === 'jadwal-cod') {
+      o.schedule = 'disetujui';
+      delete o.scheduleReason;
+    }
     o.timeline.push({ status, at: new Date().toISOString(), ...(note ? { note } : {}) });
     if (status === 'selesai') BBK.save.productStatus(o.productIds, 'terjual');
     if (status === 'dibatalkan') BBK.save.productStatus(o.productIds, 'tersedia');
+    BBK.save.orders();
+  };
+
+  /**
+   * Latest timeline entry of a step. Schedule events (event: 'jadwal') are not steps, so the
+   * stepper stays correct when an order goes back from jadwal-cod to dikonfirmasi.
+   */
+  BBK.stepEntry = (o, status) => [...o.timeline].reverse().find((t) => t.status === status && !t.event);
+
+  /* COD time rules: a datetime-local value ("2026-11-20T10:00", local time) inside BBK.codHours. */
+  const hoursToMin = (text) => {
+    const [h, m] = String(text).split('.').map(Number);
+    return h * 60 + (m || 0);
+  };
+  const pad2 = (n) => String(n).padStart(2, '0');
+  /** Date or ISO string -> value for <input type="datetime-local">. */
+  BBK.toLocalInput = (d) => {
+    const x = new Date(d);
+    return `${x.getFullYear()}-${pad2(x.getMonth() + 1)}-${pad2(x.getDate())}T${pad2(x.getHours())}:${pad2(x.getMinutes())}`;
+  };
+  /** Error message for a COD time typed in a datetime-local input, or '' when it is fine. */
+  BBK.codTimeError = (value) => {
+    if (!value) return 'Pilih tanggal dan jam COD.';
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return 'Tanggal dan jam tidak valid.';
+    if (d.getTime() < Date.now()) return 'Jadwal COD tidak boleh di masa lalu.';
+    const min = d.getHours() * 60 + d.getMinutes();
+    if (min < hoursToMin(BBK.codHours.open) || min > hoursToMin(BBK.codHours.close)) {
+      return `COD hanya bisa pukul ${BBK.codHours.open}–${BBK.codHours.close}.`;
+    }
+    return '';
+  };
+
+  /* Schedule approval: the buyer changes place/time, the seller approves or rejects (never cancels). */
+  const pushScheduleEvent = (o, note) => o.timeline.push({ status: o.status, at: new Date().toISOString(), event: 'jadwal', note });
+  /** Buyer edits place and/or time. The seller must approve again; an agreed schedule goes back to dikonfirmasi. */
+  BBK.changeSchedule = (o, { meetingPlace, scheduledAt }) => {
+    if (meetingPlace) o.meetingPlace = meetingPlace;
+    if (scheduledAt) o.scheduledAt = scheduledAt;
+    o.schedule = 'menunggu';
+    delete o.scheduleReason;
+    if (o.status === 'jadwal-cod') o.status = 'dikonfirmasi';
+    pushScheduleEvent(o, `Jadwal diubah pembeli: ${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`);
+    BBK.save.orders();
+  };
+  /** Seller rejects the schedule. The order stays alive (back at dikonfirmasi if it was agreed). */
+  BBK.rejectSchedule = (o, reason) => {
+    o.schedule = 'ditolak';
+    if (reason) o.scheduleReason = reason;
+    else delete o.scheduleReason;
+    if (o.status === 'jadwal-cod') o.status = 'dikonfirmasi';
+    pushScheduleEvent(o, reason ? `Jadwal ditolak penjual: ${reason}` : 'Jadwal ditolak penjual');
     BBK.save.orders();
   };
 
@@ -203,6 +255,32 @@
       BBK.store.set('wishlist', on ? [id, ...ids] : ids.filter((x) => x !== id));
       return on;
     },
+  };
+  /*
+   * Per-seller cart ("keranjang"): every item is handed over at one COD meeting, so a
+   * buyer only bundles items from the same seller. Stored as { sellerId: [productId, …] };
+   * items that are no longer available drop out when read.
+   */
+  BBK.cart = {
+    all: () => BBK.store.get('cart', {}),
+    ids(sellerId) {
+      return (BBK.cart.all()[sellerId] || []).filter((id) => {
+        const p = BBK.getProduct(id);
+        return p && p.sellerId === sellerId && p.status === 'tersedia';
+      });
+    },
+    has: (sellerId, id) => BBK.cart.ids(sellerId).includes(id),
+    write(sellerId, ids) {
+      const map = BBK.cart.all();
+      if (ids.length) map[sellerId] = ids;
+      else delete map[sellerId];
+      BBK.store.set('cart', map);
+    },
+    add(sellerId, id) {
+      if (!BBK.cart.has(sellerId, id)) BBK.cart.write(sellerId, [...BBK.cart.ids(sellerId), id]);
+    },
+    remove: (sellerId, id) => BBK.cart.write(sellerId, BBK.cart.ids(sellerId).filter((x) => x !== id)),
+    clear: (sellerId) => BBK.cart.write(sellerId, []),
   };
   BBK.recentSearches = {
     list: () => BBK.store.get('recentSearches', ['Kipas angin', 'Rice cooker', 'Jas lab', 'Kasur']),

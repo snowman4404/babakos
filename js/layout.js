@@ -103,7 +103,7 @@
   };
 
   /*
-   * Illustrated UB campus map (not a real map, no maps API). Pins come from
+   * Illustrated campus-area map (not a real map, no maps API). Pins come from
    * BBK.meetingPoints x/y (% of the box). The box is always 16:10, matching the
    * SVG viewBox, so pins and drawing line up. interactive: pins are buttons.
    */
@@ -135,7 +135,7 @@
           <rect x="24" y="89" width="22" height="9" rx="1"/><rect x="112" y="89" width="26" height="9" rx="1"/>
         </g>
         <circle cx="38" cy="47" r="5" fill="#d6e7cb"/>
-        <text x="74" y="58" font-size="4" fill="#7a8f6d" font-family="sans-serif" font-weight="700">KAMPUS UB</text>
+        <text x="74" y="58" font-size="4" fill="#7a8f6d" font-family="sans-serif" font-weight="700">AREA KAMPUS</text>
         <text x="62" y="92.5" font-size="3" fill="#8a8077" font-family="sans-serif">Jl. Veteran</text>
         <text transform="translate(142.2 22) rotate(90)" font-size="3" fill="#8a8077" font-family="sans-serif">Jl. MT Haryono</text>
       </svg>
@@ -235,10 +235,9 @@
             ${BBK.avatar(user, 'sm')}<span class="account-name">${esc(username)}</span>${BBK.icon('chevron-down', 16)}
           </button>
           <div class="account-menu" id="account-menu" hidden>
-            <a href="profil.html">${BBK.icon('user', 18)}Profil Saya</a>
+            <a href="profil.html">${BBK.icon('user', 18)}Akun Saya</a>
             <a href="pesanan.html">${BBK.icon('package', 18)}Pesanan Saya</a>
             <a href="profil.html#wishlist">${BBK.icon('heart', 18)}Wishlist</a>
-            <a href="jual.html">${BBK.icon('tag', 18)}Jual Barang</a>
             <button type="button" data-logout>${BBK.icon('logout', 18)}Keluar</button>
           </div>
         </div>`
@@ -363,7 +362,7 @@
     footer.innerHTML = `<div class="container foot">
         <div class="foot-brand">
           <a class="wordmark" href="index.html">BaBaKos</a>
-          <p>Barang bekas kost, pindah tangan antar mahasiswa Universitas Brawijaya.</p>
+          <p>Barang bekas kost, pindah tangan antar mahasiswa kampus se-Malang.</p>
         </div>
         <nav class="foot-links" aria-label="Footer">
           <a href="jelajah.html">Katalog</a>
