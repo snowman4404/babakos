@@ -49,8 +49,11 @@
           <section class="card" aria-labelledby="when-title">
             <h2 class="h3 card-head" id="when-title">Jadwal COD</h2>
             <div class="field">
-              <label class="field-label" for="when">Tanggal dan jam</label>
-              <input class="input" id="when" name="when" type="datetime-local" required aria-describedby="when-hint when-error">
+              <label class="field-label" for="when-date">Tanggal dan jam</label>
+              <div class="when-pair">
+                <input class="input" id="when-date" name="when-date" type="date" required aria-label="Tanggal COD" aria-describedby="when-hint when-error">
+                <input class="input" id="when-time" name="when-time" type="time" required aria-label="Jam COD" aria-describedby="when-hint when-error">
+              </div>
               <p class="field-hint" id="when-hint"></p>
               <p class="field-error" id="when-error" hidden></p>
             </div>
@@ -65,7 +68,7 @@
             <ul>
               <li>Bertemu di titik ramai di sekitar kampus, pada jam terang.</li>
               <li>Cek barangnya dulu, baru bayar tunai.</li>
-              <li>Tidak sesuai? Jangan bayar, batalkan dari halaman Lacak Pesanan.</li>
+              <li>Tidak sesuai saat COD? Jangan bayar dan hubungi penjual lewat chat.</li>
             </ul>
           </section>
         </div>

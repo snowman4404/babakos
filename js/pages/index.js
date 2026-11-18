@@ -84,10 +84,5 @@
   const areaCount = new Set(available.map((p) => p.areaId)).size;
   $('#new-sub').textContent = `${available.length} barang tersedia dari ${areaCount} area kost di Malang.`;
 
-  if (user) {
-    $('#safe-cta').textContent = 'Jual barangmu';
-    $('#safe-cta').href = 'jual.html';
-  }
-
   BBK.initReveal();
 })();

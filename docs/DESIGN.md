@@ -43,7 +43,7 @@ we still build mobile-first (360px) and scale up to that layout.
 | Maroon/Light | `#F5EAEB` | active menu item, avatar, icon tiles |
 | Base/Background | `#FEFBFC` | navbar, page tint, soft cards |
 | Base/White | `#FFFFFF` | cards |
-| Gray/Light :active | `#FAF4F4` | grouped section background (e.g. "Pesanan Saya" block) |
+| Gray/Light :active | `#FAF4F4` | grouped section background |
 | Border (unnamed) | `#EDE3E5` | card borders, dividers, nav bottom border |
 | Text/Primary | `#1B1313` (code uses `#160F0F`) | headings, body |
 | Text/Secondary | `#544D4D` | secondary text, nav links |

@@ -200,8 +200,8 @@
 
   /**
    * Index in BBK.orderSteps of the furthest step the order is at. A cancelled order reports the
-   * step it was cancelled at. Schedule events carry the status of that moment, so an order that
-   * went back from jadwal-cod to dikonfirmasi is at 1 again.
+   * step it was cancelled at. Schedule events carry the status of that moment (an agreed
+   * schedule is final now, but orders saved by an older version may have gone back a step).
    */
   BBK.stepProgress = (o) => {
     if (o.status !== 'dibatalkan') return BBK.stepIndex(o.status);
@@ -209,8 +209,7 @@
     return last ? BBK.stepIndex(last.status) : -1;
   };
   /**
-   * Latest timeline entry of a step, or undefined when the order is not (or no longer) at that
-   * step: after a schedule is reopened, the old "Jadwal COD" entry is stale until re-approved.
+   * Latest timeline entry of a step, or undefined when the order has not reached that step.
    * Schedule events (event: 'jadwal') are not steps and are skipped.
    */
   BBK.stepEntry = (o, status) => {
@@ -218,56 +217,74 @@
     return entry && BBK.stepIndex(status) <= BBK.stepProgress(o) ? entry : undefined;
   };
 
-  /* COD time rules: a datetime-local value ("2026-11-20T10:00", local time) inside BBK.codHours. */
-  const hoursToMin = (text) => {
-    const [h, m] = String(text).split('.').map(Number);
-    return h * 60 + (m || 0);
-  };
+  /*
+   * COD date rule: only the DATE is limited. It must be from today up to COD_MAX_DAYS after
+   * the day the order was made. The time of day is free. Dates are "YYYY-MM-DD" strings in
+   * local time (what <input type="date"> gives), so comparing them as text is safe.
+   */
+  BBK.COD_MAX_DAYS = 7;
   const pad2 = (n) => String(n).padStart(2, '0');
-  /** Date or ISO string -> value for <input type="datetime-local">. */
-  BBK.toLocalInput = (d) => {
+  /** Date or ISO string -> value for <input type="date"> (local time). */
+  BBK.toDateInput = (d) => {
     const x = new Date(d);
-    return `${x.getFullYear()}-${pad2(x.getMonth() + 1)}-${pad2(x.getDate())}T${pad2(x.getHours())}:${pad2(x.getMinutes())}`;
+    return `${x.getFullYear()}-${pad2(x.getMonth() + 1)}-${pad2(x.getDate())}`;
   };
-  /** Error message for a COD time typed in a datetime-local input, or '' when it is fine. */
-  BBK.codTimeError = (value) => {
-    if (!value) return 'Pilih tanggal dan jam COD.';
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return 'Tanggal dan jam tidak valid.';
-    if (d.getTime() < Date.now()) return 'Jadwal COD tidak boleh di masa lalu.';
-    const min = d.getHours() * 60 + d.getMinutes();
-    if (min < hoursToMin(BBK.codHours.open) || min > hoursToMin(BBK.codHours.close)) {
-      return `COD hanya bisa pukul ${BBK.codHours.open}–${BBK.codHours.close}.`;
-    }
+  /** Date or ISO string -> value for <input type="time"> (local time). */
+  BBK.toTimeInput = (d) => {
+    const x = new Date(d);
+    return `${pad2(x.getHours())}:${pad2(x.getMinutes())}`;
+  };
+  /** Allowed COD date window { min, max } as "YYYY-MM-DD": today .. COD_MAX_DAYS after the order date. */
+  BBK.codDateWindow = (createdAt) => {
+    const c = new Date(createdAt || Date.now());
+    return { min: BBK.toDateInput(new Date()), max: BBK.toDateInput(new Date(c.getFullYear(), c.getMonth(), c.getDate() + BBK.COD_MAX_DAYS)) };
+  };
+  /** Hint under the COD date input, e.g. "… (sampai Jumat, 27 November 2026). Jamnya bebas." */
+  BBK.codDateHint = (createdAt) => {
+    const { max } = BBK.codDateWindow(createdAt);
+    return `Pilih tanggal paling lambat ${BBK.COD_MAX_DAYS} hari setelah pesanan dibuat (sampai ${BBK.formatDate(max + 'T12:00')}). Jamnya bebas.`;
+  };
+  /** Error message for a COD date ("YYYY-MM-DD") made on `createdAt`, or '' when it is inside the window. */
+  BBK.codDateError = (value, createdAt) => {
+    if (!value) return 'Pilih tanggal COD.';
+    if (Number.isNaN(new Date(value + 'T12:00').getTime())) return 'Tanggal tidak valid.';
+    const { min, max } = BBK.codDateWindow(createdAt);
+    if (max < min) return `Batas ${BBK.COD_MAX_DAYS} hari setelah pesanan dibuat sudah lewat.`;
+    if (value < min) return 'Tanggal COD tidak boleh sebelum hari ini.';
+    if (value > max) return `Tanggal COD paling lambat ${BBK.COD_MAX_DAYS} hari setelah pesanan dibuat (${BBK.formatDate(max + 'T12:00')}).`;
     return '';
   };
+  /** Date + time input values -> error message ('' when fine). Only the date is limited; the time just has to be filled in. */
+  BBK.codWhenError = (date, time, createdAt) => BBK.codDateError(date, createdAt) || (time ? '' : 'Pilih jam COD.');
+  /** Date + time input values (local time) -> ISO string. */
+  BBK.codWhenISO = (date, time) => new Date(`${date}T${time}`).toISOString();
 
   /** Error message for a free-text COD meeting place, or '' when it is fine. */
   BBK.meetingPlaceError = (value) =>
     String(value || '').trim().length >= 3 ? '' : 'Tulis titik temu COD, mis. Depan masjid kampus.';
 
-  /* Schedule approval: the buyer changes place/time, the seller approves or rejects (never cancels). */
-  /**
-   * Put the schedule back in review: set its approval state, send an agreed order back to
-   * dikonfirmasi (the stepper then shows "Jadwal COD" as not done), log a schedule event, save.
-   */
+  /* Schedule approval: the buyer changes place/time, the seller approves or rejects (never cancels). Once approved the schedule is final. */
   const reopenSchedule = (o, state, reason, note) => {
     o.schedule = state;
     if (reason) o.scheduleReason = reason;
     else delete o.scheduleReason;
-    if (o.status === 'jadwal-cod') o.status = 'dikonfirmasi';
     o.timeline.push({ status: o.status, at: new Date().toISOString(), event: 'jadwal', note });
     BBK.save.orders();
   };
-  /** Buyer edits place and/or time. The seller must approve again; an agreed schedule goes back to dikonfirmasi. */
+  /** Buyer edits place and/or time; the seller must approve again. Returns false (no change) once the schedule is agreed. */
   BBK.changeSchedule = (o, { meetingPlace, scheduledAt }) => {
+    if (BBK.AGREED_STATUSES.includes(o.status) || o.status === 'dibatalkan') return false;
     if (meetingPlace) o.meetingPlace = meetingPlace;
     if (scheduledAt) o.scheduledAt = scheduledAt;
     reopenSchedule(o, 'menunggu', '', `Jadwal diubah pembeli: ${o.meetingPlace}, ${BBK.formatShortDate(o.scheduledAt)} ${BBK.formatTime(o.scheduledAt)}`);
+    return true;
   };
-  /** Seller rejects the schedule. The order stays alive (back at dikonfirmasi if it was agreed). */
-  BBK.rejectSchedule = (o, reason) =>
+  /** Seller rejects the schedule; the order stays alive. Returns false (no change) once the schedule is agreed. */
+  BBK.rejectSchedule = (o, reason) => {
+    if (BBK.AGREED_STATUSES.includes(o.status) || o.status === 'dibatalkan') return false;
     reopenSchedule(o, 'ditolak', reason, reason ? `Jadwal ditolak penjual: ${reason}` : 'Jadwal ditolak penjual');
+    return true;
+  };
 
   /* ---------- Chats ---------- */
   BBK.unreadChats = (userId) =>

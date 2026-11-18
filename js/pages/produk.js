@@ -71,8 +71,8 @@
   $('#p-loc').innerHTML = `${BBK.icon('pin', 18)}<span>Lokasi COD: ${esc(point.shortName)} · area ${esc(areaShort)}</span>`;
   const km = buyerAreaId ? BBK.areaDistance(buyerAreaId, p.areaId) : area.distanceKm;
   $('#p-near').textContent = buyerAreaId
-    ? `${BBK.walkMinutes(km)} menit jalan kaki dari kostmu di ${BBK.areaShortName(buyerAreaId)}. COD pukul ${BBK.codHours.open}–${BBK.codHours.close}.`
-    : `${BBK.formatKm(area.distanceKm)} km dari kawasan kampus. COD pukul ${BBK.codHours.open}–${BBK.codHours.close}.`;
+    ? `${BBK.walkMinutes(km)} menit jalan kaki dari kostmu di ${BBK.areaShortName(buyerAreaId)}.`
+    : `${BBK.formatKm(area.distanceKm)} km dari kawasan kampus.`;
   $('#p-desc').textContent = p.description;
   $('#p-posted').textContent = `Diunggah ${BBK.timeAgo(p.postedAt).toLowerCase()} · ${category.label}`;
 

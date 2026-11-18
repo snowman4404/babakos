@@ -633,13 +633,6 @@ button {
   color: var(--maroon);
 }
 
-.icon-tile-white {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--r-md);
-  background: var(--white);
-}
-
 /* Key–value rows (order summaries) */
 .kv {
   display: grid;
@@ -1914,48 +1907,6 @@ body.has-actionbar {
 
 .home-section {
   padding-top: 36px;
-}
-
-/* Four safety steps */
-.safe {
-  display: grid;
-  gap: 24px;
-}
-
-.safe-intro .lead {
-  margin-top: 6px;
-}
-
-.safe-steps {
-  display: grid;
-  gap: 16px;
-}
-
-.safe-steps li {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.safe-steps .caption {
-  margin-top: 2px;
-}
-
-.safe > .btn {
-  justify-self: start;
-}
-
-@media (min-width: 900px) {
-  .safe {
-    grid-template-columns: 1fr 2fr;
-    align-items: start;
-  }
-
-  .safe-steps {
-    grid-template-columns: repeat(2, 1fr);
-    grid-row: span 2;
-    gap: 24px;
-  }
 }
 
 /* ---------- katalog (jelajah.html) ---------- */
@@ -3628,6 +3579,19 @@ button.map-pin {
   margin-top: 20px;
 }
 
+/* Date + time inputs side by side (checkout and the Lacak edit form) */
+.when-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 420px) {
+  .when-pair {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
 .tips h2 {
   display: flex;
   align-items: center;
@@ -4053,6 +4017,11 @@ button.map-pin {
 .schedule-note.is-rejected {
   background: var(--red-bg);
   color: var(--red);
+}
+
+.schedule-note.is-agreed {
+  background: var(--green-light);
+  color: var(--green-ink);
 }
 
 /* Pencil buttons + inline edit forms (buyer changes COD time / place) */
@@ -4700,120 +4669,6 @@ button.map-pin {
 .profile-stats dd .icon {
   color: var(--amber);
   fill: var(--amber);
-}
-
-.orders-block {
-  display: grid;
-  gap: 20px;
-}
-
-.orders-block-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
-}
-
-.orders-block-head > div {
-  flex: 1 1 240px;
-  display: grid;
-  gap: 4px;
-}
-
-.orders-block-head .icon-tile {
-  color: var(--maroon);
-}
-
-.order-preview {
-  display: grid;
-  gap: 16px;
-  padding: 20px;
-  border-radius: var(--r-md);
-  background: var(--white);
-  transition: box-shadow 0.2s var(--ease);
-}
-
-a.order-preview:hover {
-  box-shadow: 0 6px 18px rgba(159, 40, 58, 0.1);
-}
-
-.order-preview-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.order-preview-body {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 14px 18px;
-  align-items: center;
-}
-
-.order-preview-body img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  padding: 4px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-}
-
-.order-preview-body > div:nth-child(2) {
-  display: grid;
-  gap: 6px;
-}
-
-.order-preview-total {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-}
-
-.order-preview-total strong {
-  font-size: var(--fs-lg);
-}
-
-.order-preview-total .text-action {
-  margin-left: auto;
-}
-
-@media (min-width: 700px) {
-  .order-preview-body {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .order-preview-total {
-    grid-column: auto;
-    display: grid;
-    justify-items: end;
-    gap: 6px;
-  }
-
-  .order-preview-total .text-action {
-    margin-left: 0;
-  }
-}
-
-.empty-line {
-  color: var(--ink-2);
-}
-
-.sales-alert {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-radius: var(--r);
-  background: var(--peach);
-  color: var(--amber-ink);
-}
-
-.sales-alert span {
-  flex: 1;
 }
 
 .utility-grid {

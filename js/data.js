@@ -82,9 +82,6 @@ BBK.faculties = [
 // Quick max-price steps (Rp) for the Katalog filter.
 BBK.priceCeilings = [100000, 200000, 500000, 1000000];
 
-// COD is possible between these hours at every meeting point.
-BBK.codHours = { open: '07.00', close: '21.00' };
-
 // trustScore (0–100) = verified email + finished deals + ratings + reply speed (mock).
 BBK.users = [
   { id: 'u1', name: 'Rizky Pratama', email: 'rizkypratama@student.ub.ac.id', university: 'Universitas Brawijaya', universityShort: 'UB', faculty: 'Fakultas Ilmu Komputer', facultyShort: 'FILKOM', cohort: 2023, areaId: 'ketawanggede', verified: true, rating: 4.8, totalSold: 3, trustScore: 92, joinedAt: '2026-08-20' },

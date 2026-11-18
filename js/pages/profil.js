@@ -24,14 +24,13 @@
     const username = me.email.split('@')[0];
     const PANELS = [
       ['profil', 'user', 'Akun Saya'],
-      ['pesanan', 'package', 'Pesanan Saya', 'pesanan.html'],
       ['barang', 'tag', 'Barang Saya'],
       ['wishlist', 'heart', 'Wishlist'],
       ['keamanan', 'lock', 'Keamanan Akun'],
     ];
     const SUPPORT = [['bantuan', 'help', 'Pusat Bantuan']];
-    const item = ([key, icon, label, href]) =>
-      `<a class="side-item" href="${href || '#' + key}" data-panel="${href ? '' : key}">${BBK.icon(icon, 20)}<span>${label}</span><span class="side-dot" aria-hidden="true"></span></a>`;
+    const item = ([key, icon, label]) =>
+      `<a class="side-item" href="#${key}" data-panel="${key}">${BBK.icon(icon, 20)}<span>${label}</span><span class="side-dot" aria-hidden="true"></span></a>`;
 
     document.title = 'Akun Saya — BaBaKos';
     $('#chat-launcher').hidden = false;
@@ -76,10 +75,6 @@
     /* --- Akun Saya --- */
     function profilPanel() {
       const area = BBK.getArea(me.areaId);
-      const myOrders = BBK.orders.filter((o) => o.buyerId === me.id).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      const latest = myOrders[0];
-      const p = latest && BBK.orderItems(latest)[0];
-      const sales = BBK.orders.filter((o) => o.sellerId === me.id && o.status === 'menunggu-konfirmasi').length;
       return `<div class="dash-hello">
           <h1 class="h1">Halo, ${esc(username)}!</h1>
           <p class="lead">Kelola profil dan kebutuhan belanja kampusmu di satu tempat.</p>
@@ -108,29 +103,6 @@
             <div><dt>Rating</dt><dd>${BBK.icon('star', 16)}${me.rating.toLocaleString('id-ID', { minimumFractionDigits: 1 })}</dd></div>
             <div><dt>Terjual</dt><dd>${me.totalSold}</dd></div>
           </dl>
-        </section>
-
-        <section class="card-soft orders-block" aria-labelledby="ob-title">
-          <div class="orders-block-head">
-            <span class="icon-tile icon-tile-white">${BBK.icon('package', 26)}</span>
-            <div><h2 class="h2" id="ob-title">Pesanan Saya</h2><p class="lead">Cek status dan lihat kembali detail pesananmu.</p></div>
-            <a class="btn" href="pesanan.html">Lihat Pesanan Saya</a>
-          </div>
-          ${
-            latest
-              ? `<a class="order-preview" href="lacak.html?id=${encodeURIComponent(latest.id)}">
-                  <div class="order-preview-top"><span class="eyebrow">Dari riwayat pesananmu</span>${BBK.statusPill(latest.status)}</div>
-                  <div class="order-preview-body">
-                    <img src="${esc(BBK.productImage(p))}" alt="" width="80" height="80">
-                    <div><p class="h3">${esc(BBK.orderTitle(latest))} - ${esc(BBK.getUser(latest.sellerId).name)}</p>
-                      <p class="caption">Dibuat pada ${esc(BBK.formatDate(latest.createdAt))}</p>
-                      <p class="caption muted">COD ${esc(latest.meetingPlace)} · ${latest.productIds.length} barang</p></div>
-                    <div class="order-preview-total"><span class="caption">Total biaya</span><strong>${BBK.formatRupiah(latest.price)}</strong><span class="text-action">Lihat detail${BBK.icon('arrow-right', 18)}</span></div>
-                  </div>
-                </a>`
-              : `<p class="order-preview empty-line">Belum ada pesanan. <a class="link-btn" href="jelajah.html">Cari barang</a></p>`
-          }
-          ${sales ? `<a class="sales-alert" href="pesanan.html?tab=penjualan">${BBK.icon('bag', 18)}<span><strong>${sales} pesanan baru</strong> untuk barangmu menunggu konfirmasi.</span>${BBK.icon('chevron-right', 18)}</a>` : ''}
         </section>
 
         <div class="utility-grid">

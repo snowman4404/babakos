@@ -1,8 +1,9 @@
 /*
  * Atur COD (checkout.html?product=p1, or ?items=p1,p3,p14 for the buyer's own bundle from
  * one seller). Summary of the item(s), a free-text meeting place (suggestion chips and the
- * illustrated campus map only fill the input), a datetime-local COD time inside
- * BBK.codHours, a note, and the payment summary (cash at the COD). "Buat Pesanan" saves a
+ * illustrated campus map only fill the input), a COD date (today up to 7 days from now,
+ * any time of day; BBK.codDateError) and time, a note, and the payment summary (cash at the
+ * COD). "Buat Pesanan" saves a
  * new order in BBK.store, marks the items as reserved, empties the seller's cart when the
  * order came from ?items, posts a message in the chat and opens lacak.html.
  */
@@ -65,7 +66,8 @@
 
   /* ---------- Meeting place: a text input; chips and map pins only fill it in ---------- */
   const place = $('#place');
-  const when = $('#when');
+  const whenDate = $('#when-date');
+  const whenTime = $('#when-time');
   $('#place-chips').innerHTML = BBK.meetingPoints.map((m) => `<button type="button" class="chip" data-point="${esc(m.id)}">${esc(m.shortName)}</button>`).join('');
   const renderMap = () => {
     const selected = BBK.meetingPoints.find((m) => m.name === place.value.trim());
@@ -90,30 +92,42 @@
   renderMap();
 
   /* ---------- Date + time ---------- */
-  when.min = BBK.toLocalInput(new Date());
-  $('#when-hint').textContent = `COD bisa pukul ${BBK.codHours.open}–${BBK.codHours.close}. Penjual yang menyetujui jadwalnya.`;
+  const limit = BBK.codDateWindow(new Date());
+  whenDate.min = limit.min;
+  whenDate.max = limit.max;
+  $('#when-hint').textContent = `${BBK.codDateHint(new Date())} Penjual yang menyetujui jadwalnya.`;
 
   /* ---------- Validation ---------- */
-  function setError(input, text) {
-    const box = $(`#${input.id}-error`);
+  function setError(input, text, boxId = `${input.id}-error`) {
+    const box = $(`#${boxId}`);
     box.textContent = text;
     box.hidden = !text;
     input.setAttribute('aria-invalid', String(!!text));
     return !text;
   }
   const checkPlace = () => setError(place, BBK.meetingPlaceError(place.value));
-  const checkWhen = () => setError(when, BBK.codTimeError(when.value));
+  // Only the date is limited; the time just has to be filled in. One error box serves both inputs.
+  const checkWhen = () => {
+    const dateText = BBK.codDateError(whenDate.value, new Date());
+    const timeText = dateText || whenTime.value ? '' : 'Pilih jam COD.';
+    setError(whenDate, dateText, 'when-error');
+    if (!dateText) setError(whenTime, timeText, 'when-error');
+    else whenTime.setAttribute('aria-invalid', 'false');
+    return !dateText && !timeText;
+  };
   place.addEventListener('blur', checkPlace);
-  when.addEventListener('blur', checkWhen);
+  whenDate.addEventListener('blur', () => whenDate.value && checkWhen());
   place.addEventListener('input', () => {
     if (place.getAttribute('aria-invalid') === 'true') checkPlace();
     renderMap();
     updateSummary();
   });
-  when.addEventListener('input', () => {
-    if (when.getAttribute('aria-invalid') === 'true') checkWhen();
-    updateSummary();
-  });
+  [whenDate, whenTime].forEach((input) =>
+    input.addEventListener('input', () => {
+      if (whenDate.getAttribute('aria-invalid') === 'true' || whenTime.getAttribute('aria-invalid') === 'true') checkWhen();
+      updateSummary();
+    }),
+  );
 
   /* ---------- Payment summary ---------- */
   $('#pay').innerHTML = `
@@ -123,7 +137,7 @@
   $('#bar-total').textContent = BBK.formatRupiah(total);
   function updateSummary() {
     const text = place.value.trim();
-    const d = when.value && new Date(when.value);
+    const d = whenDate.value && whenTime.value && new Date(`${whenDate.value}T${whenTime.value}`);
     const valid = d && !Number.isNaN(d.getTime());
     $('#pay-summary').innerHTML =
       text || valid
@@ -145,7 +159,7 @@
     const okPlace = checkPlace();
     const okWhen = checkWhen();
     if (!okPlace || !okWhen) {
-      (okPlace ? when : place).focus();
+      (okPlace ? (whenDate.getAttribute('aria-invalid') === 'true' ? whenDate : whenTime) : place).focus();
       return;
     }
     const buttons = document.querySelectorAll('[type="submit"]');
@@ -162,7 +176,7 @@
       sellerId: seller.id,
       price: total,
       meetingPlace: place.value.trim(),
-      scheduledAt: new Date(when.value).toISOString(),
+      scheduledAt: BBK.codWhenISO(whenDate.value, whenTime.value),
       schedule: 'menunggu',
       status: 'menunggu-konfirmasi',
       createdAt: now,
